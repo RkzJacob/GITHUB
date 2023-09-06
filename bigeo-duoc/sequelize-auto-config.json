@@ -1,0 +1,10 @@
+{
+    "database": "bigeo-duoc",
+    "username": "duoc2023team1",
+    "password": "duoc2023",
+    "host": "18.116.150.135",
+    "dialect": "postgres",
+    "port": 5432,
+    "output": "./models", 
+    "lang": "ts"
+  }
