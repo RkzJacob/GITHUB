@@ -1,3 +1,4 @@
+// DROPDOWN DE LA PAGINA DE INICIO ANTES DE ENTRAR A LA PLANTILLA EN SÍ
 import React from "react";
 import { Link } from "react-router-dom";
 import { createPopper } from "@popperjs/core";
@@ -27,7 +28,7 @@ const PagesDropdown = () => {
           dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
         }}
       >
-        Demo Pages
+        Menu
       </a>
       <div
         ref={popoverDropdownRef}

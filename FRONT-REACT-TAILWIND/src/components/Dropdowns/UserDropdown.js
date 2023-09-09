@@ -1,3 +1,4 @@
+// AL HACER CLICK EN LA FOTO DE PERFIL (PARTE SUPERIOR DERECHA)
 import React from "react";
 import { createPopper } from "@popperjs/core";
 
@@ -50,7 +51,7 @@ const UserDropdown = () => {
           }
           onClick={(e) => e.preventDefault()}
         >
-          Action
+          Prueba uno
         </a>
         <a
           href="#pablo"
@@ -59,7 +60,7 @@ const UserDropdown = () => {
           }
           onClick={(e) => e.preventDefault()}
         >
-          Another action
+          Prueba Dos
         </a>
         <a
           href="#pablo"
@@ -68,7 +69,7 @@ const UserDropdown = () => {
           }
           onClick={(e) => e.preventDefault()}
         >
-          Something else here
+          Prueba Tres
         </a>
         <div className="h-0 my-2 border border-solid border-blueGray-100" />
         <a
