@@ -25,5 +25,7 @@ export class UserController {
         const count = await this.userService.countUsers(); // Llama al método del servicio
         return { count }; // Devuelve el conteo en formato JSON
       }
+
+    
 }
 

@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { user } from './user.model';
-import { promises } from 'dns';
+import { Sequelize } from 'sequelize-typescript';
 import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectModel(user)
-        private readonly userModel: typeof user,
+        private readonly userModel: typeof user,private readonly sequelize: Sequelize
       ) {}
       
     async findAllUsernames(): Promise <any[]> {
@@ -18,6 +18,7 @@ export class UserService {
           return users.map((user) => user.username);
     }
 
+    
     async countUsers(): Promise<number> {
         const count = await this.userModel.count();
         return count;

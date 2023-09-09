@@ -10,18 +10,23 @@ export class tree extends Model {
   @Column({ primaryKey: true, autoIncrement: false })
   @ApiProperty()
   tree_id: number;
+
   @Column
   @ApiProperty()
   type: string;
+
   @Column
   @ApiProperty()
   plant_date?: string;
+
   @Column
   @ApiProperty()
   geometryGid: number;
+
   @Column
   @ApiProperty()
   status: string;
+  
   @Column
   @ApiProperty()
   reference_id: string;

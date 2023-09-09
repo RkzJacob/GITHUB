@@ -27,6 +27,5 @@ export class formSprinkler extends Model {
   observation: string;
   
   
-  cantidad: number;
 }
 
