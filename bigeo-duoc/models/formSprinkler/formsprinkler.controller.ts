@@ -15,9 +15,16 @@ export class FormSprinklerController {
 
 
   @Get('Conteo-defectos') //tipo de operacion y nombre
-  @ApiOperation({ summary: 'Cuenta-Defectos-3-Meses-Atras' }) //descripción metodo
+  @ApiOperation({ summary: 'Cuenta Defectos 3 Meses Atras' }) //descripción metodo
   @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
   async CuentaDeDefectos() {
       return this.formSprinklerService.CuentaDefectos3mesesAtras();
     }
+
+  @Get('Conteo-Todos-Los-Defectos') //tipo de operacion y nombre
+  @ApiOperation({ summary: 'Conteo de todos los defectos registrados' }) //descripción metodo
+  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  async ObtenerDefectos() {
+      return this.formSprinklerService.ObtenerTodosLosDefectosExistentes();
+      }
 }

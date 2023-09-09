@@ -22,10 +22,19 @@ export class FormSprinklerService {
       `;
   
       const result = await this.sequelize.query(query, { type: 'SELECT' });
-      return result;
-          
-         
-         
+      return result; 
     }
+
+    async ObtenerTodosLosDefectosExistentes(): Promise<any> {
+      const query = `
+        SELECT defect, COUNT(defect) as cantidad
+        FROM "formSprinkler"
+        GROUP BY defect;
+      `;
+  
+      const result = await this.sequelize.query(query, { type: 'SELECT' });
+      return result;     
+    }
+
   }
 
