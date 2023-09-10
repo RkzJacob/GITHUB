@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
 
-export default function CardLineChart() {
+export default function CardLineChart2() {
   const [defects, setDefects] = useState([]);
 
   const apiUrl = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta a tu API
@@ -18,22 +18,21 @@ export default function CardLineChart() {
     }, []);
       
     
-    const lables = defects.map(defect => defect.defect).join(' ');;
+    const lables = defects.map(defect => defect.defect);
     const setDatos = defects.map(defect => defect.cantidad);
+  
   useEffect(() => {
     var config = {
-      type: "line",
+      type: "bar",
       data: {
-        labels: [
-          lables
-        ],
+        labels: 
+          lables,
         datasets: [
           {
-            
+            label: 'Cantidad de Defectos',
             backgroundColor: "#4c51bf",
             borderColor: "#4c51bf",
-            data: [setDatos],
-            fill: false,
+            data: setDatos,
           },
           
         ],
@@ -109,7 +108,7 @@ export default function CardLineChart() {
         },
       },
     };
-    var ctx = document.getElementById("line-chart").getContext("2d");
+    var ctx = document.getElementById("line-chart2").getContext("2d");
     window.myLine = new Chart(ctx, config);
   }, [defects]);
   return (
@@ -126,9 +125,9 @@ export default function CardLineChart() {
           </div>
         </div>
         <div className="p-4 flex-auto">
-          {/* Chart */}
+          {/* Chart2 */}
           <div className="relative h-350-px">
-            <canvas id="line-chart"></canvas>
+            <canvas id="line-chart2"></canvas>
           </div>
         </div>
       </div>

@@ -27,9 +27,12 @@ export class FormSprinklerService {
 
     async ObtenerTodosLosDefectosExistentes(): Promise<any> {
       const query = `
-        SELECT defect, COUNT(defect) as cantidad
-        FROM "formSprinkler"
-        GROUP BY defect;
+      SELECT defect, COUNT(defect) as cantidad
+      FROM form 
+      INNER JOIN properties on properties.propid=form."propertiesPropid"
+      INNER JOIN "formSprinkler" on "formSprinkler".spid=properties."formSprinklerSpid"
+      GROUP BY defect
+      ORDER BY cantidad DESC;
       `;
   
       const result = await this.sequelize.query(query, { type: 'SELECT' });
