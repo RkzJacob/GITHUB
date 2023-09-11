@@ -38,6 +38,19 @@ export class FormSprinklerService {
       const result = await this.sequelize.query(query, { type: 'SELECT' });
       return result;     
     }
-
+    async ObtenerDefectosPorcentaje(): Promise<any> {
+      const query = `
+      SELECT defect, COUNT(defect) as cantidad,
+      ROUND(((COUNT(defect)::NUMERIC / SUM(COUNT(defect)) OVER ()))*100,2) AS porcentaje
+        FROM public.form 
+        JOIN public.properties on (propid="propertiesPropid")
+        JOIN public."formSprinkler" on (spid="formSprinklerSpid")
+        GROUP BY defect
+		    ORDER BY cantidad DESC
+      `;
+  
+      const result = await this.sequelize.query(query, { type: 'SELECT' });
+      return result;     
+    }
   }
 
