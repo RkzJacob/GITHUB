@@ -29,9 +29,9 @@ export default function CardLineChart2() {
           lables,
         datasets: [
           {
-            label: 'Cantidad de Defectos',
-            backgroundColor: "#4c51bf",
-            borderColor: "#4c51bf",
+            label: 'Tipo de Defecto',
+            backgroundColor: "#e5ead4",
+            borderColor: "#e5ead4",
             data: setDatos,
           },
           
@@ -40,36 +40,36 @@ export default function CardLineChart2() {
       options: {
         maintainAspectRatio: false,
         responsive: true,
-        title: {
-          display: false,
-          text: "Sales Charts",
-          fontColor: "white",
+        title: { //titulo del grafico
+          display: false, //indica si se debe mostrar el titulo 
+          text: "Defectos",//el nombre del titulo
+          fontColor: "black",//color del titulo
         },
-        legend: {
-          labels: {
-            fontColor: "white",
+        legend: { //leyenda del grafico
+          labels: { //personalizacion de la leyenda
+            fontColor: "white",//color de las leyendas
           },
-          align: "end",
-          position: "bottom",
+          align: "end",//alinea la leyenda al final del grafico
+          position: "bottom",//coloca la leyenda al final del grafico
         },
-        tooltips: {
-          mode: "index",
-          intersect: false,
+        tooltips: {//controla el punto de datos en el eje x
+          mode: "index",//permite mostrar informacion de cada barra
+          intersect: false,//Evita que los tooltips se superpongan
         },
-        hover: {
+        hover: {//controla el comportamiento cuando se pasa el ratón sobre el grafico
           mode: "nearest",
-          intersect: true,
+          intersect: true,//
         },
         scales: {
           xAxes: [
             {
               ticks: {
-                fontColor: "rgba(255,255,255,.7)",
+                fontColor: "white",
               },
               display: true,
               scaleLabel: {
                 display: false,
-                labelString: "Month",
+                labelString: "Nombre defecto",
                 fontColor: "white",
               },
               gridLines: {
@@ -98,7 +98,7 @@ export default function CardLineChart2() {
                 borderDash: [3],
                 borderDashOffset: [3],
                 drawBorder: false,
-                color: "rgba(255, 255, 255, 0.15)",
+                color: "rgba(229, 234, 212,0.3)",
                 zeroLineColor: "rgba(33, 37, 41, 0)",
                 zeroLineBorderDash: [2],
                 zeroLineBorderDashOffset: [2],
@@ -113,14 +113,14 @@ export default function CardLineChart2() {
   }, [defects]);
   return (
     <>
-      <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-700">
+      <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full max-w-full flex-grow flex-1">
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
                 Vista general
               </h6>
-              <h2 className="text-white text-xl font-semibold">Datos de prueba</h2>
+              <h2 className="text-white text-xl font-semibold">Cantidad por tipo de defecto</h2>
             </div>
           </div>
         </div>

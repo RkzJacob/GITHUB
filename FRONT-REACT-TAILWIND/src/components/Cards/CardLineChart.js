@@ -18,21 +18,20 @@ export default function CardLineChart() {
     }, []);
       
     
-    const lables = defects.map(defect => defect.defect).join(' ');;
+    const lables = defects.map(defect => defect.defect);
     const setDatos = defects.map(defect => defect.cantidad);
   useEffect(() => {
     var config = {
       type: "line",
       data: {
-        labels: [
-          lables
-        ],
+        labels: 
+          lables,
         datasets: [
           {
             
             backgroundColor: "#4c51bf",
             borderColor: "#4c51bf",
-            data: [setDatos],
+            data: setDatos,
             fill: false,
           },
           

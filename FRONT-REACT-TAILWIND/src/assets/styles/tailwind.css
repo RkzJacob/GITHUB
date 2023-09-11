@@ -1239,6 +1239,39 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgba(30, 41, 59, var(--tw-bg-opacity));
 }
+ 
+
+/* UTILIZACION PALETA DE COLORES BIGEO */
+
+.bg-greenBigeo {
+  --tw-bg-opacity: 1;
+  background-color: rgba(69, 147, 108, var(--tw-bg-opacity));
+}
+
+.bg-BlancoBigeo {
+  --tw-bg-opacity: 1;
+  background-color: rgba(229, 234, 212, var(--tw-bg-opacity));
+}
+
+.bg-VerdeClaroBigeo {
+  --tw-bg-opacity: 1;
+  background-color: rgba(154, 204, 119, var(--tw-bg-opacity));
+}
+
+.bg-VerdeSemiOscuro {
+  --tw-bg-opacity: 1;
+  background-color: rgba(51, 79, 83, var(--tw-bg-opacity));
+}
+
+.bg-RosadoOscuroBigeo {
+  --tw-bg-opacity: 1;
+  background-color: rgba(31, 10, 29, var(--tw-bg-opacity));
+}
+
+
+
+
+/* UTILIZACION PALETA DE COLORES BIGEO */
 
 .active\:bg-indigo-600:active {
   --tw-bg-opacity: 1;
@@ -2362,6 +2395,11 @@ select {
 .text-lightBlue-400 {
   --tw-text-opacity: 1;
   color: rgba(56, 189, 248, var(--tw-text-opacity));
+}
+/* bigeo*/
+.text-blanco {
+  --tw-text-opacity: 1;
+  color: rgba(229, 234, 212, var(--tw-text-opacity));
 }
 
 .text-lightBlue-500 {
