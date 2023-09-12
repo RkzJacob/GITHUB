@@ -3,19 +3,22 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
   // Configuración de CORS
   app.enableCors({
-    origin: 'http://localhost:3001', // Permite el acceso desde este origen
+    origin: [
+      'https://alabama-daughters-slot-involve.trycloudflare.com',
+      'http://localhost:3001',
+      
+    ], // Permite el acceso desde este origen
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
 
-
-
-
+  
   // configuracion de la api
   const config = new DocumentBuilder()
     .setTitle('NEST API REST')

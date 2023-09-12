@@ -1,18 +1,21 @@
 
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { ApiTags ,ApiOperation, ApiResponse} from '@nestjs/swagger';
 import { FormSprinklerService } from './formsprinkler.service';
 import { formSprinkler } from './formSprinkler.model.';
-import { JwtService } from '@nestjs/jwt';
+import { JwtGuard } from 'src/auth/authguard.guard';
+
+
+
+
 
 
 @ApiTags('formSprinkler')
 @Controller('formSprinkler')
 export class FormSprinklerController { 
     constructor(private readonly formSprinklerService: FormSprinklerService,
-                /*private readonly jwtService: JwtService */) {}
-
-
+                 /* private readonly jwtService: JwtService */) {}
+ 
   @Get('Conteo-defectos') //tipo de operacion y nombre
   @ApiOperation({ summary: 'Cuenta Defectos 3 Meses Atras' }) //descripción metodo
   @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa

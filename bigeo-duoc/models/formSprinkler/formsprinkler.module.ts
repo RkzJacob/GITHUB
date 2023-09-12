@@ -7,6 +7,8 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { formSprinkler } from './formSprinkler.model.';
 import { FormSprinklerController } from './formsprinkler.controller';
 import { FormSprinklerService } from './formsprinkler.service';
+import { JwtModule } from '@nestjs/jwt';
+
 
 @Module({
     imports: [SequelizeModule.forFeature([formSprinkler])],

@@ -1,5 +1,6 @@
+import { JwtSService } from './auth/jwts.service';
+import { JwtMModule } from './auth/jwtm.module';
 
-import { AuthModule } from './auth/auth.module';
 import { FormSprinklerService } from './../models/formSprinkler/formsprinkler.service';
 import { FormSprinklerModule } from './../models/formSprinkler/formsprinkler.module';
 import { FormSprinklerController } from './../models/formSprinkler/formsprinkler.controller';
@@ -10,7 +11,7 @@ import { UserModule } from './../models/user/user.module';
 import { UserService } from './../models/user/user.service';
 import { UserController } from './../models/user/user.controller';
 
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { user } from 'models/user/user.model';
@@ -19,10 +20,13 @@ import { treeController } from 'models/tree/tree.controller';
 import { TreeModule } from 'models/tree/tree.module';
 import { tree } from 'models/tree/tree.model';
 import { formSprinkler } from 'models/formSprinkler/formSprinkler.model.';
+import { JwtMiddleware } from './auth/jwt.middleware';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
-    AuthModule,
+    JwtModule,
+    JwtMModule,
     FormSprinklerModule,
     FormPlagueModule,
     SequelizeModule.forRoot({
@@ -40,17 +44,22 @@ import { formSprinkler } from 'models/formSprinkler/formSprinkler.model.';
     TreeModule,
     FormSprinklerModule,
   ],
-  controllers: [ 
+  controllers: [
     FormSprinklerController,
     FormPlagueController,
     UserController,
     treeController,
   ],
   providers: [
+    JwtSService,
     FormSprinklerService,
     FormPlagueService,
     UserService,
     treeService,
     AppService]
 })
-export class AppModule { }
+export class AppModule { 
+  //configure(consumer: MiddlewareConsumer) {
+    //consumer.apply(JwtMiddleware).forRoutes('*'); // Aplica el middleware a todas las rutas
+  //}
+}
