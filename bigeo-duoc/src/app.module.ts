@@ -1,3 +1,5 @@
+
+import { AuthModule } from './auth/auth.module';
 import { FormSprinklerService } from './../models/formSprinkler/formsprinkler.service';
 import { FormSprinklerModule } from './../models/formSprinkler/formsprinkler.module';
 import { FormSprinklerController } from './../models/formSprinkler/formsprinkler.controller';
@@ -20,6 +22,7 @@ import { formSprinkler } from 'models/formSprinkler/formSprinkler.model.';
 
 @Module({
   imports: [
+    AuthModule,
     FormSprinklerModule,
     FormPlagueModule,
     SequelizeModule.forRoot({
@@ -29,7 +32,7 @@ import { formSprinkler } from 'models/formSprinkler/formSprinkler.model.';
       username: 'duoc2023team1',
       password: 'duoc2023',
       database: 'bigeo-duoc',
-      models: [user, tree,formSprinkler],
+      models: [user, tree, formSprinkler],
       autoLoadModels: true,
       synchronize: true,
     }),
@@ -37,7 +40,7 @@ import { formSprinkler } from 'models/formSprinkler/formSprinkler.model.';
     TreeModule,
     FormSprinklerModule,
   ],
-  controllers: [
+  controllers: [ 
     FormSprinklerController,
     FormPlagueController,
     UserController,

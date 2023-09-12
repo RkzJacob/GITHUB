@@ -3,25 +3,31 @@ import Chart from "chart.js";
 import axios from "axios";
 
 export default function CardLineChart2() {
-  const [defects, setDefects] = useState([]);
-
-  const apiUrl = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta a tu API
+  const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api
+  const [loading, setLoading] = useState(true);//Constante para el estado del spinner
+  const apiUrl = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI)
     
-  useEffect(() => {
-    axios.get(apiUrl)
-      .then(response => {
-        setDefects(response.data);
+  useEffect(() => { //utilización de un hook junto utilizacion de codigo
+    setLoading(true);//Situa el estado de loading (indica que está en progreso)
+
+    axios.get(apiUrl)//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
+      .then(response => {//si la petición es exitosa esta se guarda en response
+        setDefects(response.data);//se actualizan los defectos utilizando la datos ya recibidos de response
       })
-      .catch(error => {
-        console.error('Error al obtener datos:', error);
-      });
+      .catch(error => {//si la petición falla se capta el error 
+        console.error('Error al obtener datos:', error);// y se imprime por consola
+      })
+      .finally(() => {//se ejecuta independiente si la peticion fue exitosa o falló
+      setLoading(false); // Marcar que la carga ha finalizado
+    });
     }, []);
       
     
-    const lables = defects.map(defect => defect.defect);
-    const setDatos = defects.map(defect => defect.cantidad);
+    const lables = defects.map(defect => defect.defect);//se realiza un for each en el campo defect del respuesta obtenida por el api
+    const setDatos = defects.map(defect => defect.cantidad);//se realiza un for each en el campo cantidad del respuesta obtenida por el api
   
-  useEffect(() => {
+  useEffect(() => {//utilización de un hook junto utilizacion de codigo
+    if (!loading) {//si la carga no esta en curso se ejecuta el grafico
     var config = {
       type: "bar",
       data: {
@@ -110,7 +116,8 @@ export default function CardLineChart2() {
     };
     var ctx = document.getElementById("line-chart2").getContext("2d");
     window.myLine = new Chart(ctx, config);
-  }, [defects]);
+    }
+  }, [defects,loading]);
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
@@ -127,7 +134,16 @@ export default function CardLineChart2() {
         <div className="p-4 flex-auto">
           {/* Chart2 */}
           <div className="relative h-350-px">
+          {loading ? (
+            // Si la carga está en progreso, muestra el spinner
+            <div className="text-center">
+            <div className="spinner-border" role="status">
+              <span className="sr-only">Cargando...</span>
+            </div>
+          </div>
+          ) : (// y si esta en false se carga el grafico
             <canvas id="line-chart2"></canvas>
+          )}
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import CardLineChart2 from "components/Cards/GraficoBarrasCompleto";
 import CardLineChart from "components/Cards/CardLineChart.js";
 import CardBarChart from "components/Cards/CardBarChart.js";
 //import PieChart from "components/Cards/PieChart.js"
-// import CardPageVisits from "components/Cards/CardPageVisits.js";
+//import CardPageVisits from "components/Cards/CardPageVisits.js";
 // import CardSocialTraffic from "components/Cards/CardSocialTraffic.js";
 
 export default function Dashboard() {

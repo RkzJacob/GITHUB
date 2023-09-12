@@ -75,7 +75,7 @@ export default function Sidebar() {
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
             <h6 className="md:min-w-full text-blueGray-400 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Admin Layout Pages
+              Menú
             </h6>
             {/* Navigation */}
 
@@ -98,7 +98,7 @@ export default function Sidebar() {
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                  Dashboards
+                  Dashboard
                 </Link>
               </li>
 
@@ -114,13 +114,13 @@ export default function Sidebar() {
                 >
                   <i
                     className={
-                      "fas fa-table mr-2 text-sm " +
+                      "far fa-file-pdf mr-4 text-sm " +
                       (window.location.href.indexOf("/admin/tables") !== -1
-                        ? "opacity-75"
+                        ? "opacity-25"
                         : "text-blanco")
                     }
                   ></i>{" "}
-                  Tables
+                  Generar PDF
                 </Link>
               </li>
 

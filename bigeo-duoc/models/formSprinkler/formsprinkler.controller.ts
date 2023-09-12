@@ -1,17 +1,16 @@
-/*
-https://docs.nestjs.com/controllers#controllers
-*/
 
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags ,ApiOperation, ApiResponse} from '@nestjs/swagger';
 import { FormSprinklerService } from './formsprinkler.service';
 import { formSprinkler } from './formSprinkler.model.';
+import { JwtService } from '@nestjs/jwt';
 
 
 @ApiTags('formSprinkler')
 @Controller('formSprinkler')
 export class FormSprinklerController { 
-    constructor(private readonly formSprinklerService: FormSprinklerService) {}
+    constructor(private readonly formSprinklerService: FormSprinklerService,
+                /*private readonly jwtService: JwtService */) {}
 
 
   @Get('Conteo-defectos') //tipo de operacion y nombre
