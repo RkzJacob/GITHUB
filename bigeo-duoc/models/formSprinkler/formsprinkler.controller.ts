@@ -6,10 +6,6 @@ import { formSprinkler } from './formSprinkler.model.';
 import { JwtGuard } from 'src/auth/authguard.guard';
 
 
-
-
-
-
 @ApiTags('formSprinkler')
 @Controller('formSprinkler')
 export class FormSprinklerController { 
