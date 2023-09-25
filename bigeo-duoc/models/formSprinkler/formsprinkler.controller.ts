@@ -36,4 +36,11 @@ export class FormSprinklerController {
   async ObtenerDefectosPorc() {
       return this.formSprinklerService.ObtenerDefectosPorcentaje();
       }
+
+  @Get('Conteo-Defectos-Por-Sector') //tipo de operacion y nombre
+  @ApiOperation({ summary: 'Conteo de todos los defectos en porcentaje' }) //descripción metodo
+  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  async ObtenerDefectosPorSec() {
+      return this.formSprinklerService.ObtenerDefectosPorSector();
+      }    
 }

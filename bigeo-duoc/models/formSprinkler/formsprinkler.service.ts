@@ -10,8 +10,6 @@ export class FormSprinklerService {
         @InjectModel(formSprinkler)
         private readonly sprinklerModel: typeof formSprinkler,private readonly sequelize: Sequelize
       ) {}
-      
-  
     async CuentaDefectos3mesesAtras(): Promise<any> {
       const query = `
         SELECT defect, COUNT(defect) as cantidad, "dateTime"
@@ -20,7 +18,6 @@ export class FormSprinklerService {
         WHERE "dateTime" >= NOW() - INTERVAL '3 months'
         GROUP BY defect, "dateTime";
       `;
-  
       const result = await this.sequelize.query(query, { type: 'SELECT' });
       return result; 
     }
@@ -34,7 +31,6 @@ export class FormSprinklerService {
       GROUP BY defect
       ORDER BY cantidad DESC;
       `;
-  
       const result = await this.sequelize.query(query, { type: 'SELECT' });
       return result;     
     }
@@ -47,8 +43,19 @@ export class FormSprinklerService {
         JOIN public."formSprinkler" on (spid="formSprinklerSpid")
         GROUP BY defect
 		    ORDER BY cantidad DESC
-      `;
-  
+      `;  
+      const result = await this.sequelize.query(query, { type: 'SELECT' });
+      return result;     
+    }
+
+    async ObtenerDefectosPorSector(): Promise<any> {
+      const query = `
+      SELECT sector,defect as defecto, COUNT(defect) as cantidad FROM public.form
+      JOIN public.properties on propid="propertiesPropid"
+      join public."formSprinkler" on spid="formSprinklerSpid"
+      GROUP BY sector,defect
+      ORDER BY 1,2 ASC
+      `;  
       const result = await this.sequelize.query(query, { type: 'SELECT' });
       return result;     
     }
