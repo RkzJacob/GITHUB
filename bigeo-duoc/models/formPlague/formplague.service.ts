@@ -5,7 +5,7 @@ https://docs.nestjs.com/providers#services
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { formPlague } from './formplague.model';
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 @Injectable()
 export class FormPlagueService {
     constructor(
