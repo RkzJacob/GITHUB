@@ -37,14 +37,14 @@ export default function CardPieChart() {
 
   useEffect(() => {
     if (!loading) {
-      // Generar colores aleatorios
+      // Generar colores aleatorios únicos
       const uniqueColors = new Set();
       const backgroundColors = labels.map(() => {
         let color;
         do {
           color = getRandomColor();
         } while (uniqueColors.has(color)); // Comprobar si el color ya existe en el conjunto
-        uniqueColors.add(color); 
+        uniqueColors.add(color); // Agregar el color al conjunto para evitar repeticiones
         return color;
       });
 
@@ -66,7 +66,7 @@ export default function CardPieChart() {
           title: {
             display: true,
             text: selectedKPI, // Utiliza el nombre del KPI seleccionado como título
-            fontColor: "white", 
+            fontColor: "white", // Cambia el color del título a blanco
           },
           legend: {
             labels: {
@@ -111,6 +111,7 @@ export default function CardPieChart() {
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
                 Vista general
               </h6>
+              <h2 className="text-white text-xl font-semibold"></h2>
             </div>
           </div>
         </div>
