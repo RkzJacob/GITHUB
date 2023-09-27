@@ -1,36 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
-import AdminNavbar from "../Navbars/AdminNavbar"; // Ajusta la ruta de importación
 
 export default function CardPieChart() {
   const [defects, setDefects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedKPI, setSelectedKPI] = useState("Defectos por Tipo");
-  const [selectedApiUrl, setSelectedApiUrl] = useState(""); // Agrega esta línea para definir selectedApiUrl
-  const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos';
-  const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector';
+  const [selectedApiUrl, setSelectedApiUrl] = useState('http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'); // Inicialmente selecciona el primer KPI
+  const [selectedKPI, setSelectedKPI] = useState('Defectos por Tipo'); // Nombre del KPI seleccionado
 
   useEffect(() => {
-    if (!loading) {
-      let apiUrl;
-      if (selectedKPI === "Defectos por Tipo") {
-        apiUrl = apiUrl1;
-      } else if (selectedKPI === "Defectos por Sector") {
-        apiUrl = apiUrl2;
-      }
-      // Luego, usa apiUrl en la solicitud Axios para obtener los datos correctos
-      axios.get(apiUrl)
-        .then(response => {
-          setDefects(response.data);
-        })
-        .catch(error => {
-          console.error('Error al obtener datos:', error);
-        });
-    }
-  }, [selectedKPI, loading]);
+    setLoading(true);
 
-  
+    axios.get(selectedApiUrl)
+      .then(response => {
+        setDefects(response.data);
+      })
+      .catch(error => {
+        console.error('Error al obtener datos:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [selectedApiUrl]);
+
   const labels = defects.map(defect => defect.defect);
   const data = defects.map(defect => defect.cantidad);
 
@@ -45,13 +37,14 @@ export default function CardPieChart() {
 
   useEffect(() => {
     if (!loading) {
+      // Generar colores aleatorios
       const uniqueColors = new Set();
       const backgroundColors = labels.map(() => {
         let color;
         do {
           color = getRandomColor();
-        } while (uniqueColors.has(color));
-        uniqueColors.add(color);
+        } while (uniqueColors.has(color)); // Comprobar si el color ya existe en el conjunto
+        uniqueColors.add(color); 
         return color;
       });
 
@@ -72,8 +65,8 @@ export default function CardPieChart() {
           maintainAspectRatio: false,
           title: {
             display: true,
-            text: selectedKPI,
-            fontColor: "white",
+            text: selectedKPI, // Utiliza el nombre del KPI seleccionado como título
+            fontColor: "white", 
           },
           legend: {
             labels: {
@@ -96,20 +89,21 @@ export default function CardPieChart() {
     }
   }, [defects, loading, selectedKPI]);
 
-  // Función para cambiar el KPI seleccionado desde el Navbar
-  const handleKPIChange = (newKPI) => {
-    setSelectedKPI(newKPI);
-    // Actualiza la URL de la API según el nuevo KPI seleccionado
-    if (newKPI === "Defectos por Tipo") {
-      setSelectedApiUrl(apiUrl1);
-    } else if (newKPI === "Defectos por Sector") {
-      setSelectedApiUrl(apiUrl2);
+  // Función para cambiar el KPI seleccionado
+  const handleKPIChange = (event) => {
+    const selectedKPI = event.target.value;
+    setSelectedKPI(selectedKPI);
+    // Cambia la URL de la API según el KPI seleccionado
+    if (selectedKPI === "Defectos por Tipo") {
+      setSelectedApiUrl('http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos');
+    } else if (selectedKPI === "Defectos por Sector") {
+      setSelectedApiUrl('http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector');
     }
+    // Puedes agregar más opciones aquí según tus KPIs
   };
 
   return (
     <>
-    <AdminNavbar onKPIChange={handleKPIChange} />
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">
@@ -117,7 +111,6 @@ export default function CardPieChart() {
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
                 Vista general
               </h6>
-              <h2 className="text-white text-xl font-semibold">{selectedKPI}</h2>
             </div>
           </div>
         </div>
@@ -137,5 +130,4 @@ export default function CardPieChart() {
       </div>
     </>
   );
-
 }

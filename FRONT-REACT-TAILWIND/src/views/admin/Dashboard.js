@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 // components
 import CardLineChart2 from "components/Cards/GraficoBarrasCompleto";
 import CardLineChart from "components/Cards/CardLineChart.js";
@@ -8,12 +7,6 @@ import PieChart from "components/Cards/PieChart.js"
 // import CardSocialTraffic from "components/Cards/CardSocialTraffic.js";
 
 export default function Dashboard() {
-  const [selectedKPI, setSelectedKPI] = useState("Defectos por Tipo");
-
-  const handleKPIChange = (newKPI) => {
-    setSelectedKPI(newKPI);
-  };
-
   return (
     <>
       <div className="flex flex-wrap">
@@ -26,7 +19,7 @@ export default function Dashboard() {
         </div>
 
         <div className="w-full xl:w-4/12 px-4">
-        <PieChart selectedKPI={selectedKPI} />
+          <PieChart />
         </div>
         
 

@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 
-export default function AdminNavbar({ onKPIChange }) {
+export default function Navbar() {
   const [selectedKPI, setSelectedKPI] = useState("Defectos por Tipo");
 
   const handleKPIChange = (event) => {
-    const newKPI = event.target.value;
-    setSelectedKPI(newKPI);
-    onKPIChange(newKPI);
+    setSelectedKPI(event.target.value);
   };
   
   return (
     <>
+      {/* Navbar */}
       <nav className="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-4">
-        <div className="w-full mx-auto items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
+        <div className="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
           {/* ... Otro contenido ... */}
-
+  
           {/* Selector de KPI */}
           <div className="md:w-1/3 w-full px-4">
             <label className="block uppercase text-white text-xs font-bold mb-2">
@@ -25,21 +24,21 @@ export default function AdminNavbar({ onKPIChange }) {
               onChange={handleKPIChange}
               value={selectedKPI}
             >
+              <option value="Seleccionar">Seleccionar</option>
               <option value="Defectos por Tipo">Defectos por Tipo</option>
               <option value="Defectos por Sector">Defectos por Sector</option>
             </select>
           </div>
-
+  
           {/* Nombre del KPI seleccionado */}
           <div className="md:w-1/3 w-full text-center">
             <h2 className="text-white text-xl font-semibold">{selectedKPI}</h2>
           </div>
-
+  
           {/* Resto del contenido */}
         </div>
       </nav>
       {/* End Navbar */}
     </>
   );
-
 }
