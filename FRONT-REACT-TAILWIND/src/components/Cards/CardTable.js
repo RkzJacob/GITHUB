@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
 import jsPDF from 'jspdf';
+import "jspdf-autotable";
 // components
 
 
@@ -35,12 +36,12 @@ export default function CardTable({ color }) {
 
     const GenerarPDF = () => {
       const pdf = new jsPDF();
-      pdf.text('Reporte de Defectos', 10, 10);
-      pdf.text('Tipo de Defecto | Cantidad', 10, 20);
-  
-      defects.forEach((defect, index) => {
-        const text = ` ${defect.defect}| ${defect.cantidad}`;
-        pdf.text(text, 10, 30 + index * 10);
+      pdf.text('Reporte de todos los Defectos', 10, 10);
+      pdf.autoTable({
+        head: [[ "Tipo de Defecto", "Cantidad"]],
+        body: defects.map(defect => [defect.defect, defect.cantidad]),
+        startY: 20, // Empieza la tabla a partir de esta coordenada
+        margin: { top: 15 }, // Espacio entre el texto anterior y la tabla
       });
   
       pdf.save('reporte_defectos.pdf');
@@ -49,13 +50,11 @@ export default function CardTable({ color }) {
     const GenerarPDF2 = () => {
       const pdf = new jsPDF();
       pdf.text('Reporte de Defectos por sector', 10, 10);
-      pdf.text('sector | Tipo de Defecto | Cantidad', 10, 20);
-      
-  
-      defects2.forEach((defect, index) => {
-        const text = `${defect.sector} | ${defect.defecto} | ${defect.cantidad}`;
-        pdf.setFontSize(8);
-        pdf.text(text, 10, 30 + index * 8);
+      pdf.autoTable({
+        head: [["Sector", "Tipo de Defecto", "Cantidad"]],
+        body: defects2.map(defect => [defect.sector, defect.defecto, defect.cantidad]),
+        startY: 20, // Empieza la tabla a partir de esta coordenada
+        margin: { top: 15 }, // Espacio entre el texto anterior y la tabla
       });
       pdf.save('reporte_defectos_por_sector.pdf');
     };
