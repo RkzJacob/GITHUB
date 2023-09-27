@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
+import aspersores from '../../assets/img/aspersores.png'
 // components
 
 
@@ -129,10 +130,10 @@ export default function CardTable({ color }) {
               <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <img
-                    src={require("assets/img/bootstrap.jpg").default}
+                    src={aspersores}
                     className="h-12 w-12 bg-white rounded-full border"
-                    alt="..."
-                  ></img>{" "}
+                    alt="ASPERSOR"
+                  ></img>
                   <span
                     className={
                       "ml-3 font-bold " +
@@ -154,17 +155,17 @@ export default function CardTable({ color }) {
               <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <img
-                    src={require("assets/img/angular.jpg").default}
+                    src={aspersores}
                     className="h-12 w-12 bg-white rounded-full border"
                     alt="..."
-                  ></img>{" "}
+                  ></img>
                   <span
                     className={
                       "ml-3 font-bold " +
                       +(color === "light" ? "text-blueGray-600" : "text-white")
                     }
                   >
-                    Angular Now UI Kit PRO
+                    Conteo de todos los defectos de los aspersores por sector
                   </span>
                 </th>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
