@@ -59,5 +59,32 @@ export class FormSprinklerService {
       const result = await this.sequelize.query(query, { type: 'SELECT' });
       return result;     
     }
+    async obtenerDefectosPorSectorConParametro(parametro: string): Promise<any> {
+      const query = `
+      SELECT DISTINCT defect as defecto, COUNT(defect) as cantidad FROM public.form
+      JOIN public.properties on propid="propertiesPropid"
+      join public."formSprinkler" on spid="formSprinklerSpid"
+      where sector = $1
+      group by defect
+      ORDER BY 1,2 ASC
+      
+      `;
+      const result = await this.sequelize.query(query, {
+        type: 'SELECT',
+        bind: [parametro], // Bind del parámetro
+      });
+      return result;
+    }
+
+    async ObtenerSector(): Promise<any> {
+      const query = `
+      SELECT DISTINCT sector FROM public.form
+      JOIN public.properties on propid="propertiesPropid"
+      join public."formSprinkler" on spid="formSprinklerSpid"
+      GROUP BY sector
+      `;  
+      const result = await this.sequelize.query(query, { type: 'SELECT' });
+      return result;     
+    }
   }
 

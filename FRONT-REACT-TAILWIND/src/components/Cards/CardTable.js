@@ -11,9 +11,13 @@ import aspersores from '../../assets/img/aspersores.png'
 export default function CardTable({ color }) {
   const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api KPI 1
   const [defects2, setDefects2] = useState([]); // KPI 2
+  const [defects3, setDefects3] = useState([]); // KPI con parametros
+  const [defects4, setDefects4] = useState([]);//parametros
+  const [selectedParameter, setSelectedParameter] = useState("");
 
   const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI)
   const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector'; // Ruta de la respuesta de la api(SegundoKPI)
+  const apiUrl3 = 'http://localhost:3000/formSprinkler/Sectores'; // Ruta de la respuesta de la api con parametros
 
   useEffect(() => { //utilización de un hook junto utilizacion de codigo
 
@@ -32,8 +36,32 @@ export default function CardTable({ color }) {
       .catch(error => {//si la petición falla se capta el error 
         console.error('Error al obtener datos:', error);// y se imprime por consola
       });
-}, []);
       
+      axios.get(apiUrl3)//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
+      .then(response => {//si la petición es exitosa esta se guarda en response
+        setDefects4(response.data);//se actualizan los defectos utilizando la datos ya recibidos de response
+      })
+      .catch(error => {//si la petición falla se capta el error 
+        console.error('Error al obtener datos:', error);// y se imprime por consola
+      });
+}, []);
+
+const handleParameterSelect = (event) => {
+  const parametroSeleccionado = event.target.value;
+  console.log('Parametro seleccionado:', parametroSeleccionado);
+  setSelectedParameter(parametroSeleccionado);
+
+  // Realizar la consulta al API con el parámetro seleccionado
+  axios.get(`http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector/${parametroSeleccionado}`)
+    .then(response => {
+      // Aquí puedes manejar la respuesta del API con el parámetro seleccionado
+      setDefects3(response.data);
+    })
+    .catch(error => {
+      console.error('Error al obtener datos con parámetro:', error);
+    });
+
+  };
 
     const GenerarPDF = () => {
       const pdf = new jsPDF();
@@ -59,6 +87,21 @@ export default function CardTable({ color }) {
       });
       pdf.save('reporte_defectos_por_sector.pdf');
     };
+
+    const GenerarPDF3 = () => {
+      const pdf = new jsPDF();
+      pdf.text('Reporte de Datos', 10, 10);
+      pdf.autoTable({
+        head: [['Defecto', 'Cantidad']],
+        body: defects3.map(item => [item.defecto, item.cantidad]),
+        startY: 20,
+        margin: { top: 15 },
+      });
+
+      pdf.save('reporte.pdf');
+    };
+
+    
   
 
 
@@ -144,7 +187,7 @@ export default function CardTable({ color }) {
                   </span>
                 </th>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  PDF
+                pdf
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                   <i className="fas fa-circle text-emerald-500 mr-2">
@@ -189,15 +232,22 @@ export default function CardTable({ color }) {
                       +(color === "light" ? "text-blueGray-600" : "text-white")
                     }
                   >
-                    React Material Dashboard
+                    Defecto de aspersores por sector
                   </span>
                 </th>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  PDF
+                <td className="border-t-0 px-6 align-middle  border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                <select className="bg-lightBlue-800" value={selectedParameter} onChange={handleParameterSelect}>
+                  <option  value="">Selecciona un sector</option>
+                    {defects4.map(parametro => (
+                      <option key={parametro.sector} value={parametro.sector}>
+                      {parametro.sector}
+                  </option>
+                  ))}
+                  </select>
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <i className="fas fa-circle text-emerald-500 mr-2"></i>{" "}
-                  Descargar 
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i>
+                  <button onClick={GenerarPDF3}>Generar PDF</button>
                 </td>
               </tr>
             </tbody>

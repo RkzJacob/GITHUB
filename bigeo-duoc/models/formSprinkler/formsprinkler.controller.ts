@@ -1,5 +1,5 @@
 
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
 import { ApiTags ,ApiOperation, ApiResponse} from '@nestjs/swagger';
 import { FormSprinklerService } from './formsprinkler.service';
 import { formSprinkler } from './formSprinkler.model.';
@@ -38,5 +38,16 @@ export class FormSprinklerController {
   @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
   async ObtenerDefectosPorSec() {
       return this.formSprinklerService.ObtenerDefectosPorSector();
-      }    
+      } 
+  @Get('Conteo-Defectos-Por-Sector/:parametro') // Ruta con parámetro
+  async obtenerDatos(@Param('parametro') parametro: string) {
+    return this.formSprinklerService.obtenerDefectosPorSectorConParametro(parametro);
+  }   
+
+  @Get('Sectores') // Ruta con parámetro
+  @ApiOperation({ summary: 'Conteo los sectores unicos' }) //descripción metodo
+  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  async ObtenerSectores() {
+    return this.formSprinklerService.ObtenerSector();
+  } 
 }
