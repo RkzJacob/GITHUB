@@ -123,6 +123,27 @@ export default function Sidebar() {
                   Generar PDF
                 </Link>
               </li>
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin/TableXLS") !== -1
+                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      : "text-blanco hover:text-blanco")
+                  }
+                  to="/admin/TableXLS"
+                >
+                  <i
+                    className={
+                      "far fa-file-pdf mr-4 text-sm " +
+                      (window.location.href.indexOf("/admin/TableXLS") !== -1
+                        ? "opacity-25"
+                        : "text-blanco")
+                    }
+                  ></i>{" "}
+                  Generar XLS
+                </Link>
+              </li>
 
             </ul>
 
