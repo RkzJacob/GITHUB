@@ -31,8 +31,9 @@ export default function Navbar() {
           </div>
   
           {/* Nombre del KPI seleccionado */}
+
           <div className="md:w-1/3 w-full text-center">
-            <h2 className="text-white text-xl font-semibold">{selectedKPI}</h2>
+            <h2 className="text-white text-xl font-semibold">Dashboard</h2>
           </div>
   
           {/* Resto del contenido */}

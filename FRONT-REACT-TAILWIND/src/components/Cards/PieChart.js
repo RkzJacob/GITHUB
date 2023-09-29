@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
+import AdminNavbar from "../Navbars/AdminNavbar.js"
 
 export default function CardPieChart() {
   const [defects, setDefects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedApiUrl, setSelectedApiUrl] = useState('http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'); // Inicialmente selecciona el primer KPI
-  const [selectedKPI, setSelectedKPI] = useState('Defectos por Tipo'); // Nombre del KPI seleccionado
+  const [selectedKPI, setSelectedKPI] = useState("Defectos por Tipo");
+  const [selectedApiUrl, setSelectedApiUrl] = useState("http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos"); // Agrega esta línea para definir selectedApiUrl
+  const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos';
+  const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector';
 
   useEffect(() => {
     setLoading(true);
@@ -89,21 +92,20 @@ export default function CardPieChart() {
     }
   }, [defects, loading, selectedKPI]);
 
-  // Función para cambiar el KPI seleccionado
-  const handleKPIChange = (event) => {
-    const selectedKPI = event.target.value;
-    setSelectedKPI(selectedKPI);
-    // Cambia la URL de la API según el KPI seleccionado
-    if (selectedKPI === "Defectos por Tipo") {
-      setSelectedApiUrl('http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos');
-    } else if (selectedKPI === "Defectos por Sector") {
-      setSelectedApiUrl('http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector');
+  // Función para cambiar el KPI seleccionado desde el Navbar
+  const handleKPIChange = (newKPI) => {
+    setSelectedKPI(newKPI);
+    // Actualiza la URL de la API según el nuevo KPI seleccionado
+    if (newKPI === "Defectos por Tipo") {
+      setSelectedApiUrl(apiUrl1);
+    } else if (newKPI === "Defectos por Sector") {
+      setSelectedApiUrl(apiUrl2);
     }
-    // Puedes agregar más opciones aquí según tus KPIs
   };
 
   return (
     <>
+      <AdminNavbar onKPIChange={handleKPIChange} />
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">

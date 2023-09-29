@@ -1969,6 +1969,10 @@ select {
   overflow-x: hidden;
 }
 
+.select-short {
+  width: 150px; 
+}
+
 .p-2 {
   padding: 0.5rem;
 }

@@ -238,6 +238,7 @@ const handleParameterSelect = (event) => {
                 <td className="border-t-0 px-6 align-middle  border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                 <select className="bg-lightBlue-800" value={selectedParameter} onChange={handleParameterSelect}>
                   <option  value="">Selecciona un sector</option>
+                  <option  value="">Sin sector</option>
                     {defects4.map(parametro => (
                       <option key={parametro.sector} value={parametro.sector}>
                       {parametro.sector}
