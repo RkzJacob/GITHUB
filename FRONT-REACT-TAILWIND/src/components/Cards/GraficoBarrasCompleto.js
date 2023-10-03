@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
+import AdminNavbar from "../Navbars/AdminNavbar.js"
 
 export default function CardLineChart2() {
   const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api
   const [loading, setLoading] = useState(true);//Constante para el estado del spinner
-  const apiUrl = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI)
+  const [selectedKPI, setSelectedKPI] = useState("Defectos por Tipo");
+  const [selectedApiUrl, setSelectedApiUrl] = useState("http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos"); // Agrega esta línea para definir selectedApiUrl
+  const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI)
+  const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector';
     
   useEffect(() => { //utilización de un hook junto utilizacion de codigo
     setLoading(true);//Situa el estado de loading (indica que está en progreso)
 
-    axios.get(apiUrl)//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
+    axios.get(selectedApiUrl)//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
       .then(response => {//si la petición es exitosa esta se guarda en response
         setDefects(response.data);//se actualizan los defectos utilizando la datos ya recibidos de response
       })
@@ -20,10 +24,10 @@ export default function CardLineChart2() {
       .finally(() => {//se ejecuta independiente si la peticion fue exitosa o falló
       setLoading(false); // Marcar que la carga ha finalizado
     });
-    }, []);
+    }, [selectedApiUrl]);
       
     
-    const lables = defects.map(defect => defect.defect);//se realiza un for each en el campo defect del respuesta obtenida por el api
+    const labels = selectedKPI === 'Defectos por Tipo' ? defects.map(defect => defect.defect) : defects.map(defect => defect.sector);//se realiza un for each en el campo defect del respuesta obtenida por el api
     const setDatos = defects.map(defect => defect.cantidad);//se realiza un for each en el campo cantidad del respuesta obtenida por el api
   
   useEffect(() => {//utilización de un hook junto utilizacion de codigo
@@ -32,7 +36,7 @@ export default function CardLineChart2() {
       type: "bar",
       data: {
         labels: 
-          lables,
+          labels,
         datasets: [
           {
             label: 'Tipo de Defecto',
@@ -48,7 +52,7 @@ export default function CardLineChart2() {
         responsive: true,
         title: { //titulo del grafico
           display: false, //indica si se debe mostrar el titulo 
-          text: "Defectos",//el nombre del titulo
+          text: selectedKPI, // Utiliza el nombre del KPI seleccionado como título
           fontColor: "black",//color del titulo
         },
         legend: { //leyenda del grafico
@@ -117,9 +121,24 @@ export default function CardLineChart2() {
     var ctx = document.getElementById("line-chart2").getContext("2d");
     window.myLine = new Chart(ctx, config);
     }
-  }, [defects,loading]);
+  }, [defects,loading, selectedKPI]);
+
+  // Función para cambiar el KPI seleccionado desde el Navbar
+  const changeKPI = (newKPI) => {
+    // Actualiza la URL de la API según el nuevo KPI seleccionado
+    if (newKPI === "Defectos por Tipo") {
+      setSelectedApiUrl(apiUrl1);
+      setSelectedKPI("Defectos por Tipo");
+    } else if (newKPI === "Defectos por Sector") {
+      setSelectedApiUrl(apiUrl2);   
+      setSelectedKPI("Defectos por Sector");
+    }
+  };
+
+
   return (
     <>
+    <AdminNavbar changeKPI={changeKPI} />
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">
@@ -127,7 +146,7 @@ export default function CardLineChart2() {
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
                 Vista general
               </h6>
-              <h2 className="text-white text-xl font-semibold">Cantidad por tipo de defecto</h2>
+              <h2 className="text-white text-xl font-semibold">{selectedKPI}</h2>
             </div>
           </div>
         </div>

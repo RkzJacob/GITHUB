@@ -26,7 +26,7 @@ export default function CardPieChart() {
       });
   }, [selectedApiUrl]);
 
-  const labels = defects.map(defect => defect.defect);
+  const labels = selectedKPI === 'Defectos por Tipo' ? defects.map(defect => defect.defect) : defects.map(defect => defect.sector);
   const data = defects.map(defect => defect.cantidad);
 
   const getRandomColor = () => {
@@ -93,19 +93,20 @@ export default function CardPieChart() {
   }, [defects, loading, selectedKPI]);
 
   // Función para cambiar el KPI seleccionado desde el Navbar
-  const handleKPIChange = (newKPI) => {
-    setSelectedKPI(newKPI);
+  const changeKPI = (newKPI) => {
     // Actualiza la URL de la API según el nuevo KPI seleccionado
     if (newKPI === "Defectos por Tipo") {
       setSelectedApiUrl(apiUrl1);
+      setSelectedKPI("Defectos por Tipo");
     } else if (newKPI === "Defectos por Sector") {
-      setSelectedApiUrl(apiUrl2);
+      setSelectedApiUrl(apiUrl2);   
+      setSelectedKPI("Defectos por Sector");
     }
   };
 
   return (
     <>
-      <AdminNavbar onKPIChange={handleKPIChange} />
+      <AdminNavbar changeKPI={changeKPI} />
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">

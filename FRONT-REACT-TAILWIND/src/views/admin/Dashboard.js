@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // components
 import AdminNavbar from "components/Navbars/AdminNavbar";
-import CardLineChart2 from "components/Cards/GraficoBarrasCompleto";
+import GraficoBarrasCompleto from "components/Cards/GraficoBarrasCompleto.js";
 import CardLineChart from "components/Cards/CardLineChart.js";
 import CardBarChart from "components/Cards/CardBarChart.js";
 import PieChart from "components/Cards/PieChart.js"
@@ -16,7 +16,7 @@ export default function Dashboard() {
       <div className="flex flex-wrap">
 
       <div className="w-full xl:w-14/14 px-14">
-          <CardLineChart2 />
+          <GraficoBarrasCompleto />
         </div>
 
         <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
