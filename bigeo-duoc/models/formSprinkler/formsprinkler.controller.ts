@@ -33,12 +33,12 @@ export class FormSprinklerController {
       return this.formSprinklerService.ObtenerDefectosPorcentaje();
       }
 
-  @Get('Conteo-Defectos-Por-Sector') //tipo de operacion y nombre
-  @ApiOperation({ summary: 'Conteo de todos los defectos en porcentaje' }) //descripción metodo
-  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
-  async ObtenerDefectosPorSec() {
-      return this.formSprinklerService.ObtenerDefectosPorSector();
-      } 
+  //@Get('Conteo-Defectos-Por-Sector') //tipo de operacion y nombre
+  //@ApiOperation({ summary: 'Conteo de todos los defectos en porcentaje' }) //descripción metodo
+  //@ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  //async ObtenerDefectosPorSec() {
+  //    return this.formSprinklerService.ObtenerDefectosPorSector();
+  //    } 
   @Get('Conteo-Defectos-Por-Sector/:Fecha1/:Fecha2') // Ruta con parámetro de fechas
   async obtenerDatos(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
     return this.formSprinklerService.obtenerDefectosPorSectorConParametroFecha(Fecha1,Fecha2);
