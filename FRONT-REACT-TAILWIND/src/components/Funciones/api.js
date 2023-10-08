@@ -11,6 +11,8 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     const [Kpi, setKpi] = useState('Conteo-Defectos-Por-Sector');
     const [data, setData] = useState([]);//Constante para guardar la respuesta de la api
     const [selectedApiUrl, setSelectedApiUrl] = useState("http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector/")
+    const [firstSelectValue, setFirstSelectValue] = useState(""); // Estado para el primer select
+    const [secondSelectOptions, setSecondSelectOptions] = useState([]); // Estado para el segundo select
     // = useState("http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos"); // Agrega esta línea para definir selectedApiUrl
     const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI)
     const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector';
@@ -23,8 +25,27 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
  
     const handleKPIChange = (event) => {
         setSelectedApiUrl(event.target.value);
-        changeKPI(event.target.value); // Llama a la función changeKPI con el nuevo valor
-    };
+        changeKPI(event.target.value);
+        
+        // Actualiza el estado de 'firstSelectValue'
+        setFirstSelectValue(event.target.value);
+      };
+
+    
+    
+
+    // Luego, en función del valor de 'firstSelectValue', puedes actualizar 'secondSelectOptions'
+    useEffect(() => {
+        if (firstSelectValue === "formSprinkler") {
+          setSecondSelectOptions(["Conteo de daños", "Conteo por Sector"]);
+        } else if (firstSelectValue === "formCount") {
+          setSecondSelectOptions(["Conteo de Paltas", "Conteo de Arboles"]);
+        } else {
+          setSecondSelectOptions([]); // Opciones vacías si no hay una opción válida seleccionada
+        }
+      }, [firstSelectValue]);
+  
+    
 
 
 
@@ -89,16 +110,32 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
           <div className="md:w-1/3 w-full px-4">
 
            <select
-              className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
-              onChange={handleKPIChange}
-              value={selectedApiUrl}>
+              className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full">
               <option value="Seleccionar">Seleccionar</option>
-              <option value="Defectos por Tipo">Defectos por Tipo</option>
-              <option value="Defectos por Sector">Defectos por Sector</option>
+              <option value="formCompaction">Compaction</option>
+              <option value="formCount">Conteo</option>
+              <option value="formDamage">Daños</option>
+              <option value="formDiseases">Enfermedades</option>
+              <option value="formFauna">Fauna</option>
+              <option value="formGirdling">Localizacion</option>
+              <option value="formHumidity">Humedad</option>
+              <option value="formPlague">Plagas</option>
+              <option value="formSprinkler">Aspersores</option>
             </select>
 
-            <label>Kpi</label>
-            <input type="text" value={Kpi} onChange={(e) => setKpi(e.target.value)} />
+            <select
+                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
+                value={Kpi}
+                onChange={(e) => setKpi(e.target.value)}
+                >
+                <option value="">Seleccionar KPI</option>
+                {secondSelectOptions.map((option) => (
+                    <option key={option} value={option}>
+                    {option}
+                    </option>
+                ))}
+            </select>
+
 
             <label>Seleccione Rango de fechas: </label>
                 <DatePicker selected={startDate}
@@ -123,7 +160,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
             <h2 className="text-white text-xl font-semibold">Dashboard</h2>
           </div>
 
-          {/* Resto del contenido */}
+
         </div>
     );
 }
@@ -131,3 +168,8 @@ export default ConsumirApi;
 
 
 
+
+
+            //Dentro del select iba esto.
+            {/*onChange={handleKPIChange}
+            value={selectedApiUrl}*/}
