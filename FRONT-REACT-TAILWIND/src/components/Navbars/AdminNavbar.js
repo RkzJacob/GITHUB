@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-export default function Navbar({changeKPI}) {
+export default function Navbar({changeKPI, changeBar}) {
   const [selectedKPI, setSelectedKPI] = useState("Defectos por Tipo");
 
   const handleKPIChange = (event) => {
     setSelectedKPI(event.target.value);
     changeKPI(event.target.value);
-
+    changeBar(event.target.value);
   };
   
   return (

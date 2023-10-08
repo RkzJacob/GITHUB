@@ -123,7 +123,7 @@ export default function CardBarChart() {
   }, [defects,loading, selectedKPI]);
 
   // Función para cambiar el KPI seleccionado desde el Navbar
-  const changeKPIBar = (newKPI) => {
+  const changeBar = (newKPI) => {
     // Actualiza la URL de la API según el nuevo KPI seleccionado
     if (newKPI === "Defectos por Tipo") {
       setSelectedApiUrl(apiUrl1);
@@ -137,7 +137,7 @@ export default function CardBarChart() {
 
   return (
     <>
-    <AdminNavbar changeKPIBar={changeKPIBar} />
+    <AdminNavbar changeBar={changeBar} />
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">

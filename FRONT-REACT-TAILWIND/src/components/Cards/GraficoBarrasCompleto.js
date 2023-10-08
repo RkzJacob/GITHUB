@@ -3,7 +3,7 @@ import Chart from "chart.js";
 import axios from "axios";
 import AdminNavbar from "../Navbars/AdminNavbar.js"
 
-export default function CardLineChart2() {
+export default function GraficoBarrasCompleto() {
   const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api
   const [loading, setLoading] = useState(true);//Constante para el estado del spinner
   const [selectedKPI, setSelectedKPI] = useState("Defectos por Tipo");
@@ -121,15 +121,15 @@ export default function CardLineChart2() {
     var ctx = document.getElementById("line-chart2").getContext("2d");
     window.myLine = new Chart(ctx, config);
     }
-  }, [defects,loading, selectedKPI]);
+  }, [defects, loading, selectedKPI]);
 
   // Función para cambiar el KPI seleccionado desde el Navbar
-  const changeKPI = (newKPI) => {
+  const changeBar = (newKPI2) => {
     // Actualiza la URL de la API según el nuevo KPI seleccionado
-    if (newKPI === "Defectos por Tipo") {
+    if (newKPI2 === "Defectos por Tipo") {
       setSelectedApiUrl(apiUrl1);
       setSelectedKPI("Defectos por Tipo");
-    } else if (newKPI === "Defectos por Sector") {
+    } else if (newKPI2 === "Defectos por Sector") {
       setSelectedApiUrl(apiUrl2);   
       setSelectedKPI("Defectos por Sector");
     }
@@ -138,7 +138,7 @@ export default function CardLineChart2() {
 
   return (
     <>
-    <AdminNavbar changeKPI={changeKPI} />
+    <AdminNavbar changeBar={changeBar} />
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">
@@ -146,7 +146,7 @@ export default function CardLineChart2() {
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
                 Vista general
               </h6>
-              <h2 className="text-white text-xl font-semibold">{selectedKPI}</h2>
+              <h2 className="text-white text-xl font-semibold"></h2>
             </div>
           </div>
         </div>

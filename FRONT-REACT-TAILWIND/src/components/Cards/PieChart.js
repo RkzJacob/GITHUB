@@ -119,7 +119,7 @@ export default function CardPieChart() {
           </div>
         </div>
         <div className="p-4 flex-auto">
-          <div className="relative h-400-px" id="pie-chart-container">
+          <div className="relative h-400-px" id="pie-chart-container" style={{ overflowY: 'scroll'}}>
             {loading ? (
               <div className="text-center">
                 <div className="spinner-border" role="status">
