@@ -11,7 +11,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     const [Kpi, setKpi] = useState('Conteo-Defectos-Por-Sector');
     const [data, setData] = useState([]);//Constante para guardar la respuesta de la api
     const [selectedApiUrl, setSelectedApiUrl] = useState("http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector/")
-    const [firstSelectValue, setFirstSelectValue] = useState(""); // Estado para el primer select
+    const [firstSelectValue, setFirstSelectValue] = useState("Seleccionar"); // Estado para el primer select
     const [secondSelectOptions, setSecondSelectOptions] = useState([]); // Estado para el segundo select
     // = useState("http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos"); // Agrega esta línea para definir selectedApiUrl
     const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI)
@@ -24,26 +24,24 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     };
  
     const handleKPIChange = (event) => {
-        setSelectedApiUrl(event.target.value);
-        changeKPI(event.target.value);
-        
-        // Actualiza el estado de 'firstSelectValue'
-        setFirstSelectValue(event.target.value);
-      };
+        setFirstSelectValue(event.target.value); //Actualiza el estado de firstSelectValue
+    };
 
     
     
 
-    // Luego, en función del valor de 'firstSelectValue', puedes actualizar 'secondSelectOptions'
+    // Use useEffect to set options for the second select based on firstSelectValue
     useEffect(() => {
         if (firstSelectValue === "formSprinkler") {
-          setSecondSelectOptions(["Conteo de daños", "Conteo por Sector"]);
+            setSecondSelectOptions(["Conteo de daños", "Conteo por Sector"]);
         } else if (firstSelectValue === "formCount") {
-          setSecondSelectOptions(["Conteo de Paltas", "Conteo de Arboles"]);
+            setSecondSelectOptions(["Conteo de Paltas", "Conteo de Arboles"]);
+        } else if (firstSelectValue === "Seleccionar") {
+            setSecondSelectOptions(["Seleccione arriba primero"]);
         } else {
-          setSecondSelectOptions([]); // Opciones vacías si no hay una opción válida seleccionada
+            setSecondSelectOptions([]); // Opciones vacías si no hay una opción válida seleccionada
         }
-      }, [firstSelectValue]);
+    }, [firstSelectValue]);
   
     
 
@@ -110,7 +108,9 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
           <div className="md:w-1/3 w-full px-4">
 
            <select
-              className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full">
+              className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
+              value={firstSelectValue}
+              onChange={handleKPIChange}>
               <option value="Seleccionar">Seleccionar</option>
               <option value="formCompaction">Compaction</option>
               <option value="formCount">Conteo</option>
@@ -124,17 +124,17 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
             </select>
 
             <select
-                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
-                value={Kpi}
-                onChange={(e) => setKpi(e.target.value)}
+                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
+                    value={Kpi}
+                    onChange={(e) => setKpi(e.target.value)}
                 >
-                <option value="">Seleccionar KPI</option>
-                {secondSelectOptions.map((option) => (
-                    <option key={option} value={option}>
-                    {option}
-                    </option>
-                ))}
-            </select>
+                    <option value="">Seleccionar KPI</option>
+                    {secondSelectOptions.map((option) => (
+                        <option key={option} value={option}>
+                            {option}
+                        </option>
+                    ))}
+                </select>
 
 
             <label>Seleccione Rango de fechas: </label>
