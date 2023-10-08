@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
-import AdminNavbar from "../Navbars/AdminNavbar.js"
+import ConsumirApi from "../Funciones/api.js"
 
 export default function CardPieChart() {
   const [defects, setDefects] = useState([]);
@@ -106,7 +106,6 @@ export default function CardPieChart() {
 
   return (
     <>
-      <AdminNavbar changeKPI={changeKPI} />
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">
