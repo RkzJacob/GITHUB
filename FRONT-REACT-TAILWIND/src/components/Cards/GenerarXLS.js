@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import axios from 'axios';
 import aspersores from '../../assets/img/aspersores.png'
 import   {generarInformeEnExcel }  from '../Funciones/xls';
-
+import ObtenerDataApi from '../Funciones/pruebaFuncion2';
 
 //llamo a las urls definidas
 import { apiUrl1 ,apiUrl2 ,apiUrl3 } from "components/urls/apiUrls";
@@ -13,6 +13,7 @@ import { apiUrl1 ,apiUrl2 ,apiUrl3 } from "components/urls/apiUrls";
 
 
 export default function GenerarXLS({ color }) {
+
   const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api KPI 1
   const [defects2, setDefects2] = useState([]); // KPI 2
   const [defects3, setDefects3] = useState([]); // KPI con parametros
@@ -26,33 +27,11 @@ export default function GenerarXLS({ color }) {
     //guardo el token en el localStorage
     const token = localStorage.getItem('token');
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+    ObtenerDataApi(apiUrl1,  setDefects,token);
+    ObtenerDataApi(apiUrl2, setDefects2,token);
+    ObtenerDataApi(apiUrl3,  setDefects4,token);
 
-    axios.get(apiUrl1, {headers})
-      .then(response => {//si la petición es exitosa esta se guarda en response
-        setDefects(response.data);//se actualizan los defectos utilizando la datos ya recibidos de response
-      })
-      .catch(error => {
-        console.error('Error al obtener datos:', error);// y se imprime por consola
-      });
-
-      axios.get(apiUrl2, {headers})
-      .then(response => {//si la petición es exitosa esta se guarda en response
-        setDefects2(response.data);
-      })
-      .catch(error => { 
-        console.error('Error al obtener datos:', error);// y se imprime por consola
-      });
-      
-      axios.get(apiUrl3, {headers})//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
-      .then(response => {//si la petición es exitosa esta se guarda en response
-        setDefects4(response.data);//se actualizan los defectos utilizando la datos ya recibidos de response
-      })
-      .catch(error => {
-        console.error('Error al obtener datos:', error);// y se imprime por consola
-      });
+    
 }, []);
 
 const handleParameterSelect = (event) => {
@@ -86,6 +65,7 @@ const handleParameterSelect = (event) => {
     }));
     generarInformeEnExcel(data1, 'Todos_Los_Tipos_Defecto');
   };
+
     const handleGenerateExcel2 = () => {
       // Obtén los datos que deseas exportar en formato Excel
       const data2 = defects2.map(defect => ({
@@ -113,12 +93,6 @@ const handleParameterSelect = (event) => {
 };
 
   
-
-
-    
-  
-
-
   return (
     <>
       <div
