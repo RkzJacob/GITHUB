@@ -15,9 +15,9 @@ export default function CardTable({ color }) {
   const [defects4, setDefects4] = useState([]);//parametros
   const [selectedParameter, setSelectedParameter] = useState("");
 
-  const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI)
-  const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector'; // Ruta de la respuesta de la api(SegundoKPI)
-  const apiUrl3 = 'http://localhost:3000/formSprinkler/Sectores'; // Ruta de la respuesta de la api con parametros
+  const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos/'; // Ruta de la respuesta de la api(PrimerKPI)
+  const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector/'; // Ruta de la respuesta de la api(SegundoKPI)
+  const apiUrl3 = 'http://localhost:3000/formSprinkler/Sectores/'; // Ruta de la respuesta de la api con parametros
 
   useEffect(() => { //utilización de un hook junto utilizacion de codigo
 
@@ -93,7 +93,7 @@ const handleParameterSelect = (event) => {
       pdf.text('Reporte de Datos', 10, 10);
       pdf.autoTable({
         head: [['Defecto', 'Cantidad']],
-        body: defects3.map(item => [item.defecto, item.cantidad]),
+        body: defects3.map(item => [item.defect, item.cantidad]),
         startY: 20,
         margin: { top: 15 },
       });

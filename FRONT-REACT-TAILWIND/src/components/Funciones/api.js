@@ -96,7 +96,6 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     //
 
     const fetchData = async () => {
-       
             try {
                 if (startDate && endDate) {
                     const fecha1Encoded = encodeURIComponent(moment(startDate).format('DD/MM/YYYY'));

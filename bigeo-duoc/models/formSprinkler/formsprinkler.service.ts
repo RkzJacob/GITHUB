@@ -48,17 +48,31 @@ export class FormSprinklerService {
       return result;     
     }
 
-    async ObtenerDefectosPorSector(): Promise<any> {
+    async ObtenerDefectosPorSector(sector: string): Promise<any> {
       const query = `
-      SELECT DISTINCT sector, COUNT(defect) as cantidad FROM public.form
+      SELECT DISTINCT sector,defect, COUNT(defect) as cantidad FROM public.form
       JOIN public.properties on propid="propertiesPropid"
       join public."formSprinkler" on spid="formSprinklerSpid"
-      GROUP BY sector
+      WHERE sector = $1
+      GROUP BY sector,defect
+      ORDER BY 1,2 ASC
+      `;  
+      const result = await this.sequelize.query(query, { type: 'SELECT' ,bind: [sector]});
+      return result;     
+    }
+
+    async ObtenerDefectosPorCadaSector(): Promise<any> {
+      const query = `
+      SELECT DISTINCT sector,defect, COUNT(defect) as cantidad FROM public.form
+      JOIN public.properties on propid="propertiesPropid"
+      join public."formSprinkler" on spid="formSprinklerSpid"
+      GROUP BY sector,defect
       ORDER BY 1,2 ASC
       `;  
       const result = await this.sequelize.query(query, { type: 'SELECT' });
       return result;     
     }
+
     async obtenerDefectosPorSectorConParametroFecha(Fecha1: string,Fecha2: string,): Promise<any> {
       const query = `
       SELECT TO_CHAR("dateTime",'DD/MM/YYYY') as Fecha, defect as defect, COUNT(defect) as cantidad,

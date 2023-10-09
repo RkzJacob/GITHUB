@@ -67,7 +67,7 @@ const handleParameterSelect = (event) => {
     };
 
   // Realizar la consulta al API con el parámetro seleccionado
-  axios.get(`${apiUrl1}${parametroSeleccionado}`, {headers})
+  axios.get(`${apiUrl2}${parametroSeleccionado}`, {headers})
     .then(response => {
       // Aquí puedes manejar la respuesta del API con el parámetro seleccionado
       setDefects3(response.data);
@@ -90,7 +90,7 @@ const handleParameterSelect = (event) => {
       // Obtén los datos que deseas exportar en formato Excel
       const data2 = defects2.map(defect => ({
         Sectores: defect.sector,
-        TipoDeDefecto: defect.defecto,
+        TipoDeDefecto: defect.defect,
         Cantidad: defect.cantidad
       }));
 
@@ -102,8 +102,8 @@ const handleParameterSelect = (event) => {
   const handleGenerateExcel3 = () => {
     // Obtén los datos que deseas exportar en formato Excel
     const data3 = defects3.map(defect => ({
-      Sectores: defect.sector,
-      TipoDeDefecto: defect.defecto,
+      Sector: defect.sector,
+      Defecto: defect.defect,
       Cantidad: defect.cantidad
     }));
 

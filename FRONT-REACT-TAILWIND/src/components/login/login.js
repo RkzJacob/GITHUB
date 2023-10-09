@@ -26,7 +26,6 @@ const LoginForm = () => {
       console.log('Token de acceso:', response.data.token);
       //setUserRoles(response.data.role);
       localStorage.setItem('token',response.data.token);
-      // Guarda el token en el estado o en localStorage según tus necesidades
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
     }
