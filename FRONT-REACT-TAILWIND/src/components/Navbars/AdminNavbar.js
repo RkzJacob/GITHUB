@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { ConsumirApi } from "components/Funciones/api";
+
+
 export default function Navbar(changeKPI) {
 
   return (

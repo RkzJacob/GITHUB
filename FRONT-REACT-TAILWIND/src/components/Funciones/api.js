@@ -26,8 +26,8 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
 
 
     const [apiUrl, setapiUrl] = useState(" ")
-    //const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI
-    //const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector';
+    const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI
+    const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector';
 
     const onChange = (dates) => {
         const [start, end] = dates;
@@ -96,32 +96,26 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     //
 
     const fetchData = async () => {
-        try {
-             ///Se utilizan las fechas como parametro de la consulta 
-                setapiUrl(baseUrl + formName + '/' + Kpi+ '/')
-            if (startDate) {
-                // Formateamos la fecha usando moment.js
-                setfechaFormateada(moment(startDate).format('DD/MM/YYYY'));
+       
+            try {
+                if (startDate && endDate) {
+                    const fecha1Encoded = encodeURIComponent(moment(startDate).format('DD/MM/YYYY'));
+                    const fecha2Encoded = encodeURIComponent(moment(endDate).format('DD/MM/YYYY'));
+        
+                    const apiUrl = `${baseUrl}${formName}/${Kpi}/${fecha1Encoded}/${fecha2Encoded}`;
+                    setapiUrl(apiUrl);
+        
+                    const response = await axios.get(apiUrl);
+                    setData(response.data);
+        
+                    console.log('Consulta exitosa', fecha1Encoded, fecha2Encoded);
+                } else {
+                    console.error('Las fechas no están definidas');
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
             }
-            if (endDate) {
-                // Formateamos la fecha usando moment.js
-                setfechaFormateada2(moment(endDate).format('DD/MM/YYYY'));
-            }
-            const params = {
-                Fecha1: fechaFormateada,
-                Fecha2: fechaFormateada2
-            };
-            
-            const response = await axios.get(apiUrl,
-                { params }).then(response => {//si la petición es exitosa esta se guarda en response
-                    setData(response.data);//se actualizan los datos
-                    console.log(fechaFormateada)
-                },)
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            console.log('ta mala',fechaFormateada)
-        }
-    };
+   };
 
 
 
