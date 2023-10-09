@@ -1,5 +1,3 @@
-import { JwtSService } from './auth/jwts.service';
-import { JwtMModule } from './auth/jwtm.module';
 
 import { FormSprinklerService } from './../models/formSprinkler/formsprinkler.service';
 import { FormSprinklerModule } from './../models/formSprinkler/formsprinkler.module';
@@ -11,7 +9,7 @@ import { UserModule } from './../models/user/user.module';
 import { UserService } from './../models/user/user.service';
 import { UserController } from './../models/user/user.controller';
 
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import {  Module, RequestMethod } from '@nestjs/common';
 import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { user } from 'models/user/user.model';
@@ -20,13 +18,21 @@ import { treeController } from 'models/tree/tree.controller';
 import { TreeModule } from 'models/tree/tree.module';
 import { tree } from 'models/tree/tree.model';
 import { formSprinkler } from 'models/formSprinkler/formSprinkler.model.';
-import { JwtMiddleware } from './auth/jwt.middleware';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthModule } from './auth/auth.module';
+import { AuthController } from 'src/auth/auth.controller';
+import { jwtConstants } from './auth/constants/jwt.constants';
+
+
 
 @Module({
   imports: [
-    JwtModule,
-    JwtMModule,
+    AuthModule,
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      global: true,
+      signOptions: { expiresIn: '20h' },
+    }),
     FormSprinklerModule,
     FormPlagueModule,
     SequelizeModule.forRoot({
@@ -49,17 +55,21 @@ import { JwtModule } from '@nestjs/jwt';
     FormPlagueController,
     UserController,
     treeController,
+    AuthController,
   ],
   providers: [
-    JwtSService,
     FormSprinklerService,
     FormPlagueService,
     UserService,
     treeService,
     AppService]
 })
-export class AppModule { 
+export class AppModule {
   //configure(consumer: MiddlewareConsumer) {
-    //consumer.apply(JwtMiddleware).forRoutes('*'); // Aplica el middleware a todas las rutas
+    //consumer
+      //.apply(RolesMiddleware)
+      //.forRoutes(
+       //{ path: 'user/Todos-los-usuarios', method: RequestMethod.GET },
+      //); // Aplica el middleware a todas las rutas, puedes especificar rutas específicas si lo deseas
   //}
 }

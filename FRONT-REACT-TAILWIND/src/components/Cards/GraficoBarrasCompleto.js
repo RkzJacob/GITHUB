@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
 import AdminNavbar from "../Navbars/AdminNavbar.js"
+import { apiUrl1 } from 'components/urls/apiUrls.js';
+import { apiUrl2 } from 'components/urls/apiUrls.js';
 
 export default function GraficoBarrasCompleto() {
   const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api

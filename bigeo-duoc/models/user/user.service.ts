@@ -11,11 +11,9 @@ export class UserService {
       ) {}
       
     async findAllUsernames(): Promise <any[]> {
-        const users = await this.userModel.findAll({
-            attributes: ['username'], // Selecciona solo el campo 'username'
-          });
+        const users = await this.userModel.findAll();
       
-          return users.map((user) => user.username);
+          return users;
     }
 
     

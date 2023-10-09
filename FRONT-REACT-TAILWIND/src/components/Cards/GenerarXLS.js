@@ -3,7 +3,12 @@ import PropTypes from "prop-types";
 import axios from 'axios';
 import aspersores from '../../assets/img/aspersores.png'
 import   {generarInformeEnExcel }  from '../Funciones/xls';
-// components
+
+
+//llamo a las urls definidas
+import { apiUrl1 ,apiUrl2 ,apiUrl3 } from "components/urls/apiUrls";
+
+
 
 
 
@@ -13,34 +18,39 @@ export default function GenerarXLS({ color }) {
   const [defects3, setDefects3] = useState([]); // KPI con parametros
   const [defects4, setDefects4] = useState([]);//parametros
   const [selectedParameter, setSelectedParameter] = useState("");
+  
+  //const { userRoles } = usePermiso();
+  //const isAdmin = userRoles.includes('user'); 
+  //console.log(isAdmin)
+  useEffect(() => { 
+    //guardo el token en el localStorage
+    const token = localStorage.getItem('token');
 
-  const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI)
-  const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector'; // Ruta de la respuesta de la api(SegundoKPI)
-  const apiUrl3 = 'http://localhost:3000/formSprinkler/Sectores'; // Ruta de la respuesta de la api con parametros
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
 
-  useEffect(() => { //utilización de un hook junto utilizacion de codigo
-
-    axios.get(apiUrl1)//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
+    axios.get(apiUrl1, {headers})
       .then(response => {//si la petición es exitosa esta se guarda en response
         setDefects(response.data);//se actualizan los defectos utilizando la datos ya recibidos de response
       })
-      .catch(error => {//si la petición falla se capta el error 
+      .catch(error => {
         console.error('Error al obtener datos:', error);// y se imprime por consola
       });
 
-      axios.get(apiUrl2)//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
+      axios.get(apiUrl2, {headers})
       .then(response => {//si la petición es exitosa esta se guarda en response
-        setDefects2(response.data);//se actualizan los defectos utilizando la datos ya recibidos de response
+        setDefects2(response.data);
       })
-      .catch(error => {//si la petición falla se capta el error 
+      .catch(error => { 
         console.error('Error al obtener datos:', error);// y se imprime por consola
       });
       
-      axios.get(apiUrl3)//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
+      axios.get(apiUrl3, {headers})//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
       .then(response => {//si la petición es exitosa esta se guarda en response
         setDefects4(response.data);//se actualizan los defectos utilizando la datos ya recibidos de response
       })
-      .catch(error => {//si la petición falla se capta el error 
+      .catch(error => {
         console.error('Error al obtener datos:', error);// y se imprime por consola
       });
 }, []);
@@ -49,9 +59,15 @@ const handleParameterSelect = (event) => {
   const parametroSeleccionado = event.target.value;
   console.log('Parametro seleccionado:', parametroSeleccionado);
   setSelectedParameter(parametroSeleccionado);
+  
+  const token = localStorage.getItem('token');
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
 
   // Realizar la consulta al API con el parámetro seleccionado
-  axios.get(`http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector/${parametroSeleccionado}`)
+  axios.get(`${apiUrl1}${parametroSeleccionado}`, {headers})
     .then(response => {
       // Aquí puedes manejar la respuesta del API con el parámetro seleccionado
       setDefects3(response.data);
@@ -168,7 +184,7 @@ const handleParameterSelect = (event) => {
               </tr>
             </thead>
             <tbody>
-              <tr>
+             <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <img
                     src={aspersores}

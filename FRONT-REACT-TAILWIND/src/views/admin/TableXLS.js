@@ -4,6 +4,8 @@ import React from "react";
 
 
 import GenerarXLS from "components/Cards/GenerarXLS";
+import LoginForm from "components/login/login";
+
 
 export default function Tables2() {
   return (
@@ -12,8 +14,11 @@ export default function Tables2() {
         <div className="w-full mb-12 px-4">
           <GenerarXLS color="dark" />
         </div>
-        
+        <div className="w-full mb-12 px-4">
+          <LoginForm color="dark" />
+        </div>  
       </div>
+
     </>
   );
 }

@@ -13,13 +13,14 @@ import FooterAdmin from "components/Footers/FooterAdmin.js";
 import Dashboard from "views/admin/Dashboard.js";
 import Tables from "views/admin/Tables.js";
 import Tables2 from "views/admin/TableXLS";
+import NavbarHome from "components/Navbars/HomeNavbar";
 
 export default function Admin() {
   return (
     <>
       <Sidebar />
       <div className="relative md:ml-64 bg-black">
-        <AdminNavbar />
+      <NavbarHome/>
         {/* Header */}
         <HeaderStats />
         <div className="px-4 md:px-10 mx-auto w-full -m-24">

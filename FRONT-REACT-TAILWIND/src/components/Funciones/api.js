@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
+
+
 const moment = require('moment');
 export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam, changeKPI }) {
     const [startDate, setStartDate] = useState();
@@ -23,8 +24,10 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     const [KpiName, setKpiName] = useState("Conteo-Defectos-Por-Sector");
     // = useState("http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos"); // Agrega esta línea para definir selectedApiUrl
 
+
     const [apiUrl, setapiUrl] = useState(" ")
-    const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector';
+    //const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI
+    //const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector';
 
     const onChange = (dates) => {
         const [start, end] = dates;
@@ -36,13 +39,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     const handleFormChange = (event) => {
         setFirstSelectValue(event.target.value); //Actualiza el estado de firstSelectValue
         changeFormName(event.target.value)
-        
-        
-        
     };
-
-
- 
 
     // Función para cambiar el nombre del formulario en la URL
     const changeFormName = (newFormName) => {
@@ -63,9 +60,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     // Use useEffect to set options for the second select based on firstSelectValue
     useEffect(() => {
         if (firstSelectValue === "formSprinkler") {
-            
             setSecondSelectOptions(["Conteo de daños", "Conteo-Defectos-Por-Sector"]);
-
         } else if (firstSelectValue === "formCount") {
             setSecondSelectOptions(["Conteo de Paltas", "Conteo de Arboles"]);
         } else if (firstSelectValue === "Seleccionar") {
@@ -116,6 +111,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
                 Fecha1: fechaFormateada,
                 Fecha2: fechaFormateada2
             };
+            
             const response = await axios.get(apiUrl,
                 { params }).then(response => {//si la petición es exitosa esta se guarda en response
                     setData(response.data);//se actualizan los datos
@@ -123,7 +119,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
                 },)
         } catch (error) {
             console.error('Error fetching data:', error);
-            console.log(fechaFormateada)
+            console.log('ta mala',fechaFormateada)
         }
     };
 
@@ -144,14 +140,15 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
                     value={firstSelectValue}
                     onChange={handleFormChange}>
                     <option value="Seleccionar">Seleccionar</option>
-                    <option value="formCompaction">Compaction</option>
-                    <option value="formCount">Conteo</option>
+                    
+                    {/* <option value="formCompaction">Compaction</option>
+                    <option value="formCount">Conteo</option> 
                     <option value="formDamage">Daños</option>
                     <option value="formDiseases">Enfermedades</option>
                     <option value="formFauna">Fauna</option>
                     <option value="formGirdling">Localizacion</option>
                     <option value="formHumidity">Humedad</option>
-                    <option value="formPlague">Plagas</option>
+                    <option value="formPlague">Plagas</option>*/}
                     <option value="formSprinkler">Aspersores</option>
                 </select>
 
@@ -179,7 +176,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
                     showMonthDropdown
                     showYearDropdown
                     dropdownMode="select"
-                    dateFormat="dd/mm/yyyy" />
+                    dateFormat="dd/MM/yyyy" />
 
             </div>
 
