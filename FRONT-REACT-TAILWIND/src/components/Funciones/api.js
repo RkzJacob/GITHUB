@@ -108,7 +108,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
                     const response = await axios.get(apiUrl);
                     setData(response.data);
         
-                    console.log('Consulta exitosa', fecha1Encoded, fecha2Encoded);
+                    console.log('Consulta exitosa', fecha1Encoded, fecha2Encoded,apiUrl);
                 } else {
                     console.error('Las fechas no están definidas');
                 }
