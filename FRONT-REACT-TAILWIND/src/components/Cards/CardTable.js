@@ -4,6 +4,8 @@ import axios from 'axios';
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
 import aspersores from '../../assets/img/aspersores.png'
+import ObtenerDataApi from "components/Funciones/pruebaFuncion2";
+import { apiUrl1,apiUrl2,apiUrl3 } from "components/urls/apiUrls";
 // components
 
 
@@ -15,35 +17,14 @@ export default function CardTable({ color }) {
   const [defects4, setDefects4] = useState([]);//parametros
   const [selectedParameter, setSelectedParameter] = useState("");
 
-  const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos/'; // Ruta de la respuesta de la api(PrimerKPI)
-  const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector/'; // Ruta de la respuesta de la api(SegundoKPI)
-  const apiUrl3 = 'http://localhost:3000/formSprinkler/Sectores/'; // Ruta de la respuesta de la api con parametros
-
   useEffect(() => { //utilización de un hook junto utilizacion de codigo
 
-    axios.get(apiUrl1)//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
-      .then(response => {//si la petición es exitosa esta se guarda en response
-        setDefects(response.data);//se actualizan los defectos utilizando la datos ya recibidos de response
-      })
-      .catch(error => {//si la petición falla se capta el error 
-        console.error('Error al obtener datos:', error);// y se imprime por consola
-      });
+    const token = localStorage.getItem('token');
 
-      axios.get(apiUrl2)//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
-      .then(response => {//si la petición es exitosa esta se guarda en response
-        setDefects2(response.data);//se actualizan los defectos utilizando la datos ya recibidos de response
-      })
-      .catch(error => {//si la petición falla se capta el error 
-        console.error('Error al obtener datos:', error);// y se imprime por consola
-      });
-      
-      axios.get(apiUrl3)//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
-      .then(response => {//si la petición es exitosa esta se guarda en response
-        setDefects4(response.data);//se actualizan los defectos utilizando la datos ya recibidos de response
-      })
-      .catch(error => {//si la petición falla se capta el error 
-        console.error('Error al obtener datos:', error);// y se imprime por consola
-      });
+    ObtenerDataApi(apiUrl1,setDefects,token);
+    ObtenerDataApi(apiUrl2,setDefects2,token);
+    ObtenerDataApi(apiUrl3,setDefects4,token);
+
 }, []);
 
 const handleParameterSelect = (event) => {
@@ -52,7 +33,7 @@ const handleParameterSelect = (event) => {
   setSelectedParameter(parametroSeleccionado);
 
   // Realizar la consulta al API con el parámetro seleccionado
-  axios.get(`http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector/${parametroSeleccionado}`)
+  axios.get(`${apiUrl2}${parametroSeleccionado}`)
     .then(response => {
       // Aquí puedes manejar la respuesta del API con el parámetro seleccionado
       setDefects3(response.data);
