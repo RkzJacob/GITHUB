@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useChart } from '../Funciones/context.js';
 
 
 const moment = require('moment');
-export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam, changeKPI }) {
+export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam, changeKPI, datosApi }) {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const [form, setForm] = useState('formSprinkler');
@@ -60,7 +61,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     // Use useEffect to set options for the second select based on firstSelectValue
     useEffect(() => {
         if (firstSelectValue === "formSprinkler") {
-            setSecondSelectOptions(["Conteo de daños", "Conteo-Defectos-Por-Sector"]);
+            setSecondSelectOptions(["Conteo-Todos-Los-Defectos", "Conteo-Defectos-Por-Sector"]);
         } else if (firstSelectValue === "formCount") {
             setSecondSelectOptions(["Conteo de Paltas", "Conteo de Arboles"]);
         } else if (firstSelectValue === "Seleccionar") {
@@ -96,25 +97,27 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     //
 
     const fetchData = async () => {
-            try {
-                if (startDate && endDate) {
-                    const fecha1Encoded = encodeURIComponent(moment(startDate).format('DD/MM/YYYY'));
-                    const fecha2Encoded = encodeURIComponent(moment(endDate).format('DD/MM/YYYY'));
-        
-                    const apiUrl = `${baseUrl}${formName}/${Kpi}/${fecha1Encoded}/${fecha2Encoded}`;
-                    setapiUrl(apiUrl);
-        
-                    const response = await axios.get(apiUrl);
-                    setData(response.data);
-        
-                    console.log('Consulta exitosa', fecha1Encoded, fecha2Encoded,apiUrl);
-                } else {
-                    console.error('Las fechas no están definidas');
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
+        try {
+            if (startDate && endDate) {
+                const fecha1Encoded = encodeURIComponent(moment(startDate).format('DD/MM/YYYY'));
+                const fecha2Encoded = encodeURIComponent(moment(endDate).format('DD/MM/YYYY'));
+    
+                const apiUrl = `${baseUrl}${formName}/${Kpi}/${fecha1Encoded}/${fecha2Encoded}`;
+                setSelectedApiUrl(apiUrl); // Cambia esta línea
+    
+                const response = await axios.get(apiUrl);
+                setData(response.data);
+                datosApi(response.data);
+                console.log('Consulta exitosa', fecha1Encoded, fecha2Encoded, apiUrl);
+                
+            } else {
+                console.error('Las fechas no están definidas');
             }
-   };
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+        return datosApi;
+    };
 
 
 
@@ -160,7 +163,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
                 </select>
 
 
-                <label>Seleccione Rango de fechas: </label>
+            <label>Seleccione Rango de fechas: </label>
                 <DatePicker selected={startDate}
                     onChange={onChange}
                     startDate={startDate}
@@ -188,11 +191,3 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     );
 }
 export default ConsumirApi;
-
-
-
-
-
-//Dentro del select iba esto.
-{/*onChange={handleKPIChange}
-            value={selectedApiUrl}*/}
