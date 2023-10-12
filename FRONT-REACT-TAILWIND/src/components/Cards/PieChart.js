@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
+import ConsumirApi from 'components/Funciones/api';
 
 export default function CardPieChart({ fetchData }) {
   const [defects, setDefects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedKPI, setSelectedKPI] = useState("");
 
-  const updateDefectsData = (data) => {
-    setDefects(data);
-    setLoading(false);
-  };
 
   useEffect(() => {
     if (fetchData) {
       fetchData()
-        .then((response) => {
-          updateDefectsData(response.data);
+        .then((data) => {
+          setDefects(data); // Establece los datos recibidos en el estado
+          setLoading(false);
         })
         .catch((error) => {
           console.error('Error al obtener datos:', error);
@@ -104,7 +102,6 @@ export default function CardPieChart({ fetchData }) {
 
   return (
     <>
-    {console.log("datos del piechart", fetchData)}
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">

@@ -8,15 +8,15 @@ import ConsumirApi from "components/Funciones/api";
 
 export default function Dashboard() {
 
-  const [pieChartData, setPieChartData] = useState([]); // Sirve para cargar el estado en piechart.
+  const [pieChartData, setPieChartData] = useState([]); 
   
   const updatePieChartData = (data) => {
     setPieChartData(data);
   };
 
   const chartsData = (datos) => {
-    console.log('entre2')
-    //console.log(datos);
+    console.log('Dashboard.js !!!')
+    console.log(datos);
   };
   
   return (

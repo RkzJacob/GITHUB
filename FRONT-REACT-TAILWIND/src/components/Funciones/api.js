@@ -6,7 +6,7 @@ import { useChart } from '../Funciones/context.js';
 
 
 const moment = require('moment');
-export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam, changeKPI, datosApi }) {
+export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam, changeKPI, datosApi, chartsData  }) {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const [form, setForm] = useState('formSprinkler');
@@ -108,6 +108,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
                 const response = await axios.get(apiUrl);
                 setData(response.data);
                 datosApi(response.data);
+                chartsData(response.data)
                 console.log('Consulta exitosa', fecha1Encoded, fecha2Encoded, apiUrl);
                 
             } else {
@@ -116,7 +117,6 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-        return datosApi;
     };
 
 
@@ -177,7 +177,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
             </div>
 
             <div>
-                <button onClick={fetchData}>Generar Dashboard</button>
+                <button onClick={fetchData} >Generar Dashboard</button>
             </div>
 
             {/* Nombre del KPI seleccionado */}
@@ -185,8 +185,6 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
             <div className="md:w-1/3 w-full text-center">
                 <h2 className="text-white text-xl font-semibold">Dashboard</h2>
             </div>
-
-
         </div>
     );
 }
