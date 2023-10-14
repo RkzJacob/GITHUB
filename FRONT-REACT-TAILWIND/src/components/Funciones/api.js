@@ -13,8 +13,7 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     const [Kpi, setKpi] = useState(' ');
     const [data, setData] = useState([]);//Constante para guardar la respuesta de la api
     const [selectedApiUrl, setSelectedApiUrl] = useState("http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector/")
-    const [firstSelectValue, setFirstSelectValue] = useState("Seleccionar"); // Estado para el primer select
-    const [secondSelectOptions, setSecondSelectOptions] = useState([]); // Estado para el segundo select
+
 
 
     const [fechaFormateada, setfechaFormateada] = useState(); // Estado para el primer select
@@ -36,12 +35,6 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
         setEndDate(end);
     };
 
-
-    const handleFormChange = (event) => {
-        setFirstSelectValue(event.target.value); //Actualiza el estado de firstSelectValue
-        changeFormName(event.target.value)
-    };
-
     // Función para cambiar el nombre del formulario en la URL
     const changeFormName = (newFormName) => {
         setFormName(newFormName);
@@ -56,24 +49,6 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
     const constructApiUrl = () => {
         return `${baseUrl}${formName}/${KpiName}/`;
     };
-
-
-    // Use useEffect to set options for the second select based on firstSelectValue
-    useEffect(() => {
-        if (firstSelectValue === "formSprinkler") {
-            setSecondSelectOptions(["Conteo-Todos-Los-Defectos", "Conteo-Defectos-Por-Sector"]);
-        } else if (firstSelectValue === "formCount") {
-            setSecondSelectOptions(["Conteo de Paltas", "Conteo de Arboles"]);
-        } else if (firstSelectValue === "Seleccionar") {
-            setSecondSelectOptions(["Seleccione arriba primero"]);
-        } else {
-            setSecondSelectOptions([]); // Opciones vacías si no hay una opción válida seleccionada
-        }
-    }, [firstSelectValue]);
-
-
-
-
 
     //*useEffect(() => { //utilización de un hook junto utilizacion de codigo
     //        axios.get(selectedApiUrl, {
@@ -122,69 +97,8 @@ export function ConsumirApi({ formParam, KpiParam, startDateParam, endDateParam,
 
 
     return (
-
-        <div className="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
-            <label className="block uppercase text-white text-xs font-bold mb-2">
-                Seleccionar KPI
-            </label>
-
-            {/* Selector de KPI */}
-            <div className="md:w-1/3 w-full px-4">
-
-                <select
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
-                    value={firstSelectValue}
-                    onChange={handleFormChange}>
-                    <option value="Seleccionar">Seleccionar</option>
-                    
-                    {/* <option value="formCompaction">Compaction</option>
-                    <option value="formCount">Conteo</option> 
-                    <option value="formDamage">Daños</option>
-                    <option value="formDiseases">Enfermedades</option>
-                    <option value="formFauna">Fauna</option>
-                    <option value="formGirdling">Localizacion</option>
-                    <option value="formHumidity">Humedad</option>
-                    <option value="formPlague">Plagas</option>*/}
-                    <option value="formSprinkler">Aspersores</option>
-                </select>
-
-                <select
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
-                    value={Kpi}
-                    onChange={(e) => setKpi(e.target.value)
-                    }
-                >
-                    <option  value="">Seleccionar KPI</option>
-                    {secondSelectOptions.map((option) => (
-                        <option  key={option} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
-
-
-            <label>Seleccione Rango de fechas: </label>
-                <DatePicker selected={startDate}
-                    onChange={onChange}
-                    startDate={startDate}
-                    endDate={endDate}
-                    selectsRange
-                    showMonthDropdown
-                    showYearDropdown
-                    dropdownMode="select"
-                    dateFormat="dd/MM/yyyy" />
-
-            </div>
-
-            <div>
-                <button onClick={fetchData} >Generar Dashboard</button>
-            </div>
-
-            {/* Nombre del KPI seleccionado */}
-
-            <div className="md:w-1/3 w-full text-center">
-                <h2 className="text-white text-xl font-semibold">Dashboard</h2>
-            </div>
+        <div className="">
+            {/* Esta parte no contiene elementos de interfaz de usuario */}
         </div>
     );
 }

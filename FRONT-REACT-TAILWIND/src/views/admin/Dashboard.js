@@ -21,9 +21,6 @@ export default function Dashboard() {
   
   return (
     <>
-      <AdminNavbar 
-        chartsData = {chartsData}
-      />
       <div className="flex flex-wrap">
       
       <div className="w-full xl:w-14/14 px-14">
