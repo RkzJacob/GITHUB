@@ -140,7 +140,6 @@ export default function GraficoBarrasCompleto() {
 
   return (
     <>
-    <AdminNavbar changeBar={changeBar} />
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">

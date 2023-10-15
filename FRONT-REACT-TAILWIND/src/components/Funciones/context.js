@@ -1,21 +1,21 @@
 import React, { createContext, useContext, useState } from 'react';
 
-// Crear un contexto para el gráfico
-const ChartContext = createContext();
+// Crea el contexto con valores iniciales
+export const DataContext = createContext();
 
-// Un componente proveedor para el contexto del gráfico
-export function ChartProvider({ children }) {
-  const [data, setData] = useState([]); // Datos para el gráfico
-  const [fetchData, setFetchData] = useState(null); // Método para obtener datos
+// Crea el proveedor personalizado para el contexto
+export const DataContextProvider = ({ children }) => {
+  const [data, setData] = useState([]); // Datos iniciales del contexto
+
 
   return (
-    <ChartContext.Provider value={{ data, setData, fetchData, setFetchData }}>
+    <DataContext.Provider value={{ data, setData }} >
       {children}
-    </ChartContext.Provider>
+    </DataContext.Provider>
   );
-}
+};
 
-// Un gancho personalizado para acceder al contexto del gráfico
-export function useChart() {
-  return useContext(ChartContext);
-}
+// Hook personalizado para consumir el contexto
+export const useDataContext = () => {
+  return useContext(DataContext);
+};
