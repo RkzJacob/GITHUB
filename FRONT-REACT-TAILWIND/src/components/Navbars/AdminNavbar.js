@@ -63,13 +63,9 @@ export default function AdminNavbar({ ongetData, chartsData }) {
 
 
     return (
-        <div className="w-full items-left flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
-            <label className="block uppercase text-white text-xs font-bold mb-2">
-                Seleccionar KPI
-            </label>
+        <div className=" flex  md:justify-start border-b flex-wrap md:px-2 px-2">
 
-
-            <div className="md:w-full w-full px-4">
+            <div className="md:w-4/12 w-4/12  px-2">
                 <select
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
                     value={firstSelectValue}
@@ -78,7 +74,8 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                     <option value="Seleccionar">Seleccionar</option>
                     <option value="formSprinkler">Aspersores</option>
                 </select>
-
+            </div>
+            <div className="md:w-3/12 w-4/12 px-2">
                 <select
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
                     value={Kpi}
@@ -87,9 +84,9 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                     <option value="">Seleccionar KPI</option>
                     <option value="Conteo-Defectos-Por-Sector">Defectos Por Sector</option>
                 </select>
-
-                <label>Seleccione Rango de fechas: </label>
-                <DatePicker
+            </div>
+            <div className="md:w-3/12 w-3/12 px-2">
+                <DatePicker className="md:w-2/12 w-2/12 px-2"
                     selected={startDate}
                     onChange={onChange}
                     startDate={startDate}
@@ -100,13 +97,18 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                     dropdownMode="select"
                     dateFormat="dd/MM/yyyy"
                 />
-                <button onClick={handleGetData} class="bg-blue-500  text-white font-bold py-16 px-4 rounded ">
-                    Button
-                </button>
             </div>
+            <div className="md:w-2/12 w-2/12 px-2">
+            <button onClick={handleGetData} className=" px-2 placeholder-blueGray-300 text-blueGray-600 font-bold relative rounded bg-white ">
+                    Cargar
+                </button>
+                 
+            </div>
+            </div>
+            
 
 
-        </div>
+        
     );
 }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
-import ConsumirApi from 'components/Funciones/api';
+
 
 export default function CardPieChart({ fetchData }) {
   const [defects, setDefects] = useState([]);

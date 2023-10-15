@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
-import AdminNavbar from "../Navbars/AdminNavbar.js"
+
 import { apiUrl1 } from 'components/urls/apiUrls.js';
 import { apiUrl2 } from 'components/urls/apiUrls.js';
+import { DataContext } from 'components/Funciones/context.js';
 
 export default function GraficoBarrasCompleto() {
   const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api
@@ -12,6 +13,10 @@ export default function GraficoBarrasCompleto() {
   const [selectedApiUrl, setSelectedApiUrl] = useState("http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos"); // Agrega esta línea para definir selectedApiUrl
   const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI)
   const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector';
+
+
+
+  const {data} =  useContext(DataContext)
     
   useEffect(() => { //utilización de un hook junto utilizacion de codigo
     setLoading(true);//Situa el estado de loading (indica que está en progreso)
@@ -27,10 +32,12 @@ export default function GraficoBarrasCompleto() {
       setLoading(false); // Marcar que la carga ha finalizado
     });
     }, [selectedApiUrl]);
-      
     
-    const labels = selectedKPI === 'Defectos por Tipo' ? defects.map(defect => defect.defect) : defects.map(defect => defect.sector);//se realiza un for each en el campo defect del respuesta obtenida por el api
-    const setDatos = defects.map(defect => defect.cantidad);//se realiza un for each en el campo cantidad del respuesta obtenida por el api
+    
+    const labels2 = data.map(defect => defect.sector);
+    const setDatos2 = data.map(defect => defect.cantidad);
+
+    
   
   useEffect(() => {//utilización de un hook junto utilizacion de codigo
     if (!loading) {//si la carga no esta en curso se ejecuta el grafico
@@ -38,13 +45,13 @@ export default function GraficoBarrasCompleto() {
       type: "bar",
       data: {
         labels: 
-          labels,
+          labels2,
         datasets: [
           {
             label: 'Tipo de Defecto',
             backgroundColor: "#e5ead4",
             borderColor: "#e5ead4",
-            data: setDatos,
+            data: setDatos2,
           },
           
         ],

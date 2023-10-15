@@ -6,9 +6,7 @@ import "jspdf-autotable";
 import aspersores from '../../assets/img/aspersores.png';
 import ObtenerDataApi from "components/Funciones/pruebaFuncion2";
 import { apiUrl1,apiUrl2,apiUrl3 } from "components/urls/apiUrls";
-import generarPDFAlert1 from "components/Funciones/generarPdfAlert";
-import generarPDFAlert2 from "components/Funciones/generarPdfAlert2";
-import generarPDFAlert3 from "components/Funciones/generarpdfAlert3";
+import { Alertas } from "components/Funciones/generarAlertas";
 // components
 
 
@@ -48,15 +46,15 @@ const handleParameterSelect = (event) => {
   };
 
     const GenerarPDF = () => {
-      generarPDFAlert1(defects);
+      Alertas.generarPDFAlert1(defects);
     };
 
     const GenerarPDF2 = () => {
-      generarPDFAlert2(defects2);
+      Alertas.generarPDFAlert2(defects2);
     };
 
     const GenerarPDF3 = () => {
-      generarPDFAlert3(defects3,selectedParameter);
+      Alertas.generarPDFAlert3(defects3,selectedParameter);
     };
 
     

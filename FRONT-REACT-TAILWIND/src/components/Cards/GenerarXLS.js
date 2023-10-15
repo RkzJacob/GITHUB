@@ -11,12 +11,7 @@ import ObtenerDataApi from '../Funciones/pruebaFuncion2';
 //llamo a las urls definidas
 import { apiUrl1 ,apiUrl2 ,apiUrl3 } from "components/urls/apiUrls";
 //alertas
-import generarExcelYMostrarAlerta from "components/Funciones/generarAlertas";
-import generarExcelYMostrarAlerta2 from "components/Funciones/generarAlerta2";
-import generarExcelYMostrarAlerta3 from "components/Funciones/generarAlerta3";
-
-
-
+import { Alertas } from "components/Funciones/generarAlertas";
 
 
 export default function GenerarXLS({ color }) {
@@ -65,15 +60,15 @@ const handleParameterSelect = (event) => {
   };
 
   const handleGenerateExcel = () => {
-    generarExcelYMostrarAlerta(defects);
+    Alertas.generarExcelYMostrarAlerta(defects);
   };
 
     const handleGenerateExcel2 = () => {
-      generarExcelYMostrarAlerta2(defects2);
+      Alertas.generarExcelYMostrarAlerta2(defects2);
   };
 
   const handleGenerateExcel3 = () => {
-    generarExcelYMostrarAlerta3(defects3);
+    Alertas.generarExcelYMostrarAlerta3(defects3);
 };
 
   
