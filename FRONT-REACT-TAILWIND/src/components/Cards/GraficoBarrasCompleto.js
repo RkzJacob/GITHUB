@@ -2,40 +2,18 @@ import React, { useState, useEffect, useContext } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
 
-import { apiUrl1 } from 'components/urls/apiUrls.js';
-import { apiUrl2 } from 'components/urls/apiUrls.js';
+
 import { DataContext } from 'components/Funciones/context.js';
 
 export default function GraficoBarrasCompleto() {
-  const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api
-  const [loading, setLoading] = useState(true);//Constante para el estado del spinner
-  const [selectedKPI, setSelectedKPI] = useState("Defectos por Tipo");
-  const [selectedApiUrl, setSelectedApiUrl] = useState("http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos"); // Agrega esta línea para definir selectedApiUrl
-  const apiUrl1 = 'http://localhost:3000/formSprinkler/Conteo-Todos-Los-Defectos'; // Ruta de la respuesta de la api(PrimerKPI)
-  const apiUrl2 = 'http://localhost:3000/formSprinkler/Conteo-Defectos-Por-Sector';
-
-
+  const [loading, setLoading] = useState(false);//Constante para el estado del spinner
 
   const {data} =  useContext(DataContext)
-    
-  useEffect(() => { //utilización de un hook junto utilizacion de codigo
-    setLoading(true);//Situa el estado de loading (indica que está en progreso)
-
-    axios.get(selectedApiUrl)//se realiza una peticion get (usando la url de la respuesta que debe entregar en el backend)
-      .then(response => {//si la petición es exitosa esta se guarda en response
-        setDefects(response.data);//se actualizan los defectos utilizando la datos ya recibidos de response
-      })
-      .catch(error => {//si la petición falla se capta el error 
-        console.error('Error al obtener datos:', error);// y se imprime por consola
-      })
-      .finally(() => {//se ejecuta independiente si la peticion fue exitosa o falló
-      setLoading(false); // Marcar que la carga ha finalizado
-    });
-    }, [selectedApiUrl]);
+  
     
     
-    const labels2 = data.map(defect => defect.sector);
-    const setDatos2 = data.map(defect => defect.cantidad);
+  const labels2 = data.map(defect => defect.sector);
+  const setDatos2 = data.map(defect => defect.cantidad);
 
     
   
@@ -61,7 +39,7 @@ export default function GraficoBarrasCompleto() {
         responsive: true,
         title: { //titulo del grafico
           display: false, //indica si se debe mostrar el titulo 
-          text: selectedKPI, // Utiliza el nombre del KPI seleccionado como título
+          text: 'nada', // Utiliza el nombre del KPI seleccionado como título
           fontColor: "black",//color del titulo
         },
         legend: { //leyenda del grafico
@@ -130,19 +108,9 @@ export default function GraficoBarrasCompleto() {
     var ctx = document.getElementById("line-chart2").getContext("2d");
     window.myLine = new Chart(ctx, config);
     }
-  }, [defects, loading, selectedKPI]);
+  }, [ loading]);
 
-  // Función para cambiar el KPI seleccionado desde el Navbar
-  const changeBar = (newKPI2) => {
-    // Actualiza la URL de la API según el nuevo KPI seleccionado
-    if (newKPI2 === "Defectos por Tipo") {
-      setSelectedApiUrl(apiUrl1);
-      setSelectedKPI("Defectos por Tipo");
-    } else if (newKPI2 === "Defectos por Sector") {
-      setSelectedApiUrl(apiUrl2);   
-      setSelectedKPI("Defectos por Sector");
-    }
-  };
+  
 
 
   return (
