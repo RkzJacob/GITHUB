@@ -1,19 +1,26 @@
 import React, { useState,useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
-import aspersores from '../../assets/img/aspersores.png'
-import   {generarInformeEnExcel }  from '../Funciones/xls';
+import aspersores from '../../assets/img/aspersores.png';
 import ObtenerDataApi from '../Funciones/pruebaFuncion2';
+
+
+
+
 
 //llamo a las urls definidas
 import { apiUrl1 ,apiUrl2 ,apiUrl3 } from "components/urls/apiUrls";
+//alertas
+import generarExcelYMostrarAlerta from "components/Funciones/generarAlertas";
+import generarExcelYMostrarAlerta2 from "components/Funciones/generarAlerta2";
+import generarExcelYMostrarAlerta3 from "components/Funciones/generarAlerta3";
 
 
 
 
 
 export default function GenerarXLS({ color }) {
-
+  
   const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api KPI 1
   const [defects2, setDefects2] = useState([]); // KPI 2
   const [defects3, setDefects3] = useState([]); // KPI con parametros
@@ -58,38 +65,15 @@ const handleParameterSelect = (event) => {
   };
 
   const handleGenerateExcel = () => {
-    // Obtén los datos que deseas exportar en formato Excel
-    const data1 = defects.map(defect => ({
-      TipoDeDefecto: defect.defect,
-      Cantidad: defect.cantidad
-    }));
-    generarInformeEnExcel(data1, 'Todos_Los_Tipos_Defecto');
+    generarExcelYMostrarAlerta(defects);
   };
 
     const handleGenerateExcel2 = () => {
-      // Obtén los datos que deseas exportar en formato Excel
-      const data2 = defects2.map(defect => ({
-        Sectores: defect.sector,
-        TipoDeDefecto: defect.defect,
-        Cantidad: defect.cantidad
-      }));
-
-    // Genera el informe en Excel
-     // El segundo argumento es el nombre del archivo
-     generarInformeEnExcel(data2, 'Todos_los_Defecto_Por_Sector'); // El segundo argumento es el nombre del archivo
+      generarExcelYMostrarAlerta2(defects2);
   };
 
   const handleGenerateExcel3 = () => {
-    // Obtén los datos que deseas exportar en formato Excel
-    const data3 = defects3.map(defect => ({
-      Sector: defect.sector,
-      Defecto: defect.defect,
-      Cantidad: defect.cantidad
-    }));
-
-  // Genera el informe en Excel
-   // El segundo argumento es el nombre del archivo
-   generarInformeEnExcel(data3, 'Todos_los_Defecto_Por_Sector'); // El segundo argumento es el nombre del archivo
+    generarExcelYMostrarAlerta3(defects3);
 };
 
   
@@ -209,11 +193,11 @@ const handleParameterSelect = (event) => {
               </tr>
               <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                  <img
-                    src={require("assets/img/vue.jpg").default}
+                <img
+                    src={aspersores}
                     className="h-12 w-12 bg-white rounded-full border"
                     alt="..."
-                  ></img>{" "}
+                  ></img>
                   <span
                     className={
                       "ml-3 font-bold " +
@@ -241,6 +225,7 @@ const handleParameterSelect = (event) => {
             </tbody>
           </table>
         </div>
+        
       </div>
     </>
   );

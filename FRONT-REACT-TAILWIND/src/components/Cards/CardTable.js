@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
-import aspersores from '../../assets/img/aspersores.png'
+import aspersores from '../../assets/img/aspersores.png';
 import ObtenerDataApi from "components/Funciones/pruebaFuncion2";
 import { apiUrl1,apiUrl2,apiUrl3 } from "components/urls/apiUrls";
+import generarPDFAlert1 from "components/Funciones/generarPdfAlert";
+import generarPDFAlert2 from "components/Funciones/generarPdfAlert2";
+import generarPDFAlert3 from "components/Funciones/generarpdfAlert3";
 // components
 
 
@@ -45,41 +48,15 @@ const handleParameterSelect = (event) => {
   };
 
     const GenerarPDF = () => {
-      const pdf = new jsPDF();
-      pdf.text('Reporte de todos los Defectos', 10, 10);
-      pdf.autoTable({
-        head: [[ "Tipo de Defecto", "Cantidad"]],
-        body: defects.map(defect => [defect.defect, defect.cantidad]),
-        startY: 20, // Empieza la tabla a partir de esta coordenada
-        margin: { top: 15 }, // Espacio entre el texto anterior y la tabla
-      });
-  
-      pdf.save('reporte_defectos.pdf');
+      generarPDFAlert1(defects);
     };
 
     const GenerarPDF2 = () => {
-      const pdf = new jsPDF();
-      pdf.text('Reporte de Defectos por sector', 10, 10);
-      pdf.autoTable({
-        head: [["Sector", "Tipo de Defecto", "Cantidad"]],
-        body: defects2.map(defect => [defect.sector, defect.defecto, defect.cantidad]),
-        startY: 20, // Empieza la tabla a partir de esta coordenada
-        margin: { top: 15 }, // Espacio entre el texto anterior y la tabla
-      });
-      pdf.save('reporte_defectos_por_sector.pdf');
+      generarPDFAlert2(defects2);
     };
 
     const GenerarPDF3 = () => {
-      const pdf = new jsPDF();
-      pdf.text('Reporte de Datos', 10, 10);
-      pdf.autoTable({
-        head: [['Defecto', 'Cantidad']],
-        body: defects3.map(item => [item.defect, item.cantidad]),
-        startY: 20,
-        margin: { top: 15 },
-      });
-
-      pdf.save('reporte.pdf');
+      generarPDFAlert3(defects3,selectedParameter);
     };
 
     
@@ -202,11 +179,11 @@ const handleParameterSelect = (event) => {
               </tr>
               <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                  <img
-                    src={require("assets/img/vue.jpg").default}
+                <img
+                    src={aspersores}
                     className="h-12 w-12 bg-white rounded-full border"
-                    alt="..."
-                  ></img>{" "}
+                    alt="ASPERSOR"
+                  ></img> 
                   <span
                     className={
                       "ml-3 font-bold " +
