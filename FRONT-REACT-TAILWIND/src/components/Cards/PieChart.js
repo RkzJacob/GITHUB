@@ -1,29 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useContext  } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
+import { DataContext } from "components/Funciones/context";
 
 
 export default function CardPieChart({ fetchData }) {
   const [defects, setDefects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedKPI, setSelectedKPI] = useState("");
+  const chartRef = useRef(null);
 
+  
+  const contextData = useContext(DataContext);
 
   useEffect(() => {
-    if (fetchData) {
-      fetchData()
-        .then((data) => {
-          setDefects(data); // Establece los datos recibidos en el estado
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error('Error al obtener datos:', error);
-        });
+    if (contextData && contextData.data) { 
+      const data = contextData.data; 
+  
+      setDefects(data);
+      setLoading(false);
     }
-  }, [fetchData]);
-
-  const labels = selectedKPI === 'Defectos por Tipo' ? defects.map(defect => defect.defect) : defects.map(defect => defect.sector);
-  const data = defects.map(defect => defect.cantidad);
+  }, [contextData]);
 
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
@@ -35,25 +32,49 @@ export default function CardPieChart({ fetchData }) {
   }
 
   useEffect(() => {
-    if (!loading) {
-      // Generar colores aleatorios únicos
+    if (!loading && contextData && contextData.data) {
+      const data = contextData.data;
+  
+      // Inicializa un objeto para almacenar labels para que no se repitan
+      const uniqueLabels = {};
+  
+      data.forEach(defect => {
+        const cantidad = parseInt(defect.cantidad, 10); // Convierte a número
+        if (!isNaN(cantidad)) {
+          if (uniqueLabels[defect.defect]) {
+            uniqueLabels[defect.defect] += cantidad; // Suma números en lugar de concatenar
+          } else {
+            uniqueLabels[defect.defect] = cantidad;
+          }
+        }
+      });
+  
+      const labels = Object.keys(uniqueLabels);
+      const dataValues = Object.values(uniqueLabels);
+  
+      // Genera colores aleatorios únicos
       const uniqueColors = new Set();
       const backgroundColors = labels.map(() => {
         let color;
         do {
           color = getRandomColor();
-        } while (uniqueColors.has(color)); // Comprobar si el color ya existe en el conjunto
-        uniqueColors.add(color); // Agregar el color al conjunto para evitar repeticiones
+        } while (uniqueColors.has(color));
+        uniqueColors.add(color);
         return color;
       });
-
-      var config = {
+  
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
+  
+      const ctx = document.getElementById("pie-chart").getContext("2d");
+      const config = {
         type: "pie",
         data: {
           labels: labels,
           datasets: [
             {
-              data: data,
+              data: dataValues,
               backgroundColor: backgroundColors,
               borderWidth: 1,
             },
@@ -64,8 +85,8 @@ export default function CardPieChart({ fetchData }) {
           maintainAspectRatio: false,
           title: {
             display: true,
-            text: selectedKPI, // Utiliza el nombre del KPI seleccionado como título
-            fontColor: "white", // Cambia el color del título a blanco
+            text: selectedKPI,
+            fontColor: "white",
           },
           legend: {
             labels: {
@@ -74,59 +95,37 @@ export default function CardPieChart({ fetchData }) {
           },
         },
       };
-
-      var ctx = document.getElementById("pie-chart").getContext("2d");
-
-      var container = document.getElementById("pie-chart-container");
-      container.style.width = "80%";
-
-      var pieChart = new Chart(ctx, config);
-      pieChart.canvas.parentNode.style.width = '100%';
-      pieChart.canvas.parentNode.style.height = '400px';
-
-      window.myPie = pieChart;
+  
+      chartRef.current = new Chart(ctx, config);
     }
-  }, [defects, loading, selectedKPI]);
-
-  // Función para cambiar el KPI seleccionado desde el Navbar
-  //const changeKPI = (newKPI) => {
-    // Actualiza la URL de la API según el nuevo KPI seleccionado
-    //if (newKPI === "Defectos por Tipo") {
-      //setSelectedApiUrl(apiUrl1);
-      //setSelectedKPI("Defectos por Tipo");
-    //} else if (newKPI === "Defectos por Sector") {
-      //setSelectedApiUrl(apiUrl2);   
-      //setSelectedKPI("Defectos por Sector");
-    //}
-  //};
+  }, [contextData, loading, selectedKPI]);
 
   return (
-    <>
-      <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
-        <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
-          <div className="flex flex-wrap items-center">
-            <div className="relative w-full max-w-full flex-grow flex-1">
-              <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
-                Vista general
-              </h6>
-              <h2 className="text-white text-xl font-semibold"></h2>
-            </div>
-          </div>
-        </div>
-        <div className="p-4 flex-auto">
-          <div className="relative h-400-px" id="pie-chart-container" style={{ overflowY: 'scroll'}}>
-            {loading ? (
-              <div className="text-center">
-                <div className="spinner-border" role="status">
-                  <span className="sr-only">Cargando...</span>
-                </div>
-              </div>
-            ) : (
-              <canvas id="pie-chart"></canvas>
-            )}
+    <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
+      <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
+        <div className="flex flex-wrap items-center">
+          <div className="relative w-full max-w-full flex-grow flex-1">
+            <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
+              Vista general
+            </h6>
+            <h2 className="text-white text-xl font-semibold"></h2>
           </div>
         </div>
       </div>
-    </>
+      <div className="p-4 flex-auto">
+        <div className="relative h-500-px w-500-px" id="pie-chart-container">
+          {loading ? (
+            <div className="text-center">
+              <div className="spinner-border" role="status">
+                <span className="sr-only">Cargando...</span>
+              </div>
+            </div>
+          ) : (
+            <canvas id="pie-chart"></canvas>
+          )}
+        </div>
+      </div>
+    </div>
   );
+  
 }

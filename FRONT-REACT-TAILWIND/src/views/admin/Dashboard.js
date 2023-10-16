@@ -12,6 +12,7 @@ import { DataContext } from "components/Funciones/context";
 export default function Dashboard() {
 
   const [pieChartData, setPieChartData] = useState([]);
+  const [barChartData, setBarChartData] = useState([]);
 
   const {data} =  useContext( DataContext)
   
@@ -36,7 +37,7 @@ export default function Dashboard() {
         </div>
 
         <div className="w-full xl:w-14/14 px-14">
-          <GraficoBarrasCompleto />
+          <GraficoBarrasCompleto data={barChartData} />
         </div>
 
         <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
@@ -44,7 +45,7 @@ export default function Dashboard() {
         </div>
 
         <div>
-          <PieChart data={pieChartData} /> {/* Pass data as a prop to PieChart */}
+          <PieChart data={pieChartData} /> 
         </div>
 
 
