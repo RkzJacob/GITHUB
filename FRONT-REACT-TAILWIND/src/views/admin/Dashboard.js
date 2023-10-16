@@ -54,11 +54,8 @@ export default function Dashboard() {
 
       {/* ------------------- */}
 
-      <div className="flex flex-wrap mt-4">
-      <button onClick={handleGetData} class="bg-blue-500  text-white font-bold py-16 px-4 rounded ">
-                    Button
-                </button>
-      </div>
+      
+      
     </>
 
   );

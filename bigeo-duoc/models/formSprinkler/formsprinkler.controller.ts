@@ -5,16 +5,18 @@ import { FormSprinklerService } from './formsprinkler.service';
 import { formSprinkler } from './formSprinkler.model.';
 import { Role } from 'src/auth/enums/rol.enum';
 import { Auth } from 'src/auth/decoratos/auth.decorators';
+import { AuthGuard } from 'src/auth/guard/auth.guard';
 
 
 
 @ApiBearerAuth()
+//@UseGuards(AuthGuard)
 @ApiTags('formSprinkler')
 @Controller('formSprinkler')
 export class FormSprinklerController { 
     constructor(private readonly formSprinklerService: FormSprinklerService,
                  /* private readonly jwtService: JwtService */) {}
-
+                 
   @Get('Conteo-defectos') //tipo de operacion y nombre
   @ApiOperation({ summary: 'Cuenta Defectos 3 Meses Atras' }) //descripción metodo
   @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa

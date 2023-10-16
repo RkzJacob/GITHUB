@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useAuth } from 'components/Funciones/authContext';
+import { useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 const LoginForm = () => {
+  const history = useHistory();
+  const { login } = useAuth();
+  console.log({ login });
   //const {setUserRoles} = usePermiso();
 
   const [formData, setFormData] = useState({
@@ -23,17 +29,27 @@ const LoginForm = () => {
 
     try {
       const response = await axios.post('http://localhost:3000/auth/login', formData);
-      console.log('Token de acceso:', response.data.token);
+      //console.log('Token de acceso:', response.data.token);
       //setUserRoles(response.data.role);
-      localStorage.setItem('token',response.data.token);
+      login(response.data.token);
+
+      await Swal.fire({
+        icon: 'success',
+        title: 'Usuario autenticado',
+      });
+
+      history.push('/admin'); 
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
+      await Swal.fire({
+        icon: 'error',
+        title: 'No se ha podido autenticar',
+      });
     }
   };
 
   return (
-
-    <form className="form" onSubmit={handleSubmit}>
+    <div className='float-center'>
+    <form className="form " onSubmit={handleSubmit}>
       <p className="form-title">Autenticación</p>
       <div className="input-container">
         <input type="text"
@@ -92,6 +108,7 @@ const LoginForm = () => {
       </button>
       
     </form>
+    </div>
       
   );
 };

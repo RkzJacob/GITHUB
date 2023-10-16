@@ -1509,6 +1509,13 @@ select {
   float: left;
 }
 
+.float-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 .font-light {
   font-weight: 300;
 }

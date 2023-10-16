@@ -19,14 +19,17 @@ export function GenerarPDF2  ( data,nombreArchivo) {
     const pdf = new jsPDF();
     let currentY = 10;
 
-    data.forEach(item => {
+    const sectoresUnicos = [...new Set(data.map(item => item.sector))];
+    console.log("Sectores Únicos:", sectoresUnicos);
+    
+
+    sectoresUnicos.forEach(sector => {
     // Agrega el nombre del sector
-    pdf.text(`Sector: ${item.sector}`, 10, currentY);
+    pdf.text(`Sector: ${sector}`, 10, currentY);
     currentY += 10;
 
-    const tableData = data
-      .filter(defect => defect.sector === item.sector)
-      .map(defect => [defect.defect, defect.cantidad]);
+    const defectosSector = data.filter(defect => defect.sector === sector);
+    const tableData = defectosSector.map(defect => [defect.defect, defect.cantidad]);
 
     // Agrega la tabla de defectos y cantidades
     pdf.autoTable({

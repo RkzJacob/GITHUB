@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { generarInformeEnExcel } from './xls';
+import { generarInformeEnExcel, generarInformeEnExcel2 } from './xls';
 import { GenerarPDF,GenerarPDF2,GenerarPDF3 } from "./generarPdf";
 
 //generar alerta por todos los tipos de defecto
@@ -41,7 +41,7 @@ const generarExcelYMostrarAlerta2 = async (defects) => {
     }));
     
     if (data1.length > 0) {
-      generarInformeEnExcel(data1, 'Defectos por sector');
+      generarInformeEnExcel2(data1, 'Defectos por sector');
       await Swal.fire({
         icon: 'success',
         title: 'Archivo xls generado correctamente',

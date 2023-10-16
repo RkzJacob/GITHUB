@@ -41,10 +41,10 @@ export default function CardPieChart({ fetchData }) {
       data.forEach(defect => {
         const cantidad = parseInt(defect.cantidad, 10); // Convierte a número
         if (!isNaN(cantidad)) {
-          if (uniqueLabels[defect.defect]) {
-            uniqueLabels[defect.defect] += cantidad; // Suma números en lugar de concatenar
+          if (uniqueLabels[defect.sector]) {
+            uniqueLabels[defect.sector] += cantidad; // Suma números en lugar de concatenar
           } else {
-            uniqueLabels[defect.defect] = cantidad;
+            uniqueLabels[defect.sector] = cantidad;
           }
         }
       });

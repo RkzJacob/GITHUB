@@ -21,7 +21,6 @@ export default function CardTable({ color }) {
   useEffect(() => { //utilización de un hook junto utilizacion de codigo
 
     const token = localStorage.getItem('token');
-
     ObtenerDataApi(apiUrl1,setDefects,token);
     ObtenerDataApi(apiUrl2,setDefects2,token);
     ObtenerDataApi(apiUrl3,setDefects4,token);
@@ -33,8 +32,14 @@ const handleParameterSelect = (event) => {
   console.log('Parametro seleccionado:', parametroSeleccionado);
   setSelectedParameter(parametroSeleccionado);
 
+  const token = localStorage.getItem('token');
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
   // Realizar la consulta al API con el parámetro seleccionado
-  axios.get(`${apiUrl2}${parametroSeleccionado}`)
+  axios.get(`${apiUrl2}${parametroSeleccionado}`, {headers})
     .then(response => {
       // Aquí puedes manejar la respuesta del API con el parámetro seleccionado
       setDefects3(response.data);

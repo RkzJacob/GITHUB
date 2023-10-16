@@ -15,11 +15,11 @@ export default function GraficoBarrasCompleto() {
       const defectCounts = [];
 
       data.forEach(defect => {
-        if (!sectors.includes(defect.defect)) {
-          sectors.push(defect.defect);
+        if (!sectors.includes(defect.sector)) {
+          sectors.push(defect.sector);
           defectCounts.push(1);
         } else {
-          const index = sectors.indexOf(defect.defect);
+          const index = sectors.indexOf(defect.sector);
           defectCounts[index] += 1;
         }
       });
