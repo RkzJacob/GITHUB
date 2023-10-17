@@ -11,6 +11,7 @@ import { AuthProvider } from "components/Funciones/authContext";
 import Admin from "layouts/Admin.js";
 import LoginForm from "components/login/login";
 import PrivateRoute from "components/Funciones/privateRoute";
+import { PermisoProvider } from "components/Funciones/Permisos";
 
 // views without layouts
 
@@ -18,6 +19,7 @@ ReactDOM.render(
   <BrowserRouter>
     <Switch>
     <AuthProvider>
+    <PermisoProvider>
       <DataContextProvider>
       {/* add routes with layouts */}
       <Route path="/login" component={LoginForm} />
@@ -27,6 +29,7 @@ ReactDOM.render(
       {/* add redirect for first page */}
       <Redirect from="*" to="/" />
       </DataContextProvider>
+      </PermisoProvider>
       </AuthProvider>
     </Switch>
   </BrowserRouter>,

@@ -1,21 +1,22 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 
 const PermisoContext = createContext();
 
 export const PermisoProvider = ({ children }) => {
-  const [userRoles, setUserRoles] = useState([]);
+
+  // Actualizar el rol
+  const Rol = (rol) => {
+    localStorage.setItem('role', rol);
+  };
 
   return (
-    <PermisoContext.Provider value={{ userRoles, setUserRoles }}>
+    <PermisoContext.Provider value={{ Rol }}>
       {children}
     </PermisoContext.Provider>
   );
 };
 
 export const usePermiso = () => {
-  const context = useContext(PermisoContext);
-  if (!context) {
-    throw new Error('usePermiso debe ser usado dentro de PermisoProvider');
-  }
-  return context;
+  return useContext(PermisoContext);
+ 
 };

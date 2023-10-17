@@ -3,19 +3,24 @@ import axios from 'axios';
 import { useAuth } from 'components/Funciones/authContext';
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { usePermiso } from 'components/Funciones/Permisos';
 
 
 const LoginForm = () => {
   const history = useHistory();
   const { login } = useAuth();
-  console.log({ login });
-  //const {setUserRoles} = usePermiso();
 
+  const {Rol} = usePermiso();
+
+
+  //constantes para el formulario
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
 
+
+  //cambios cuando cambia algo del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -29,9 +34,8 @@ const LoginForm = () => {
 
     try {
       const response = await axios.post('http://localhost:3000/auth/login', formData);
-      //console.log('Token de acceso:', response.data.token);
-      //setUserRoles(response.data.role);
       login(response.data.token);
+      Rol(response.data.role);
 
       await Swal.fire({
         icon: 'success',

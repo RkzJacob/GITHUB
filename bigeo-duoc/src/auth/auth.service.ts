@@ -32,7 +32,8 @@ export class AuthService {
     
     return {
       token,
-      findUser,
+      user: findUser,
+      role: findUser.userRole
     };
     
 }

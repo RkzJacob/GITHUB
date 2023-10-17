@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch,  Redirect } from "react-router-dom";
 
 // components
 
@@ -17,6 +17,7 @@ import NavbarHome from "components/Navbars/HomeNavbar";
 import PrivateRoute from "components/Funciones/privateRoute";
 
 export default function Admin() {
+
   return (
     <>
       <Sidebar />
