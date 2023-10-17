@@ -3,6 +3,7 @@ import React, { useState, useEffect ,useContext} from "react";
 import AdminNavbar from "components/Navbars/AdminNavbar";
 import GraficoBarrasCompleto from "components/Cards/GraficoBarrasCompleto.js";
 import CardLineChart from "components/Cards/CardLineChart.js";
+import TablaDatos from "components/Cards/TablaDatos.js";
 import PieChart from "components/Cards/PieChart.js"
 import ConsumirApi from "components/Funciones/api";
 import { fetchData } from "components/Funciones/api"; 
@@ -13,6 +14,7 @@ export default function Dashboard() {
 
   const [pieChartData, setPieChartData] = useState([]);
   const [barChartData, setBarChartData] = useState([]);
+  const [tablaChartData, setTablaChartData] = useState([]);
 
   const {data} =  useContext( DataContext)
   
@@ -40,12 +42,16 @@ export default function Dashboard() {
           <GraficoBarrasCompleto data={barChartData} />
         </div>
 
-        <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+        {/* <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
           <CardLineChart />
+        </div> */}
+
+        <div >
+          <PieChart data={pieChartData} /> 
         </div>
 
-        <div>
-          <PieChart data={pieChartData} /> 
+        <div className="w-full xl:w-14/14 px-14">
+          <TablaDatos data={tablaChartData} /> 
         </div>
 
 

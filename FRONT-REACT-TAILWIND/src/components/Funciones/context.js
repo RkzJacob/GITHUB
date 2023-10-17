@@ -6,10 +6,10 @@ export const DataContext = createContext();
 // Crea el proveedor personalizado para el contexto
 export const DataContextProvider = ({ children }) => {
   const [data, setData] = useState([]); // Datos iniciales del contexto
-
+  const [selectedKPI, setSelectedKPI] = useState(""); // Agregar estado para SelectedKPI
 
   return (
-    <DataContext.Provider value={{ data, setData }} >
+    <DataContext.Provider value={{ data, setData, selectedKPI, setSelectedKPI }}>
       {children}
     </DataContext.Provider>
   );

@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useRef, useContext  } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
-import { DataContext } from "components/Funciones/context";
+import { DataContext, useDataContext  } from "components/Funciones/context";
 
 
 export default function CardPieChart({ fetchData }) {
   const [defects, setDefects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedKPI, setSelectedKPI] = useState("");
+  // const [selectedKPI, setSelectedKPI] = useState("");
+  const [chartLabels, setChartLabels] = useState([]);
   const chartRef = useRef(null);
 
   
   const contextData = useContext(DataContext);
+  const { selectedKPI } = useDataContext();
 
   useEffect(() => {
     if (contextData && contextData.data) { 
@@ -40,11 +42,19 @@ export default function CardPieChart({ fetchData }) {
   
       data.forEach(defect => {
         const cantidad = parseInt(defect.cantidad, 10); // Convierte a número
+        let labelKey; 
+
+        if (selectedKPI === "Conteo-Todos-Los-Defectos") {
+          labelKey = defect.defect;
+        } else {
+            labelKey = defect.sector;
+        }
+        
         if (!isNaN(cantidad)) {
-          if (uniqueLabels[defect.sector]) {
-            uniqueLabels[defect.sector] += cantidad; // Suma números en lugar de concatenar
+          if (uniqueLabels[labelKey]) {
+            uniqueLabels[labelKey] += cantidad; // Suma números en lugar de concatenar
           } else {
-            uniqueLabels[defect.sector] = cantidad;
+            uniqueLabels[labelKey] = cantidad;
           }
         }
       });

@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ConsumirApi } from "../Funciones/api.js"; // Asegúrate de importar correctamente
 import { fetchData } from "../Funciones/api.js";
-import { DataContext } from "components/Funciones/context.js";
+import { DataContext, useDataContext  } from "components/Funciones/context.js";
 
 export default function AdminNavbar({ ongetData, chartsData }) {
     const [startDate, setStartDate] = useState();
@@ -12,21 +12,31 @@ export default function AdminNavbar({ ongetData, chartsData }) {
     const [datosA, estableceDatos] = useState('');
     const [firstSelectValue, setFirstSelectValue] = useState("Seleccionar"); // Estado para el primer select
     const [secondSelectOptions, setSecondSelectOptions] = useState([]); // Estado para el segundo select
+    const [KpiOptions, setKpiOptions] = useState([]);
+
+    const [secondSelectValue, setSecondSelectValue] = useState("");
+
+    const [KpiValue, setKpiValue] = useState("");
     const [formName, setFormName] = useState("");
 
     const {data} =  useContext( DataContext)
     const {setData} =  useContext( DataContext)
+    const { selectedKPI, setSelectedKPI } = useDataContext();
 
 
     useEffect(() => {
         if (firstSelectValue === "formSprinkler") {
-            setSecondSelectOptions(["Conteo-Todos-Los-Defectos", "Conteo-Defectos-Por-Sector"]);
+            setKpiOptions([
+                { value: "Conteo-Defectos-Por-Sector", label: "Defectos Por Sector" },
+                { value: "Conteo-Todos-Los-Defectos", label: "Defectos Por Tipo" },
+            ]);
         } else if (firstSelectValue === "formCount") {
-            setSecondSelectOptions(["Conteo de Paltas", "Conteo de Arboles"]);
-        } else if (firstSelectValue === "Seleccionar") {
-            setSecondSelectOptions(["Seleccione arriba primero"]);
+            setKpiOptions([
+                { value: "Conteo de Paltas", label: "Conteo de Paltas" },
+                { value: "Conteo de Arboles", label: "Conteo de Arboles" },
+            ]);
         } else {
-            setSecondSelectOptions([]); // Opciones vacías si no hay una opción válida seleccionada
+            setKpiOptions([]);
         }
     }, [firstSelectValue]);
 
@@ -38,12 +48,15 @@ export default function AdminNavbar({ ongetData, chartsData }) {
 
 
     const handleFormChange = (event) => {
-        setFirstSelectValue(event.target.value); //Actualiza el estado de firstSelectValue
-        setFormName(event.target.value)
+        setFirstSelectValue(event.target.value);
+        setFormName(event.target.value);
+        setSecondSelectValue(""); // Reiniciar el valor del segundo select al cambiar el primer select
     };
 
     const handleKpiChange = (event) => {
+        setSecondSelectValue(event.target.value);
         setKpi(event.target.value);
+        setSelectedKPI(event.target.value); // Actualiza el estado SelectedKPI en el contexto
     };
 
     const datosApi = (datos) => {
@@ -76,13 +89,16 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                 </select>
             </div>
             <div className="md:w-3/12 w-4/12 px-2">
-                <select
+            <select
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
-                    value={Kpi}
-                    onChange={(e) => { setKpi(e.target.value)}}
-                >
+                    value={secondSelectValue}
+                    onChange={handleKpiChange}>
                     <option value="">Seleccionar KPI</option>
-                    <option value="Conteo-Defectos-Por-Sector">Defectos Por Sector</option>
+                    {KpiOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
                 </select>
             </div>
             <div className="md:w-3/12 w-3/12 px-2">

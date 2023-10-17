@@ -51,6 +51,11 @@ export class FormSprinklerController {
   async ObtenerDefectosPorCadaSector() {
     return this.formSprinklerService.ObtenerDefectosPorCadaSector();
   } 
+
+  @Get('Conteo-Todos-Los-Defectos/:Fecha1/:Fecha2') // Ruta con parámetro de fechas
+  async obtenerDatosDefectos(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
+    return this.formSprinklerService.ObtenerTodosLosDefectosExistentesConParametroFecha(Fecha1,Fecha2);
+  } 
     
   @Get('Conteo-Defectos-Por-Sector/:Fecha1/:Fecha2') // Ruta con parámetro de fechas
   async obtenerDatos(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {

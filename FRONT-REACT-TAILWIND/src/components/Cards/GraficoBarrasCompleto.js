@@ -6,6 +6,7 @@ import { DataContext } from 'components/Funciones/context.js';
 export default function GraficoBarrasCompleto() {
   const [loading, setLoading] = useState(true);
   const { data } = useContext(DataContext);
+  const { selectedKPI } = useContext(DataContext);
 
   useEffect(() => {
     if (data && data.length > 0) {
@@ -15,12 +16,24 @@ export default function GraficoBarrasCompleto() {
       const defectCounts = [];
 
       data.forEach(defect => {
-        if (!sectors.includes(defect.sector)) {
-          sectors.push(defect.sector);
-          defectCounts.push(1);
+        if (selectedKPI === "Conteo-Todos-Los-Defectos") {
+          // Agrupar por tipo de defecto
+          if (!sectors.includes(defect.defect)) {
+            sectors.push(defect.defect);
+            defectCounts.push(1);
+          } else {
+            const index = sectors.indexOf(defect.defect);
+            defectCounts[index] += 1;
+          }
         } else {
-          const index = sectors.indexOf(defect.sector);
-          defectCounts[index] += 1;
+          // Agrupar por sector
+          if (!sectors.includes(defect.sector)) {
+            sectors.push(defect.sector);
+            defectCounts.push(1);
+          } else {
+            const index = sectors.indexOf(defect.sector);
+            defectCounts[index] += 1;
+          }
         }
       });
 

@@ -73,6 +73,24 @@ export class FormSprinklerService {
       return result;     
     }
 
+    async ObtenerTodosLosDefectosExistentesConParametroFecha(Fecha1: string,Fecha2: string,): Promise<any> {
+      const query = `
+      SELECT TO_CHAR("dateTime",'DD/MM/YYYY') as Fecha, defect as defect, COUNT(defect) as cantidad,
+      sector as sector
+      FROM public.form
+      JOIN public.properties on propid="propertiesPropid"
+      join public."formSprinkler" on spid="formSprinklerSpid"
+      WHERE TO_CHAR("dateTime",'DD/MM/YYYY') BETWEEN $1 AND $2
+      group by defect, Fecha, sector
+      ORDER BY 1,2 ASC
+      `;
+      const result = await this.sequelize.query(query, {
+        type: 'SELECT',
+        bind: [Fecha1,Fecha2], // Bind del parámetro
+      });
+      return result;
+    }
+
     async obtenerDefectosPorSectorConParametroFecha(Fecha1: string,Fecha2: string,): Promise<any> {
       const query = `
       SELECT TO_CHAR("dateTime",'DD/MM/YYYY') as Fecha, defect as defect, COUNT(defect) as cantidad,
