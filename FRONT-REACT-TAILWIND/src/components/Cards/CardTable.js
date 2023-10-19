@@ -1,12 +1,13 @@
 import React, { useState,useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
-import jsPDF from 'jspdf';
 import "jspdf-autotable";
 import aspersores from '../../assets/img/aspersores.png';
 import ObtenerDataApi from "components/Funciones/pruebaFuncion2";
 import { apiUrl1,apiUrl2,apiUrl3 } from "components/urls/apiUrls";
 import { Alertas } from "components/Funciones/generarAlertas";
+
+
 // components
 
 
@@ -17,13 +18,19 @@ export default function CardTable({ color }) {
   const [defects3, setDefects3] = useState([]); // KPI con parametros
   const [defects4, setDefects4] = useState([]);//parametros
   const [selectedParameter, setSelectedParameter] = useState("");
+  const token = localStorage.getItem('token');
+  const rol = localStorage.getItem('role');
+
+  const isUser = (rol === 'user');
+  const isAdmin = (rol === 'Admin');
+
+
 
   useEffect(() => { //utilización de un hook junto utilizacion de codigo
-
-    const token = localStorage.getItem('token');
     ObtenerDataApi(apiUrl1,setDefects,token);
     ObtenerDataApi(apiUrl2,setDefects2,token);
     ObtenerDataApi(apiUrl3,setDefects4,token);
+  
 
 }, []);
 
@@ -32,7 +39,6 @@ const handleParameterSelect = (event) => {
   console.log('Parametro seleccionado:', parametroSeleccionado);
   setSelectedParameter(parametroSeleccionado);
 
-  const token = localStorage.getItem('token');
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -156,6 +162,7 @@ const handleParameterSelect = (event) => {
                 </td>
                 
               </tr>
+              {isUser && (
               <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <img
@@ -180,6 +187,7 @@ const handleParameterSelect = (event) => {
                
                 </td>
               </tr>
+            )}
               <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                 <img

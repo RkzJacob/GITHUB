@@ -50,14 +50,17 @@ export class FormSprinklerService {
 
     async ObtenerDefectosPorSector(sector: string): Promise<any> {
       const query = `
-      SELECT DISTINCT sector,defect, COUNT(defect) as cantidad FROM public.form
+      SELECT DISTINCT sector,defect, COUNT(defect) as cantidad 
+      FROM public.form
       JOIN public.properties on propid="propertiesPropid"
       join public."formSprinkler" on spid="formSprinklerSpid"
       WHERE sector = $1
       GROUP BY sector,defect
-      ORDER BY 1,2 ASC
+      ORDER BY defect ASC,COUNT(defect) DESC
       `;  
-      const result = await this.sequelize.query(query, { type: 'SELECT' ,bind: [sector]});
+      const result = await this.sequelize.query(query, { 
+        type: 'SELECT' ,
+        bind: [sector]});
       return result;     
     }
 
