@@ -18,6 +18,7 @@ export default function TablaDatos() {
   };
 
   const calcularTotales = () => {
+    
     const totales = {};
     data.forEach(defect => {
       if (selectedKPI === "Conteo-Todos-Los-Defectos") {
