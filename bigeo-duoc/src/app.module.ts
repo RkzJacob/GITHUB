@@ -1,3 +1,5 @@
+import { ClienteService } from './../models/cliente/cliente.service';
+import { ClienteController } from './../models/cliente/cliente.controller';
 
 import { FormSprinklerService } from './../models/formSprinkler/formsprinkler.service';
 import { FormSprinklerModule } from './../models/formSprinkler/formsprinkler.module';
@@ -9,7 +11,7 @@ import { UserModule } from './../models/user/user.module';
 import { UserService } from './../models/user/user.service';
 import { UserController } from './../models/user/user.controller';
 
-import {  Module, RequestMethod } from '@nestjs/common';
+import { Module, RequestMethod } from '@nestjs/common';
 import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { user } from 'models/user/user.model';
@@ -51,6 +53,7 @@ import { jwtConstants } from './auth/constants/jwt.constants';
     FormSprinklerModule,
   ],
   controllers: [
+    ClienteController,
     FormSprinklerController,
     FormPlagueController,
     UserController,
@@ -58,6 +61,7 @@ import { jwtConstants } from './auth/constants/jwt.constants';
     AuthController,
   ],
   providers: [
+    ClienteService,
     FormSprinklerService,
     FormPlagueService,
     UserService,
@@ -66,10 +70,10 @@ import { jwtConstants } from './auth/constants/jwt.constants';
 })
 export class AppModule {
   //configure(consumer: MiddlewareConsumer) {
-    //consumer
-      //.apply(RolesMiddleware)
-      //.forRoutes(
-       //{ path: 'user/Todos-los-usuarios', method: RequestMethod.GET },
-      //); // Aplica el middleware a todas las rutas, puedes especificar rutas específicas si lo deseas
+  //consumer
+  //.apply(RolesMiddleware)
+  //.forRoutes(
+  //{ path: 'user/Todos-los-usuarios', method: RequestMethod.GET },
+  //); // Aplica el middleware a todas las rutas, puedes especificar rutas específicas si lo deseas
   //}
 }

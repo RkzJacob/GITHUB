@@ -10,7 +10,7 @@ import GenerarXLS from "components/Cards/GenerarXLS";
 export default function Tables2() {
   return (
     <>
-      <div className="flex flex-wrap mt-4">
+      <div className="flex flex-wrap mt-4 fullscreen2">
         <div className="w-full mb-12 px-4">
           <GenerarXLS color="dark" />
         </div>

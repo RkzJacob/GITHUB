@@ -37,6 +37,11 @@ export default function Dashboard() {
         <div className="w-full">
           <AdminNavbar />
         </div>
+        <div className="w-full xl:w-14/14 px-14"> 
+          <PieChart data={pieChartData} /> 
+        </div>
+
+        
 
         <div className="w-full xl:w-14/14 px-14">
           <GraficoBarrasCompleto data={barChartData} />
@@ -46,10 +51,7 @@ export default function Dashboard() {
           <CardLineChart />
         </div> */}
 
-        <div >
-          <PieChart data={pieChartData} /> 
-        </div>
-
+        
         <div className="w-full xl:w-14/14 px-14">
           <TablaDatos data={tablaChartData} /> 
         </div>

@@ -3194,5 +3194,6 @@ select {
   text-decoration: underline;
 }
 
-
-
+.fullscreen2{
+  height: 100vh;
+}
