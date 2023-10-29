@@ -200,5 +200,87 @@ export class FormSprinklerService {
       }
     }
 
+    async CerroCasa(Fecha1: string, Fecha2: string): Promise<any> {
+      try {
+        // Leer el archivo JSON con la estructura
+        const data = await fs.readFile('./JSON/client.json', 'utf8');
+        const estructura = JSON.parse(data);
+    
+        // Encontrar el cerro "CerroTunel"
+        const CerroCasa = estructura.cerros.find(cerro => cerro.nombre === "CerroCasa");
+    
+        if (!CerroCasa) {
+          throw new Error('No se encontró el cerro "CerroTunel" en la estructura.');
+        }
+    
+        const sectoresCerroCasa = CerroCasa.sectores;
+    
+        // Generar la lista de placeholders para los sectores en el query
+        const placeholders = sectoresCerroCasa.map((_, index) => `$${index + 3}`).join(',');
+    
+        const query = `
+          SELECT TO_CHAR("dateTime",'DD/MM/YYYY') as Fecha, defect as defect, COUNT(defect) as cantidad,
+          sector as sector
+          FROM public.form
+          JOIN public.properties on propid="propertiesPropid"
+          JOIN public."formSprinkler" on spid="formSprinklerSpid"
+          WHERE TO_CHAR("dateTime",'DD/MM/YYYY') BETWEEN $1 AND $2
+          AND sector IN (${placeholders}) 
+          GROUP BY defect, Fecha, sector
+          ORDER BY 1,2 ASC
+        `;
+    
+        const result = await this.sequelize.query(query, {
+          type: 'SELECT',
+          bind: [Fecha1, Fecha2, ...sectoresCerroCasa], // Bind de los parámetros
+        });
+    
+        return result;
+      } catch (error) {
+        throw new Error(`Error al obtener los sectores y realizar la consulta: ${error.message}`);
+      }
+    }
+
+    async LaEsperanza(Fecha1: string, Fecha2: string): Promise<any> {
+      try {
+        // Leer el archivo JSON con la estructura
+        const data = await fs.readFile('./JSON/client.json', 'utf8');
+        const estructura = JSON.parse(data);
+    
+        // Encontrar el cerro "CerroTunel"
+        const LaEsperanza = estructura.cerros.find(cerro => cerro.nombre === "LaEsperanza");
+    
+        if (!LaEsperanza) {
+          throw new Error('No se encontró el cerro "CerroTunel" en la estructura.');
+        }
+    
+        const sectoresLaEsperanza = LaEsperanza.sectores;
+    
+        // Generar la lista de placeholders para los sectores en el query
+        const placeholders = sectoresLaEsperanza.map((_, index) => `$${index + 3}`).join(',');
+    
+        const query = `
+          SELECT TO_CHAR("dateTime",'DD/MM/YYYY') as Fecha, defect as defect, COUNT(defect) as cantidad,
+          sector as sector
+          FROM public.form
+          JOIN public.properties on propid="propertiesPropid"
+          JOIN public."formSprinkler" on spid="formSprinklerSpid"
+          WHERE TO_CHAR("dateTime",'DD/MM/YYYY') BETWEEN $1 AND $2
+          AND sector IN (${placeholders}) 
+          GROUP BY defect, Fecha, sector
+          ORDER BY 1,2 ASC
+        `;
+    
+        const result = await this.sequelize.query(query, {
+          type: 'SELECT',
+          bind: [Fecha1, Fecha2, ...sectoresLaEsperanza], // Bind de los parámetros
+        });
+    
+        return result;
+      } catch (error) {
+        throw new Error(`Error al obtener los sectores y realizar la consulta: ${error.message}`);
+      }
+    }
+
   }
 
