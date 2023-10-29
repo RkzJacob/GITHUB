@@ -68,4 +68,23 @@ export class FormSprinklerController {
   async ObtenerSectores() {
     return this.formSprinklerService.ObtenerSector();
   } 
+
+  @Get('ALL-sectores/:Fecha1/:Fecha2') // Ruta con parámetro
+  @ApiOperation({ summary: 'Conteo los sectores unicos' }) //descripción metodo
+  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  async TodosSectores(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
+    return this.formSprinklerService.TodosLosSectores(Fecha1,Fecha2);
+  }
+
+  @Get('defectos-Cerro-Tunel/:Fecha1/:Fecha2') // Ruta con parámetro
+  @ApiOperation({ summary: 'Conteo los sectores unicos' }) //descripción metodo
+  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  async getCerroTunel(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
+    return this.formSprinklerService.CerroTunel(Fecha1,Fecha2);
+  }
+
+
+
+
+
 }
