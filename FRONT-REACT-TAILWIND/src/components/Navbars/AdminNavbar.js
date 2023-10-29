@@ -14,7 +14,8 @@ export default function AdminNavbar({ ongetData, chartsData }) {
     const [firstSelectValue, setFirstSelectValue] = useState("Seleccionar"); // Estado para el primer select
     const [secondSelectOptions, setSecondSelectOptions] = useState([]); // Estado para el segundo select
     const [KpiOptions, setKpiOptions] = useState([]);
-
+    const [CerroOptions, setCerroOptions] = useState([]);
+    const [CerroValue, setCerroValue] = useState("");
     const [secondSelectValue, setSecondSelectValue] = useState("");
 
     const [KpiValue, setKpiValue] = useState("");
@@ -22,7 +23,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
 
     const { data } = useContext(DataContext)
     const { setData } = useContext(DataContext)
-    const { selectedKPI, setSelectedKPI } = useDataContext();
+
 
 
     useEffect(() => {
@@ -30,6 +31,12 @@ export default function AdminNavbar({ ongetData, chartsData }) {
             setKpiOptions([
                 { value: "Conteo-Defectos-Por-Sector", label: "Defectos Por Sector" },
                 { value: "Conteo-Todos-Los-Defectos", label: "Defectos Por Tipo" },
+                { value: "ALL-sectores", label: "Defectos" },
+            ]);
+            setCerroOptions([
+                { value: "defectos-Cerro-Tunel", label: "Cerro Tunel" },
+                { value: "defectos-Cerro-Casa", label: "Cerro Casa" },
+                { value: "defectos-Cerro-Esperanza", label: "Cerro Esperanza" },
             ]);
         } else if (firstSelectValue === "formCount") {
             setKpiOptions([
@@ -57,9 +64,12 @@ export default function AdminNavbar({ ongetData, chartsData }) {
     const handleKpiChange = (event) => {
         setSecondSelectValue(event.target.value);
         setKpi(event.target.value);
-        setSelectedKPI(event.target.value); // Actualiza el estado SelectedKPI en el contexto
     };
+    const handleCerroChange = (event) => {
+        setCerroValue(event.target.value);
+        setKpi(event.target.value);
 
+    };
     const datosApi = (datos) => {
         estableceDatos(datos);
         console.log(datosA);
@@ -79,7 +89,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                 await Swal.fire({
                     icon: 'error',
                     title: 'Seleccione todos los datos para generar dashboard',
-                  });
+                });
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -106,6 +116,20 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                     onChange={handleKpiChange}>
                     <option value="">Seleccionar KPI</option>
                     {KpiOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+
+            </div>
+            <div className="md:w-3/12 w-4/12 px-2">
+                <select
+                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
+                    value={CerroValue}
+                    onChange={handleCerroChange}>
+                    <option value="ALL-sectores">Campo General</option>
+                    {CerroOptions.map((option) => (
                         <option key={option.value} value={option.value}>
                             {option.label}
                         </option>
