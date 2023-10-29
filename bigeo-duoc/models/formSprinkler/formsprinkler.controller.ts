@@ -17,13 +17,6 @@ export class FormSprinklerController {
     constructor(private readonly formSprinklerService: FormSprinklerService,
                  /* private readonly jwtService: JwtService */) {}
                  
-  @Get('Conteo-defectos') //tipo de operacion y nombre
-  @ApiOperation({ summary: 'Cuenta Defectos 3 Meses Atras' }) //descripción metodo
-  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
-  async CuentaDeDefectos() {
-      return this.formSprinklerService.CuentaDefectos3mesesAtras();
-    }
-
   @Get('Conteo-Todos-Los-Defectos') //tipo de operacion y nombre
   @ApiOperation({ summary: 'Conteo de todos los defectos registrados' }) //descripción metodo
   @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
@@ -97,6 +90,26 @@ export class FormSprinklerController {
     return this.formSprinklerService.CerroCasa(Fecha1,Fecha2);
   }
 
+  @Get('defectos-Cerro-Tunel-General') // Ruta con parámetro
+  @ApiOperation({ summary: 'Conteo defectos por sector del Cerro tunel generales' }) //descripción metodo
+  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  async getCerroTunel2() {
+    return this.formSprinklerService.CerroTunel2();
+  }
+
+  @Get('defectos-Cerro-casa-General') // Ruta con parámetro
+  @ApiOperation({ summary: 'Conteo defectos por sector del cerro casa generales' }) //descripción metodo
+  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  async getCerroCasa2() {
+    return this.formSprinklerService.CerroCasa2();
+  }
+
+  @Get('defectos-Cerro-Esperanza-General') // Ruta con parámetro
+  @ApiOperation({ summary: 'Conteo defectos por sector del cerro esperanza generales' }) //descripción metodo
+  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  async getCerroEsperanza2() {
+    return this.formSprinklerService.CerroEsperanza2();
+  }
 
 
 

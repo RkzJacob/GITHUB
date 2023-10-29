@@ -11,17 +11,6 @@ export class FormSprinklerService {
         @InjectModel(formSprinkler)
         private readonly sprinklerModel: typeof formSprinkler,private readonly sequelize: Sequelize
       ) {}
-    async CuentaDefectos3mesesAtras(): Promise<any> {
-      const query = `
-        SELECT defect, COUNT(defect) as cantidad, "dateTime"
-        FROM "formSprinkler"
-        INNER JOIN properties ON "formSprinkler".spid = properties."formSprinklerSpid"
-        WHERE "dateTime" >= NOW() - INTERVAL '3 months'
-        GROUP BY defect, "dateTime";
-      `;
-      const result = await this.sequelize.query(query, { type: 'SELECT' });
-      return result; 
-    }
 
     async ObtenerTodosLosDefectosExistentes(): Promise<any> {
       const query = `
@@ -281,6 +270,128 @@ export class FormSprinklerService {
         throw new Error(`Error al obtener los sectores y realizar la consulta: ${error.message}`);
       }
     }
+
+    async CerroTunel2(): Promise<any> {
+      try {
+        // Leer el archivo JSON con la estructura
+        const data = await fs.readFile('./JSON/client.json', 'utf8');
+        const estructura = JSON.parse(data);
+    
+        // Encontrar el cerro "CerroTunel"
+        const cerroTunel = estructura.cerros.find(cerro => cerro.nombre === "CerroTunel");
+    
+        if (!cerroTunel) {
+          throw new Error('No se encontró el cerro "CerroTunel" en la estructura.');
+        }
+    
+        const sectoresCerroTunel = cerroTunel.sectores;
+    
+        // Generar la lista de placeholders para los sectores en el query
+        const placeholders = sectoresCerroTunel.map((_, index) => `$${index + 1}`).join(',');
+        
+        const query = `
+          SELECT defect as defect, COUNT(defect) as cantidad,
+          sector as sector
+          FROM public.form
+          JOIN public.properties on propid="propertiesPropid"
+          JOIN public."formSprinkler" on spid="formSprinklerSpid"
+          WHERE sector IN (${placeholders}) 
+          GROUP BY defect,sector
+          ORDER BY 1,2 ASC
+        `;
+    
+        const result = await this.sequelize.query(query, {
+          type: 'SELECT',
+          bind: [...sectoresCerroTunel], // Bind de los parámetros
+        });
+    
+        return result;
+      } catch (error) {
+        throw new Error(`Error al obtener los sectores y realizar la consulta: ${error.message}`);
+      }
+    }
+
+    async CerroCasa2(): Promise<any> {
+      try {
+        // Leer el archivo JSON con la estructura
+        const data = await fs.readFile('./JSON/client.json', 'utf8');
+        const estructura = JSON.parse(data);
+    
+        // Encontrar el cerro "CerroTunel"
+        const CerroCasa2 = estructura.cerros.find(cerro => cerro.nombre === "CerroCasa");
+    
+        if (!CerroCasa2) {
+          throw new Error('No se encontró el cerro "CerroTunel" en la estructura.');
+        }
+    
+        const sectoresCerroCasa2 = CerroCasa2.sectores;
+    
+        // Generar la lista de placeholders para los sectores en el query
+        const placeholders = sectoresCerroCasa2.map((_, index) => `$${index + 1}`).join(',');
+        
+        const query = `
+          SELECT defect as defect, COUNT(defect) as cantidad,
+          sector as sector
+          FROM public.form
+          JOIN public.properties on propid="propertiesPropid"
+          JOIN public."formSprinkler" on spid="formSprinklerSpid"
+          WHERE sector IN (${placeholders}) 
+          GROUP BY defect,sector
+          ORDER BY 1,2 ASC
+        `;
+    
+        const result = await this.sequelize.query(query, {
+          type: 'SELECT',
+          bind: [...sectoresCerroCasa2], // Bind de los parámetros
+        });
+    
+        return result;
+      } catch (error) {
+        throw new Error(`Error al obtener los sectores y realizar la consulta: ${error.message}`);
+      }
+    }
+
+    async CerroEsperanza2(): Promise<any> {
+      try {
+        // Leer el archivo JSON con la estructura
+        const data = await fs.readFile('./JSON/client.json', 'utf8');
+        const estructura = JSON.parse(data);
+    
+        // Encontrar el cerro "CerroTunel"
+        const CerroEsperanza2 = estructura.cerros.find(cerro => cerro.nombre === "LaEsperanza");
+    
+        if (!CerroEsperanza2) {
+          throw new Error('No se encontró el cerro "CerroTunel" en la estructura.');
+        }
+    
+        const sectoresCerroEsperanza2 = CerroEsperanza2.sectores;
+    
+        // Generar la lista de placeholders para los sectores en el query
+        const placeholders = sectoresCerroEsperanza2.map((_, index) => `$${index + 1}`).join(',');
+        
+        const query = `
+          SELECT defect as defect, COUNT(defect) as cantidad,
+          sector as sector
+          FROM public.form
+          JOIN public.properties on propid="propertiesPropid"
+          JOIN public."formSprinkler" on spid="formSprinklerSpid"
+          WHERE sector IN (${placeholders}) 
+          GROUP BY defect,sector
+          ORDER BY 1,2 ASC
+        `;
+    
+        const result = await this.sequelize.query(query, {
+          type: 'SELECT',
+          bind: [...sectoresCerroEsperanza2], // Bind de los parámetros
+        });
+    
+        return result;
+      } catch (error) {
+        throw new Error(`Error al obtener los sectores y realizar la consulta: ${error.message}`);
+      }
+    }
+    
+
 
   }
 
