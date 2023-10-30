@@ -127,7 +127,7 @@ export default function CardPieChart({ fetchData }) {
         </div>
       </div>
       <div className="p-4 flex-auto">
-        <div className="relative h-500-px w-500-px" id="pie-chart-container">
+        <div className="relative h-500-px w-700-px" id="pie-chart-container">
           {loading ? (
             <div className="text-center">
               <div className="spinner-border" role="status">
