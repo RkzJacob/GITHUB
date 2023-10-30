@@ -99,9 +99,16 @@ const handleParameterSelect = (event) => {
       Alertas.generarPDFAlert3(defects3,selectedParameter);
     };
 
-    const GenerarPDF4 = () => {
-      ObtenerDataApiParametros(apiUrl4,setDefects5,token,startDate,endDate);
-      Alertas.generarPDFAlert4(defects5);
+    const GenerarPDF4 = async () => {
+      try {
+        // Esperar a que los datos se obtengan
+        await ObtenerDataApiParametros(apiUrl4, setDefects5, token, startDate, endDate);
+        // Después de obtener los datos, llamar a la función para generar el PDF
+        Alertas.generarPDFAlert4(defects5);
+      } catch (error) {
+        console.error('Error al generar el PDF:', error);
+        // Manejar el error si ocurre alguno
+      }
     };
 
     

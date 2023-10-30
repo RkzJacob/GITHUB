@@ -167,6 +167,7 @@ const generarPDFAlert1 = async (defects) => {
 
     const generarPDFAlert4 = async (defects) => {
       try {
+        
         const perAdministrationPercentage  = defects.perAdministrationPercentage;
         const perSectorPercentage = defects.perSectorPercentage;
 
@@ -183,7 +184,6 @@ const generarPDFAlert1 = async (defects) => {
           });
         }
       } catch (error) {
-        console.error('Error generando el informe en Excel:', error);
         await Swal.fire({
           icon: 'error',
           title: 'Ocurrió un error al generar el informe PDF',

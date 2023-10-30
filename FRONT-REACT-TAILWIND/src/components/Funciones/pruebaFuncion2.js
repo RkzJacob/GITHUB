@@ -2,6 +2,7 @@
 //obtiene por parametro url los datos y los guarda en setdata
 
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export function ObtenerDataApi  (url, setData,token) {
     const headers = {
@@ -19,6 +20,7 @@ export function ObtenerDataApi  (url, setData,token) {
   };
 
 export function ObtenerDataApiParametros (url, setData, token, Fecha1, Fecha2) {
+    return new Promise((resolve, reject) => {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
@@ -37,30 +39,33 @@ export function ObtenerDataApiParametros (url, setData, token, Fecha1, Fecha2) {
     
     const formattedUrl = `${url}${formattedFecha1}/${formattedFecha2}`;
     console.log(formattedUrl);
+
+    Swal.fire({
+      icon: 'info',
+      title: 'Obteniendo datos...',
+      allowOutsideClick: false,
+      showCancelButton: false,
+      showConfirmButton: false,
+      willOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
     axios.get(formattedUrl, { headers })
       .then(response => {
         setData(response.data);
-        console.log('listo',formattedUrl);
-        console.log('listo',response.data);
+        console.log('listo');
+        resolve(response.data);
       })
       .catch(error => {
+        reject(error);
         console.error('Error al obtener datos:', error);
+      })
+      .finally(() => {
+        Swal.close();
       });
+    });
   };
 
-export function extraerPorcentajes(data, cerro) {
-    const porcentajesCerro = data.perSectorPercentage[cerro];
-    const porcentajeTotalCerro = data.perAdministrationPercentage[cerro];
-  
-    const sectores = Object.keys(porcentajesCerro).map(sector => ({
-      sector: sector,
-      porcentaje: porcentajesCerro[sector],
-    }));
-  
-    return {
-      cerro: cerro,
-      porcentajeTotalCerro: porcentajeTotalCerro,
-      sectores: sectores,
-    };
-  }
+
 
