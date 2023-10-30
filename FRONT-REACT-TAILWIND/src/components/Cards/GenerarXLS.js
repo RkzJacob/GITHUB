@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
 import aspersores from '../../assets/img/aspersores.png';
-import ObtenerDataApi from '../Funciones/pruebaFuncion2';
+import  { ObtenerDataApi,ObtenerDataApiParametros } from "components/Funciones/pruebaFuncion2";
 
 
 

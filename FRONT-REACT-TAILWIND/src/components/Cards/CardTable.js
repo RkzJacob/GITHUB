@@ -3,20 +3,36 @@ import PropTypes from "prop-types";
 import axios from 'axios';
 import "jspdf-autotable";
 import aspersores from '../../assets/img/aspersores.png';
-import ObtenerDataApi from "components/Funciones/pruebaFuncion2";
-import { apiUrl1,apiUrl2,apiUrl3 } from "components/urls/apiUrls";
-import { Alertas } from "components/Funciones/generarAlertas";
 
+import { apiUrl1,apiUrl2,apiUrl3,apiUrl4 } from "components/urls/apiUrls";
+import { Alertas } from "components/Funciones/generarAlertas";
+import  { ObtenerDataApi,ObtenerDataApiParametros } from "components/Funciones/pruebaFuncion2";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 // components
 
+const formatDate = (date) => {
+      
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
 
+  return  `${day}-${month}-${year}`;
+};
 
 export default function CardTable({ color }) {
   const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api KPI 1
   const [defects2, setDefects2] = useState([]); // KPI 2
   const [defects3, setDefects3] = useState([]); // KPI con parametros
   const [defects4, setDefects4] = useState([]);//parametros
+  const [defects5, setDefects5] = useState([]);//parametros
+
+  // fechas
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] =  useState(null);
+
   const [selectedParameter, setSelectedParameter] = useState("");
   const token = localStorage.getItem('token');
   const rol = localStorage.getItem('role');
@@ -24,13 +40,15 @@ export default function CardTable({ color }) {
   const isUser = (rol === 'user');
   const isAdmin = (rol === 'Admin');
 
+  
 
 
   useEffect(() => { //utilización de un hook junto utilizacion de codigo
     ObtenerDataApi(apiUrl1,setDefects,token);
     ObtenerDataApi(apiUrl2,setDefects2,token);
     ObtenerDataApi(apiUrl3,setDefects4,token);
-  
+    
+    
 
 }, []);
 
@@ -55,6 +73,19 @@ const handleParameterSelect = (event) => {
     });
 
   };
+    const onChange = (dates) => {
+      const [start, end] = dates;
+      setStartDate(start);
+      setEndDate(end);
+
+      
+    };
+    
+
+
+    
+
+    
 
     const GenerarPDF = () => {
       Alertas.generarPDFAlert1(defects);
@@ -66,6 +97,11 @@ const handleParameterSelect = (event) => {
 
     const GenerarPDF3 = () => {
       Alertas.generarPDFAlert3(defects3,selectedParameter);
+    };
+
+    const GenerarPDF4 = () => {
+      ObtenerDataApiParametros(apiUrl4,setDefects5,token,startDate,endDate);
+      Alertas.generarPDFAlert4(defects5);
     };
 
     
@@ -121,7 +157,7 @@ const handleParameterSelect = (event) => {
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
                 >
-                  Tipo
+                  Parametro
                 </th>
                 <th
                   className={
@@ -131,12 +167,51 @@ const handleParameterSelect = (event) => {
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
                 >
-                  Completion
+                  FORMATO
                 </th>
                 
               </tr>
             </thead>
             <tbody>
+
+            <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={aspersores}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="ASPERSOR"
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    INFORME GENERAL DE ADMINISTRACIONES
+                  </span>
+                </th>
+                <td className=" text-black  border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                
+                <DatePicker className="md:w-2/12 w-2/12 px-2"
+                    selected={startDate}
+                    onChange={onChange}
+                    startDate={startDate}
+                    endDate={endDate}
+                    selectsRange
+                    showMonthDropdown
+                    showYearDropdown
+                    isClearable
+                    dropdownMode="select"
+                    dateFormat="dd/MM/yyyy"
+                />
+            
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2">
+                  </i> <button onClick={GenerarPDF4}> Generar PDF </button>
+                </td>
+                
+              </tr>
               <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <img
