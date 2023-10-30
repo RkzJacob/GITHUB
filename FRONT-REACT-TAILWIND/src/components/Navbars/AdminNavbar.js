@@ -23,26 +23,23 @@ export default function AdminNavbar({ ongetData, chartsData }) {
 
     const { data } = useContext(DataContext)
     const { setData } = useContext(DataContext)
+    const { selectedKPI, setSelectedKPI } = useDataContext();
 
 
 
     useEffect(() => {
         if (firstSelectValue === "formSprinkler") {
             setKpiOptions([
-                { value: "Conteo-Defectos-Por-Sector", label: "Defectos Por Sector" },
-                { value: "Conteo-Todos-Los-Defectos", label: "Defectos Por Tipo" },
+                { value: "Conteo-Todos-Los-Defectos", label: "Todos los defectos" },
+                { value: "Conteo-Defectos-Por-Sector", label: "Defectos Por sector" },
                 { value: "ALL-sectores", label: "Defectos" },
             ]);
-            setCerroOptions([
+            /* setCerroOptions([
                 { value: "defectos-Cerro-Tunel", label: "Cerro Tunel" },
                 { value: "defectos-Cerro-Casa", label: "Cerro Casa" },
                 { value: "defectos-Cerro-Esperanza", label: "Cerro Esperanza" },
-            ]);
-        } else if (firstSelectValue === "formCount") {
-            setKpiOptions([
-                { value: "Conteo de Paltas", label: "Conteo de Paltas" },
-                { value: "Conteo de Arboles", label: "Conteo de Arboles" },
-            ]);
+            ]);*/
+            
         } else {
             setKpiOptions([]);
         }
@@ -64,12 +61,14 @@ export default function AdminNavbar({ ongetData, chartsData }) {
     const handleKpiChange = (event) => {
         setSecondSelectValue(event.target.value);
         setKpi(event.target.value);
+        setSelectedKPI(event.target.value);
     };
+    /*
     const handleCerroChange = (event) => {
         setCerroValue(event.target.value);
-        setKpi(event.target.value);
+        //setKpi(event.target.value);
 
-    };
+    }; */
     const datosApi = (datos) => {
         estableceDatos(datos);
         console.log(datosA);
@@ -123,7 +122,8 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                 </select>
 
             </div>
-            <div className="md:w-3/12 w-4/12 px-2">
+            
+            {/* <div className="md:w-3/12 w-4/12 px-2">
                 <select
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
                     value={CerroValue}
@@ -136,6 +136,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                     ))}
                 </select>
             </div>
+                    */}
             <div className="md:w-3/12 w-3/12 px-2">
                 <DatePicker className="md:w-2/12 w-2/12 px-2"
                     selected={startDate}
