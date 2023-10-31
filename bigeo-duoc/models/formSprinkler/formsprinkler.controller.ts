@@ -62,10 +62,17 @@ export class FormSprinklerController {
     return this.formSprinklerService.ObtenerSector();
   } 
 
-  @Get('ALL-sectores/:Fecha1/:Fecha2') // Ruta con parámetro
+  @Get('defectos-Todos/:Fecha1/:Fecha2') // Ruta con parámetro
   @ApiOperation({ summary: 'Conteo de todos los defectos utilizando json' }) //descripción metodo
   @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
   async TodosSectores(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
+    return this.formSprinklerService.TodosLosSectores(Fecha1,Fecha2);
+  }
+
+  @Get('sector-Todos/:Fecha1/:Fecha2') // Ruta con parámetro
+  @ApiOperation({ summary: 'Conteo de todos los defectos utilizando json' }) //descripción metodo
+  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  async TodosSectores2(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
     return this.formSprinklerService.TodosLosSectores(Fecha1,Fecha2);
   }
 
@@ -76,6 +83,13 @@ export class FormSprinklerController {
     return this.formSprinklerService.CerroTunel(Fecha1,Fecha2);
   }
 
+  @Get('sector-Cerro-Tunel/:Fecha1/:Fecha2') // Ruta con parámetro
+  @ApiOperation({ summary: 'Conteo defectos por sector del cerroTunel' }) //descripción metodo
+  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  async getCerroTunel3(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
+    return this.formSprinklerService.CerroTunel(Fecha1,Fecha2);
+  }
+
   @Get('defectos-Cerro-Casa/:Fecha1/:Fecha2') // Ruta con parámetro
   @ApiOperation({ summary: 'Conteo defectos por sector del CerroCasa' }) //descripción metodo
   @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
@@ -83,10 +97,24 @@ export class FormSprinklerController {
     return this.formSprinklerService.CerroCasa(Fecha1,Fecha2);
   }
 
+  @Get('sector-Cerro-Casa/:Fecha1/:Fecha2') // Ruta con parámetro
+  @ApiOperation({ summary: 'Conteo defectos por sector del CerroCasa' }) //descripción metodo
+  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  async getCerroCasa3(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
+    return this.formSprinklerService.CerroCasa(Fecha1,Fecha2);
+  }
+
   @Get('defectos-Cerro-Esperanza/:Fecha1/:Fecha2') // Ruta con parámetro
   @ApiOperation({ summary: 'Conteo defectos por sector del Cerro Esperanza' }) //descripción metodo
   @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
   async getCerroEsperanza(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
+    return this.formSprinklerService.CerroCasa(Fecha1,Fecha2);
+  }
+
+  @Get('sector-Cerro-Esperanza/:Fecha1/:Fecha2') // Ruta con parámetro
+  @ApiOperation({ summary: 'Conteo defectos por sector del Cerro Esperanza' }) //descripción metodo
+  @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formSprinkler] }) // Respuesta exitosa
+  async getCerroEsperanza3(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
     return this.formSprinklerService.CerroCasa(Fecha1,Fecha2);
   }
 

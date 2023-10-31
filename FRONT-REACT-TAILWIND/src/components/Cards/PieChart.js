@@ -44,10 +44,10 @@ export default function CardPieChart({ fetchData }) {
         const cantidad = parseInt(defect.cantidad, 10); // Convierte a número
         let labelKey; 
 
-        if (selectedKPI === "Conteo-Todos-Los-Defectos") {
+        if (selectedKPI === "defectos") {
           labelKey = defect.defect;
-        }else if (selectedKPI === "Conteo-Defectos-Por-Sector") {
-            labelKey = defect.defect;
+        }else if (selectedKPI === "sector") {
+            labelKey = defect.sector;
         }else if (selectedKPI === "Seleccionar KPI") {
             labelKey = null;
         } else {

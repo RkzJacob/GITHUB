@@ -21,7 +21,7 @@ export default function TablaDatos() {
     
     const totales = {};
     data.forEach(defect => {
-      if (selectedKPI === "Conteo-Todos-Los-Defectos") {
+      if (selectedKPI === "defectos") {
         // Agrupar por tipo de defecto
         if (!totales[defect.defect]) {
           totales[defect.defect] = 1;

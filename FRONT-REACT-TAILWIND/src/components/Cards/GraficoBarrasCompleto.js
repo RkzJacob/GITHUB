@@ -16,7 +16,7 @@ export default function GraficoBarrasCompleto() {
       const defectCounts = [];
 
       data.forEach(defect => {
-        if (selectedKPI === "Conteo-Todos-Los-Defectos") {
+        if (selectedKPI === "defectos") {
           // Agrupar por tipo de defecto
           if (!sectors.includes(defect.defect)) {
             sectors.push(defect.defect);

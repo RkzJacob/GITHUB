@@ -15,7 +15,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
     const [secondSelectOptions, setSecondSelectOptions] = useState([]); // Estado para el segundo select
     const [KpiOptions, setKpiOptions] = useState([]);
     const [CerroOptions, setCerroOptions] = useState([]);
-    const [CerroValue, setCerroValue] = useState("");
+    const [CerroValue, setCerroValue] = useState('');
     const [secondSelectValue, setSecondSelectValue] = useState("");
 
     const [KpiValue, setKpiValue] = useState("");
@@ -30,16 +30,10 @@ export default function AdminNavbar({ ongetData, chartsData }) {
     useEffect(() => {
         if (firstSelectValue === "formSprinkler") {
             setKpiOptions([
-                { value: "Conteo-Todos-Los-Defectos", label: "Todos los defectos" },
-                { value: "Conteo-Defectos-Por-Sector", label: "Defectos Por sector" },
-                { value: "ALL-sectores", label: "Defectos" },
-            ]);
-            /* setCerroOptions([
-                { value: "defectos-Cerro-Tunel", label: "Cerro Tunel" },
-                { value: "defectos-Cerro-Casa", label: "Cerro Casa" },
-                { value: "defectos-Cerro-Esperanza", label: "Cerro Esperanza" },
-            ]);*/
-            
+                { value: "defectos", label: "Todos los defectos" },
+                { value: "sector", label: "Defectos Por sector" },
+                /*{ value: "ALL-sectores", label: "Defectos" },*/
+            ]);           
         } else {
             setKpiOptions([]);
         }
@@ -63,12 +57,11 @@ export default function AdminNavbar({ ongetData, chartsData }) {
         setKpi(event.target.value);
         setSelectedKPI(event.target.value);
     };
-    /*
+    /**/
     const handleCerroChange = (event) => {
         setCerroValue(event.target.value);
-        //setKpi(event.target.value);
+    }; 
 
-    }; */
     const datosApi = (datos) => {
         estableceDatos(datos);
         console.log(datosA);
@@ -77,8 +70,9 @@ export default function AdminNavbar({ ongetData, chartsData }) {
 
 
     const handleGetData = async () => {
+        const finalValue = `${secondSelectValue}-${CerroValue}`;
         try {
-            const response = await fetchData(formName, Kpi, startDate, endDate);
+            const response = await fetchData(formName, finalValue, startDate, endDate);
 
             if (response) {
                 setData(response);
@@ -122,21 +116,19 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                 </select>
 
             </div>
-            
-            {/* <div className="md:w-3/12 w-4/12 px-2">
+            <div className="md:w-3/12 w-4/12 px-2">
                 <select
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
                     value={CerroValue}
-                    onChange={handleCerroChange}>
-                    <option value="ALL-sectores">Campo General</option>
-                    {CerroOptions.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
+                    onChange={handleCerroChange}
+                >
+                    <option value="Seleccionar">Seleccionar</option>
+                    <option value="Todos">General</option>
+                    <option value="Cerro-Tunel">Cerro Tunel</option>
+                    <option value="Cerro-Casa">Cerro Casa</option>
+                    <option value="Cerro-Esperanza">Cerro Esperanza</option>
                 </select>
             </div>
-                    */}
             <div className="md:w-3/12 w-3/12 px-2">
                 <DatePicker className="md:w-2/12 w-2/12 px-2"
                     selected={startDate}
