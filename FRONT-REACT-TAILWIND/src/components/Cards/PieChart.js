@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useContext  } from 'react';
 import Chart from "chart.js";
-import axios from "axios";
 import { DataContext, useDataContext  } from "components/Funciones/context";
 
 
@@ -10,6 +9,7 @@ export default function CardPieChart({ fetchData }) {
   // const [selectedKPI, setSelectedKPI] = useState("");
   const [chartLabels, setChartLabels] = useState([]);
   const chartRef = useRef(null);
+  const legendRef = useRef(null);
 
   
   const contextData = useContext(DataContext);
@@ -85,7 +85,7 @@ export default function CardPieChart({ fetchData }) {
       const config = {
         type: "pie",
         data: {
-          labels: labels,
+          labels: chartLabels, // Usa chartLabels en lugar de labels
           datasets: [
             {
               data: dataValues,
@@ -103,14 +103,28 @@ export default function CardPieChart({ fetchData }) {
             fontColor: "white",
           },
           legend: {
+            display: false,
             labels: {
-              fontColor: "white",
+              fontColor: "black",
             },
+          },
+          legendCallback: function(chart) {
+            const labels = chart.data.labels;
+            const datasets = chart.data.datasets[0].data;
+            let legendHTML = '';
+      
+            labels.forEach((label, index) => {
+              legendHTML += `<li>${label}: ${datasets[index]}</li>`;
+            });
+      
+            return `<ul>${legendHTML}</ul>`;
           },
         },
       };
-  
+      
       chartRef.current = new Chart(ctx, config);
+      const legend = chartRef.current.generateLegend();
+      legendRef.current.innerHTML = legend;
     }
   }, [contextData, loading, selectedKPI]);
 
@@ -127,7 +141,10 @@ export default function CardPieChart({ fetchData }) {
         </div>
       </div>
       <div className="p-4 flex-auto">
+      
         <div className="relative h-500-px w-700-px" id="pie-chart-container">
+        <div className="legend-container" ref={legendRef}></div>
+
           {loading ? (
             <div className="text-center">
               <div className="spinner-border" role="status">

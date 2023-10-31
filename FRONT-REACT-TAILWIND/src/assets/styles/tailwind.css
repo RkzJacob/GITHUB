@@ -3198,20 +3198,12 @@ select {
   height: 100vh;
 }
 
-.labels-container {
-  width: 200px; /* Ajusta el ancho según tus necesidades */
-  height: 100%; /* Asegura que ocupe la altura completa del contenedor */
-  overflow-y: auto; /* Agrega desplazamiento vertical si es necesario */
-  border-right: 1px solid #ccc; /* Opcional: Agrega un borde a la derecha para separarla del gráfico */
+.legend-container {
+  position: absolute;
+  top: 10;
+  left: 10px; /* Ajusta según tu diseño */
+  max-height: 300px; /* Ajusta según tu diseño */
+  overflow-y: auto;
+  color: black;
 }
 
-.label-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.label-list li {
-  padding: 4px 8px; /* Espaciado interno */
-  border-bottom: 1px solid #ccc; /* Opcional: Agrega un borde inferior a cada elemento de la lista */
-}
