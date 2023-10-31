@@ -143,8 +143,8 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                     dateFormat="dd/MM/yyyy"
                 />
             </div>
-            <div className="md:w-2/12 w-2/12 px-2">
-                <button onClick={handleGetData} className=" px-2 placeholder-blueGray-300 text-blueGray-600 font-bold relative rounded bg-white ">
+            <div className="md:w-3/12 w-3/12 px-2">
+                <button onClick={handleGetData} className="bg-green  text-white border border-gray font-bold relative rounded p-2 px-4 ">
                     Cargar
                 </button>
 
