@@ -85,7 +85,7 @@ export default function CardPieChart({ fetchData }) {
       const config = {
         type: "pie",
         data: {
-          labels: chartLabels, // Usa chartLabels en lugar de labels
+          labels: labels, // Usa chartLabels en lugar de labels
           datasets: [
             {
               data: dataValues,
