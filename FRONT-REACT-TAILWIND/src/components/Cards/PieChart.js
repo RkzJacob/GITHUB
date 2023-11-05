@@ -7,7 +7,6 @@ export default function CardPieChart({ fetchData }) {
   const [defects, setDefects] = useState([]);
   const [loading, setLoading] = useState(true);
   // const [selectedKPI, setSelectedKPI] = useState("");
-  const [chartLabels, setChartLabels] = useState([]);
   const chartRef = useRef(null);
   const legendRef = useRef(null);
 

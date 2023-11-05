@@ -37,6 +37,8 @@ export default function GraficoBarrasCompleto() {
         }
       });
 
+    
+
       var config = {
         type: "bar",
         data: {

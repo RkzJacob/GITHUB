@@ -1,3 +1,15 @@
+import { FormCountService } from './../models/formCount/formcount.service';
+import { FormCountModule } from './../models/formCount/formcount.module';
+import { FormCountController } from './../models/formCount/formcount.controller';
+import { FormDamageService } from './../models/formDamage/formdamage.service';
+import { FormDamageModule } from './../models/formDamage/formdamage.module';
+import { FormDamageController } from './../models/formDamage/formdamage.controller';
+import { FormFaunaModule } from './../models/formFauna/formfauna.module';
+import { FormFaunaService } from './../models/formFauna/formfauna.service';
+import { FormFaunaController } from './../models/formFauna/formfauna.controller';
+import { FormCompactionService } from './../models/formCompaction/formcompaction.service';
+import { FormCompactionModule } from './../models/formCompaction/formcompaction.module';
+import { FormCompactionController } from './../models/formCompaction/formcompaction.controller';
 import { ClienteService } from './../models/cliente/cliente.service';
 import { ClienteController } from './../models/cliente/cliente.controller';
 
@@ -29,6 +41,10 @@ import { jwtConstants } from './auth/constants/jwt.constants';
 
 @Module({
   imports: [
+    FormCountModule,
+    FormDamageModule,
+    FormFaunaModule,
+    FormCompactionModule,
     AuthModule,
     JwtModule.register({
       secret: jwtConstants.secret,
@@ -53,6 +69,10 @@ import { jwtConstants } from './auth/constants/jwt.constants';
     FormSprinklerModule,
   ],
   controllers: [
+    FormCountController,
+    FormDamageController,
+    FormFaunaController,
+    FormCompactionController,
     ClienteController,
     FormSprinklerController,
     FormPlagueController,
@@ -61,6 +81,10 @@ import { jwtConstants } from './auth/constants/jwt.constants';
     AuthController,
   ],
   providers: [
+    FormCountService,
+    FormDamageService,
+    FormFaunaService,
+    FormCompactionService,
     ClienteService,
     FormSprinklerService,
     FormPlagueService,
