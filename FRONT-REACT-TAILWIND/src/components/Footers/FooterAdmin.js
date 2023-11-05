@@ -4,7 +4,7 @@ import React from "react";
 export default function FooterAdmin() {
   return (
     <>
-      <footer className="block py-40">
+      <footer className="block py-40 bg-white">
         <div className="container mx-auto px-4">
           <hr className="mb-4 border-b-1 border-black" />
           <div className="flex flex-wrap items-center md:justify-between justify-center">

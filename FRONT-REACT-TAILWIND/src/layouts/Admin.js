@@ -21,7 +21,7 @@ export default function Admin() {
   return (
     <>
       <Sidebar />
-      <div className="relative md:ml-64 bg-black">
+      <div className="relative md:ml-64 bg-white">
       <NavbarHome/>
       
         {/* Header */}

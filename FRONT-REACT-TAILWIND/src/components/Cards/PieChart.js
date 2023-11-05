@@ -7,7 +7,6 @@ export default function CardPieChart({ fetchData }) {
   const [defects, setDefects] = useState([]);
   const [loading, setLoading] = useState(true);
   // const [selectedKPI, setSelectedKPI] = useState("");
-  const [chartLabels, setChartLabels] = useState([]);
   const chartRef = useRef(null);
   const legendRef = useRef(null);
 
@@ -85,7 +84,7 @@ export default function CardPieChart({ fetchData }) {
       const config = {
         type: "pie",
         data: {
-          labels: chartLabels, // Usa chartLabels en lugar de labels
+          labels: labels, // Usa chartLabels en lugar de labels
           datasets: [
             {
               data: dataValues,

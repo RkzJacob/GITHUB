@@ -60,24 +60,43 @@ export function GenerarPDF3  (data,nombreArchivo,sector) {
 
 export function GenerarPDF4  (data,data2,nombreArchivo) {
   const pdf = new jsPDF();
-
+  console.log('entrando en generarpdf')
   pdf.text(`Reporte general`, 10, 10);
 
-  let currentY = pdf.autoTable.previous ? pdf.autoTable.previous.finalY + 10 : 20;
+  let currentY = 15;
+  let headersPrinted = false;
+  
 
   //mostrar data de perAdministrationPercentage
   Object.keys(data).forEach(subseccion => {
     const porcentaje = data[subseccion];
 
-    pdf.autoTable({
-      head: [["Cerro", "Porcentaje"]],
-      body: [[subseccion, porcentaje]],
-      startY: currentY,
-      margin: { top: 15 },
-    });
+    if (!headersPrinted) {
+      // Si los encabezados no se han impreso, imprímelos
+      pdf.autoTable({
+        head: [["Cerro", "Porcentaje"]],
+        body: [[subseccion, porcentaje]],
+        startY: currentY+5,
+        margin: { top: 10 },
+        rowHeight: 1,
+        verticalAlign: 'top',
+        cellPadding: 0,
+      });
+      headersPrinted = true; // Establece la bandera como true
+    }else {
 
+    pdf.autoTable({
+      body: [[subseccion, porcentaje]],
+      startY: currentY+5,
+      margin: { top: 10 },
+      rowHeight: 1,
+      verticalAlign: 'top',
+      cellPadding: 0,
+      tableLayout: 'fixed',
+    });
+  }
     // Actualizar la posición actual Y
-    currentY = pdf.autoTable.previous.finalY + 10;
+    currentY = pdf.autoTable.previous.finalY + 5;
   });
 
   // Mostrar datos de perSectorPercentage
@@ -85,17 +104,28 @@ export function GenerarPDF4  (data,data2,nombreArchivo) {
     pdf.text(`Cerro: ${sector}`, 10, currentY);
     currentY += 10;
 
+    let headersPrinted2 = false;
+
     Object.keys(data2[sector]).forEach(subseccion => {
       const porcentaje = data2[sector][subseccion];
-
+      if (!headersPrinted2){
       pdf.autoTable({
         head: [["Sectores", "Porcentaje"]],
         body: [[subseccion, porcentaje]],
-        startY: currentY,
+        startY: currentY + 5,
+        margin: { top: 15 },
+      });
+      headersPrinted2 = true;
+      
+    }else{
+      pdf.autoTable({
+        body: [[subseccion, porcentaje]],
+        startY: currentY + 5,
         margin: { top: 15 },
       });
 
-      currentY = pdf.autoTable.previous.finalY + 10;
+    } 
+      currentY = pdf.autoTable.previous.finalY + 5;
     });
   });
 

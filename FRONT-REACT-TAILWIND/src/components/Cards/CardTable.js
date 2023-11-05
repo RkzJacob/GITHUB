@@ -81,12 +81,6 @@ const handleParameterSelect = (event) => {
       
     };
     
-
-
-    
-
-    
-
     const GenerarPDF = () => {
       Alertas.generarPDFAlert1(defects);
     };

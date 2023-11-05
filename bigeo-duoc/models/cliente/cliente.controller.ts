@@ -4,8 +4,12 @@ https://docs.nestjs.com/controllers#controllers
 
 import { Controller, Get, Param } from '@nestjs/common';
 import { ClienteService } from './cliente.service';
-import * as fs from 'fs';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+
+@ApiBearerAuth()
+//@UseGuards(AuthGuard)
+@ApiTags('Clientes')
 @Controller('Clientes')
 export class ClienteController {
     constructor(private readonly jsonService: ClienteService) {}

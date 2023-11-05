@@ -172,6 +172,7 @@ const generarPDFAlert1 = async (defects) => {
         const perSectorPercentage = defects.perSectorPercentage;
 
         if (perAdministrationPercentage && Object.keys(perAdministrationPercentage).length > 0) {
+          console.log('usando funcion')
           GenerarPDF4(perAdministrationPercentage , perSectorPercentage,`Reporte General`);
           await Swal.fire({
             icon: 'success',
