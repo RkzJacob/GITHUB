@@ -1,54 +1,78 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import Chart from "chart.js";
 import axios from "axios";
 import { DataContext } from 'components/Funciones/context.js';
+import { useDataContext } from 'components/Funciones/context';
 
 export default function GraficoBarrasCompleto() {
   const [loading, setLoading] = useState(true);
-  const { data } = useContext(DataContext);
-  const { selectedKPI } = useContext(DataContext);
+  const [defects, setDefects] = useState([]);
+  
+  const chartRef = useRef(null);
+  const legendRef = useRef(); // Initialize with an empty ref
+
+  const contextData = useContext(DataContext);
+  const { selectedKPI } = useDataContext();
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      setLoading(false);
+    if (contextData && contextData.data) { 
+      const data = contextData.data; 
 
-      const sectors = [];
-      const defectCounts = [];
+      // Destruye el gráfico anterior si existe
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
+      
+      // Ordena los datos de mayor a menor según la cantidad
+      data.sort((a, b) => parseInt(b.cantidad, 10) - parseInt(a.cantidad, 10));
+
+      setDefects(data);
+      setLoading(false);
+    }
+  }, [contextData]);
+
+  useEffect(() => {
+    if (!loading && contextData && contextData.data) {
+      const data = contextData.data;
+
+      // Inicializa un objeto para almacenar labels para que no se repitan
+      const uniqueLabels = {};
 
       data.forEach(defect => {
+        const cantidad = parseInt(defect.cantidad, 10); // Convierte a número
+        let labelKey; 
+
         if (selectedKPI === "defectos") {
-          // Agrupar por tipo de defecto
-          if (!sectors.includes(defect.defect)) {
-            sectors.push(defect.defect);
-            defectCounts.push(1);
-          } else {
-            const index = sectors.indexOf(defect.defect);
-            defectCounts[index] += 1;
-          }
+          labelKey = defect.defect;
+        } else if (selectedKPI === "sector") {
+          labelKey = defect.sector;
+        } else if (selectedKPI === "Seleccionar KPI") {
+          labelKey = null;
         } else {
-          // Agrupar por sector
-          if (!sectors.includes(defect.sector)) {
-            sectors.push(defect.sector);
-            defectCounts.push(1);
+          labelKey = defect.sector;
+        }
+        
+        if (!isNaN(cantidad)) {
+          if (uniqueLabels[labelKey]) {
+            uniqueLabels[labelKey] += cantidad; // Suma números en lugar de concatenar
           } else {
-            const index = sectors.indexOf(defect.sector);
-            defectCounts[index] += 1;
+            uniqueLabels[labelKey] = cantidad;
           }
         }
       });
 
-    
+      const labelbar = Object.keys(uniqueLabels);
+      const dataValues = Object.values(uniqueLabels);
 
       var config = {
         type: "bar",
         data: {
-          labels: sectors,
+          labels: labelbar,
           datasets: [
             {
-              label: 'Tipo de Defecto',
               backgroundColor: "#e5ead4",
               borderColor: "#e5ead4",
-              data: defectCounts,
+              data: dataValues,
             },
           ],
         },
@@ -127,12 +151,15 @@ export default function GraficoBarrasCompleto() {
         },
       };
 
-      var ctx = document.getElementById("line-chart2");
-      if (ctx) {
-        var chart = new Chart(ctx, config);
+      const ctx = document.getElementById("line-chart2").getContext("2d");
+      chartRef.current = new Chart(ctx, config);
+      const legend = chartRef.current.generateLegend();
+
+      if (legendRef.current) {
+        legendRef.current.innerHTML = legend;
       }
     }
-  }, [data]);
+  }, [contextData, loading, selectedKPI]);
 
   return (
     <>

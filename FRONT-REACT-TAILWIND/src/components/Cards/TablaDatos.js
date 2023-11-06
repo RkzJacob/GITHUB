@@ -18,32 +18,32 @@ export default function TablaDatos() {
   };
 
   const calcularTotales = () => {
-    
     const totales = {};
+  
     data.forEach(defect => {
       if (selectedKPI === "defectos") {
         // Agrupar por tipo de defecto
         if (!totales[defect.defect]) {
-          totales[defect.defect] = 1;
+          totales[defect.defect] = parseInt(defect.cantidad, 10);
         } else {
-          totales[defect.defect] += 1;
+          totales[defect.defect] += parseInt(defect.cantidad, 10);
         }
       } else {
         // Agrupar por sector
         if (!totales[defect.sector]) {
-          totales[defect.sector] = 1;
+          totales[defect.sector] = parseInt(defect.cantidad, 10);
         } else {
-          totales[defect.sector] += 1;
+          totales[defect.sector] += parseInt(defect.cantidad, 10);
         }
       }
     });
-
+  
     if (sortColumn) {
       // Ordenar los totales según la columna seleccionada
       const sortedTotales = Object.entries(totales).sort((a, b) => {
         const [keyA, valueA] = a;
         const [keyB, valueB] = b;
-
+  
         if (sortColumn === 'etiqueta') {
           return sortDirection === 'asc' ? keyA.localeCompare(keyB) : keyB.localeCompare(keyA);
         } else if (sortColumn === 'totalCantidad') {
@@ -53,13 +53,13 @@ export default function TablaDatos() {
           const porcentajeB = valueB / data.length;
           return sortDirection === 'asc' ? porcentajeA - porcentajeB : porcentajeB - porcentajeA;
         }
-
+  
         return 0; // En caso de que la columna de clasificación no se reconozca
       });
-
+  
       return Object.fromEntries(sortedTotales);
     }
-
+  
     return totales;
   };
 

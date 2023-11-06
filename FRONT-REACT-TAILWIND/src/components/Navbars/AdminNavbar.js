@@ -32,9 +32,20 @@ export default function AdminNavbar({ ongetData, chartsData }) {
             setKpiOptions([
                 { value: "defectos", label: "Todos los defectos" },
                 { value: "sector", label: "Defectos Por sector" },
-                /*{ value: "ALL-sectores", label: "Defectos" },*/
             ]);           
-        } else {
+        } else if (firstSelectValue === "formFauna") {
+            setKpiOptions([
+                { value: "Fauna", label: "FAUNA TEST" },
+            ]);           
+        } else if (firstSelectValue === "formCompaction") {
+            setKpiOptions([
+                { value: "Pressure", label: "Compaction TEST" },
+            ]);           
+        } else if (firstSelectValue === "formCount") {
+            setKpiOptions([
+                { value: "Fruit", label: "Conteo de frutas" },
+            ]);           
+        }else {
             setKpiOptions([]);
         }
     }, [firstSelectValue]);
@@ -100,6 +111,9 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                 >
                     <option value="Seleccionar">Seleccionar</option>
                     <option value="formSprinkler">Aspersores</option>
+                    <option value="formCompaction">Compaction</option>
+                    <option value="formCount">Conteo</option>
+                    <option value="formFauna">Fauna</option>
                 </select>
             </div>
             <div className="md:w-3/12 w-4/12 px-2">
