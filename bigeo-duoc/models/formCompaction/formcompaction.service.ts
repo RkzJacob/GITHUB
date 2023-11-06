@@ -82,7 +82,7 @@ export class FormCompactionService {
             JOIN public."formCompaction" on cptid="formCompactionCptid"
             WHERE TO_CHAR("dateTime",'DD/MM/YYYY') BETWEEN $1 AND $2
             AND sector IN (${placeholders}) 
-            GROUP BY pressure,sector,Fecha
+            GROUP BY Fecha,pressure,sector
             ORDER BY 1,2 ASC
           `;
       
