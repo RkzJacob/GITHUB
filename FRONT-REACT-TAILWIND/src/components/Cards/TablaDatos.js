@@ -19,6 +19,7 @@ export default function TablaDatos() {
 
   const calcularTotales = () => {
     const totales = {};
+    let sumaTotalCantidad = 0;
   
     data.forEach(defect => {
       if (selectedKPI === "defectos") {
@@ -28,6 +29,7 @@ export default function TablaDatos() {
         } else {
           totales[defect.defect] += parseInt(defect.cantidad, 10);
         }
+        sumaTotalCantidad += parseInt(defect.cantidad, 10);
       } else {
         // Agrupar por sector
         if (!totales[defect.sector]) {
@@ -35,6 +37,7 @@ export default function TablaDatos() {
         } else {
           totales[defect.sector] += parseInt(defect.cantidad, 10);
         }
+        sumaTotalCantidad += parseInt(defect.cantidad, 10);
       }
     });
   
@@ -49,21 +52,21 @@ export default function TablaDatos() {
         } else if (sortColumn === 'totalCantidad') {
           return sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
         } else if (sortColumn === 'porcentajeTotal') {
-          const porcentajeA = valueA / data.length;
-          const porcentajeB = valueB / data.length;
+          const porcentajeA = (valueA / sumaTotalCantidad) * 100;
+          const porcentajeB = (valueB / sumaTotalCantidad) * 100;
           return sortDirection === 'asc' ? porcentajeA - porcentajeB : porcentajeB - porcentajeA;
         }
   
         return 0; // En caso de que la columna de clasificación no se reconozca
       });
   
-      return Object.fromEntries(sortedTotales);
+      return { totales: Object.fromEntries(sortedTotales), sumaTotalCantidad };
     }
   
-    return totales;
+    return { totales, sumaTotalCantidad };
   };
 
-  const totales = calcularTotales();
+  const { totales, sumaTotalCantidad } = calcularTotales();
 
   return (
     <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
@@ -96,15 +99,15 @@ export default function TablaDatos() {
               </tr>
             </thead>
             <tbody>
-              {Object.keys(totales).map(etiqueta => (
-                <tr key={etiqueta}>
-                  <td className="text-white">{etiqueta}</td>
-                  <td className="text-white">{totales[etiqueta]}</td>
-                  <td className="text-white">
-                    {(totales[etiqueta] / data.length * 100).toFixed(2)}%
-                  </td>
-                </tr>
-              ))}
+            {totales && Object.keys(totales).map(etiqueta => (
+              <tr key={etiqueta}>
+                <td className="text-white">{etiqueta}</td>
+                <td className="text-white">{totales[etiqueta]}</td>
+                <td className="text-white">
+                  {((totales[etiqueta] / sumaTotalCantidad) * 100).toFixed(2)}%
+                </td>
+              </tr>
+            ))}
             </tbody>
           </table>
         </div>
