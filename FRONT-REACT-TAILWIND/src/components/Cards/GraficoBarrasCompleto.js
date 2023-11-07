@@ -110,7 +110,7 @@ export default function GraficoBarrasCompleto() {
                 scaleLabel: {
                   display: false,
                   labelString: "Nombre defecto",
-                  fontColor: "white",
+                  fontColor: "black",
                 },
                 gridLines: {
                   display: false,
@@ -163,7 +163,7 @@ export default function GraficoBarrasCompleto() {
 
   return (
     <>
-      <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-600">
+      <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-VerdeSemiOscuro">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full max-w-full flex-grow flex-1">
