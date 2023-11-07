@@ -32,20 +32,20 @@ export default function AdminNavbar({ ongetData, chartsData }) {
             setKpiOptions([
                 { value: "defectos", label: "Todos los defectos" },
                 { value: "sector", label: "Defectos Por sector" },
-            ]);           
+            ]);
         } else if (firstSelectValue === "formFauna") {
             setKpiOptions([
                 { value: "Fauna", label: "FAUNA TEST" },
-            ]);           
+            ]);
         } else if (firstSelectValue === "formCompaction") {
             setKpiOptions([
                 { value: "Pressure", label: "Compaction TEST" },
-            ]);           
+            ]);
         } else if (firstSelectValue === "formCount") {
             setKpiOptions([
                 { value: "Fruit", label: "Conteo de frutas" },
-            ]);           
-        }else {
+            ]);
+        } else {
             setKpiOptions([]);
         }
     }, [firstSelectValue]);
@@ -71,7 +71,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
     /**/
     const handleCerroChange = (event) => {
         setCerroValue(event.target.value);
-    }; 
+    };
 
     const datosApi = (datos) => {
         estableceDatos(datos);
@@ -79,24 +79,36 @@ export default function AdminNavbar({ ongetData, chartsData }) {
         chartsData(datosA);
     }
 
+    const showErrorMessage = async (message) => {
+        await Swal.fire({
+            icon: 'error',
+            title: message,
+        });
+    }
 
     const handleGetData = async () => {
         const finalValue = `${secondSelectValue}-${CerroValue}`;
         try {
+            if (!formName || !finalValue || !startDate || !endDate) {
+                if (!formName) {
+                    showErrorMessage('Seleccione algún Form');
+                }
+                if (!finalValue) {
+                    showErrorMessage('Seleccione algún KPI');
+                }
+                if (!startDate || !endDate) {
+                    showErrorMessage('Seleccione Fechas');
+                }
+                return; // Evita continuar si hay errores
+            }
             const response = await fetchData(formName, finalValue, startDate, endDate);
 
-            if (response) {
+            if (response && response.length > 0) {
                 setData(response);
-                console.log('Data:', response);
             } else {
-                console.log('No data available');
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Seleccione todos los datos para generar dashboard',
-                });
+                showErrorMessage('No hay datos disponibles para las fechas seleccionadas');
             }
         } catch (error) {
-            console.error('Error fetching data:', error);
         }
     }
 
