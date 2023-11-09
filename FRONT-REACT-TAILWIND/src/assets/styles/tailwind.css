@@ -3196,6 +3196,8 @@ select {
 
 .fullscreen2{
   height: 100vh;
+  
+  
 }
 
 .legend-container {
@@ -3205,5 +3207,10 @@ select {
   max-height: 300px; /* Ajusta según tu diseño */
   overflow-y: auto;
   color: black;
+}
+
+.fullscreen3 {
+  
+  margin-top: 60px;
 }
 
