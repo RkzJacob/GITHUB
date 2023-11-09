@@ -34,15 +34,15 @@ export class FormCountService {
           const placeholders = sectoresCerroTunel.map((_, index) => `$${index + 3}`).join(',');
       
           const query = `
-            SELECT TO_CHAR("dateTime",'DD/MM/YYYY') as Fecha,"hasFruit" ,COUNT("hasFruit") as cantidad,
-            sector as sector
+            SELECT TO_CHAR("dateTime",'DD/MM/YYYY') as Fecha, "hasFruit", COUNT("hasFruit") as cantidad, sector as sector
             FROM public.form
             JOIN public.properties on propid="propertiesPropid"
             JOIN public."formCount" on cntid="formCountCntid"
             WHERE TO_CHAR("dateTime",'DD/MM/YYYY') BETWEEN $1 AND $2
             AND sector IN (${placeholders}) 
-            GROUP BY "hasFruit",sector,Fecha
-            ORDER BY 1,2 ASC
+            AND "hasFruit" = 'si' -- Agrega esta línea para filtrar por "hasFruit" igual a "si"
+            GROUP BY "hasFruit", sector, Fecha
+            ORDER BY 1, 2 ASC
           `;
       
           const result = await this.sequelize.query(query, {

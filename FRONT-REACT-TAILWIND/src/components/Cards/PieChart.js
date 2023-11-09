@@ -45,8 +45,10 @@ export default function CardPieChart({ fetchData }) {
 
         if (selectedKPI === "defectos") {
           labelKey = defect.defect;
-        }else if (selectedKPI === "Seleccionar KPI") {
-            labelKey = null;
+        } else if (selectedKPI === "Fruit") {
+          labelKey = defect.sector;
+        } else if (selectedKPI === "Seleccionar KPI") {
+          labelKey = null;
         } else {
             labelKey = defect.sector;
         }
