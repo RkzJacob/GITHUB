@@ -7,7 +7,7 @@ import { useDataContext } from 'components/Funciones/context';
 export default function GraficoBarrasCompleto() {
   const [loading, setLoading] = useState(true);
   const [defects, setDefects] = useState([]);
-  
+
   const chartRef = useRef(null);
   const legendRef = useRef(); // Initialize with an empty ref
 
@@ -15,14 +15,14 @@ export default function GraficoBarrasCompleto() {
   const { selectedKPI } = useDataContext();
 
   useEffect(() => {
-    if (contextData && contextData.data) { 
-      const data = contextData.data; 
+    if (contextData && contextData.data) {
+      const data = contextData.data;
 
       // Destruye el gráfico anterior si existe
       if (chartRef.current) {
         chartRef.current.destroy();
       }
-      
+
       // Ordena los datos de mayor a menor según la cantidad
       data.sort((a, b) => parseInt(b.cantidad, 10) - parseInt(a.cantidad, 10));
 
@@ -40,7 +40,7 @@ export default function GraficoBarrasCompleto() {
 
       data.forEach(defect => {
         const cantidad = parseInt(defect.cantidad, 10); // Convierte a número
-        let labelKey; 
+        let labelKey;
 
         if (selectedKPI === "defectos") {
           labelKey = defect.defect;
@@ -51,7 +51,7 @@ export default function GraficoBarrasCompleto() {
         } else {
           labelKey = defect.sector;
         }
-        
+
         if (!isNaN(cantidad)) {
           if (uniqueLabels[labelKey]) {
             uniqueLabels[labelKey] += cantidad; // Suma números en lugar de concatenar
@@ -63,16 +63,24 @@ export default function GraficoBarrasCompleto() {
 
       const labelbar = Object.keys(uniqueLabels);
       const dataValues = Object.values(uniqueLabels);
+      // Ordenar de mayor a menor
+      const sortedData = labelbar.map((label, index) => ({
+        label,
+        value: dataValues[index],
+      })).sort((a, b) => b.value - a.value);
+
+      const sortedLabelbar = sortedData.map(item => item.label);
+      const sortedDataValues = sortedData.map(item => item.value);
 
       var config = {
         type: "bar",
         data: {
-          labels: labelbar,
+          labels: sortedLabelbar,
           datasets: [
             {
               backgroundColor: "#e5ead4",
               borderColor: "#e5ead4",
-              data: dataValues,
+              data: sortedDataValues,
             },
           ],
         },
