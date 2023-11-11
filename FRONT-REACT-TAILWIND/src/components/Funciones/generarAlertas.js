@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import { generarInformeEnExcel, generarInformeEnExcel2 } from './xls';
-import { GenerarPDF,GenerarPDF2,GenerarPDF3, GenerarPDF4 } from "./generarPdf";
+import { GenerarPDF,GenerarPDF2,GenerarPDF3, GenerarPDF5 } from "./generarPdf";
 
 //generar alerta por todos los tipos de defecto
 const generarExcelYMostrarAlerta = async (defects) => {
@@ -173,7 +173,7 @@ const generarPDFAlert1 = async (defects) => {
 
         if (perAdministrationPercentage && Object.keys(perAdministrationPercentage).length > 0) {
           console.log('usando funcion')
-          GenerarPDF4(perAdministrationPercentage , perSectorPercentage,`Reporte General`);
+          GenerarPDF5(perAdministrationPercentage , perSectorPercentage,`Reporte General`);
           await Swal.fire({
             icon: 'success',
             title: 'Archivo PDF generado correctamente',

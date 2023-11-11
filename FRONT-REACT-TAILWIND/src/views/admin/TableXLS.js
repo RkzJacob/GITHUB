@@ -12,7 +12,7 @@ import NavbarHome from "components/Navbars/HomeNavbar";
 export default function Tables2() {
   return (
     <>
-      <div className="flex flex-wrap mt-4 fullscreen3">
+      <div className="flex flex-wrap ">
 
       <div className="w-full">
           <NavbarHome/>
@@ -21,7 +21,7 @@ export default function Tables2() {
         
 
         <div className="w-full xl:w-14/14 px-14 mt-20">
-          <GenerarXLS color="dark" />
+          <GenerarXLS color="light" />
         </div>
 
       </div>

@@ -58,78 +58,45 @@ export function GenerarPDF3  (data,nombreArchivo,sector) {
     pdf.save(`${nombreArchivo}.pdf`);
 };
 
-export function GenerarPDF4  (data,data2,nombreArchivo) {
+export function GenerarPDF5(data, data2, nombreArchivo) {
   const pdf = new jsPDF();
-  console.log('entrando en generarpdf')
-  pdf.text(`Reporte general`, 10, 10);
+  console.log('entrando en generarpdf');
+  pdf.text('Reporte general de administraciones', 10, 10);
 
-  let currentY = 15;
-  let headersPrinted = false;
-  
+  let currentY = 20; // Espacio inicial después del título
+  // Función auxiliar para imprimir secciones de datos con encabezados
+  const printSection = (sectionData, headers, startY) => {
+    let sectionHeadersPrinted = false;
+    Object.keys(sectionData).forEach(key => {
+      let percentage = parseFloat(sectionData[key]).toFixed(1);
 
-  //mostrar data de perAdministrationPercentage
-  Object.keys(data).forEach(subseccion => {
-    const porcentaje = data[subseccion];
-
-    if (!headersPrinted) {
-      // Si los encabezados no se han impreso, imprímelos
-      pdf.autoTable({
-        head: [["Cerro", "Porcentaje"]],
-        body: [[subseccion, porcentaje]],
-        startY: currentY+5,
-        margin: { top: 10 },
-        rowHeight: 1,
-        verticalAlign: 'top',
-        cellPadding: 0,
-      });
-      headersPrinted = true; // Establece la bandera como true
-    }else {
-
-    pdf.autoTable({
-      body: [[subseccion, porcentaje]],
-      startY: currentY+5,
-      margin: { top: 10 },
-      rowHeight: 1,
-      verticalAlign: 'top',
-      cellPadding: 0,
-      tableLayout: 'fixed',
+      if (!sectionHeadersPrinted) {
+        pdf.autoTable({
+          head: [headers],
+          body: [[key, `${percentage}%`]],
+          startY: startY,
+          margin: { top: 10 },
+          theme: 'grid' // Asegura que las líneas de la tabla sean visibles
+        });
+        sectionHeadersPrinted = true;
+      } else {
+        pdf.autoTable({
+          body: [[key, `${percentage}%`]],
+          startY: pdf.autoTable.previous.finalY + 2, // Espacio entre filas
+          margin: { top: 10 },
+          theme: 'grid'
+        });
+      }
     });
-  }
-    // Actualizar la posición actual Y
-    currentY = pdf.autoTable.previous.finalY + 5;
-  });
-
-  // Mostrar datos de perSectorPercentage
+    return pdf.autoTable.previous.finalY; // Retorna la última posición Y después de la sección
+  };
+  // Imprimir la primera sección de datos
+  currentY = printSection(data, ["Cerro", "Porcentaje"], currentY) + 5;
+  // Imprimir la segunda sección de datos
   Object.keys(data2).forEach(sector => {
-    pdf.text(`Cerro: ${sector}`, 10, currentY);
-    currentY += 10;
-
-    let headersPrinted2 = false;
-
-    Object.keys(data2[sector]).forEach(subseccion => {
-      const porcentaje = data2[sector][subseccion];
-      if (!headersPrinted2){
-      pdf.autoTable({
-        head: [["Sectores", "Porcentaje"]],
-        body: [[subseccion, porcentaje]],
-        startY: currentY + 5,
-        margin: { top: 15 },
-      });
-      headersPrinted2 = true;
-      
-    }else{
-      pdf.autoTable({
-        body: [[subseccion, porcentaje]],
-        startY: currentY + 5,
-        margin: { top: 15 },
-      });
-
-    } 
-      currentY = pdf.autoTable.previous.finalY + 5;
-    });
+    pdf.text(`Reporte por Administración: ${sector}`, 10, currentY);
+    currentY = printSection(data2[sector], ["Sectores", "Porcentaje"], currentY + 5) + 10;
   });
-
-
-
+  // Guardar el PDF con el nombre de archivo proporcionado
   pdf.save(`${nombreArchivo}.pdf`);
 };

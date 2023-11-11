@@ -76,7 +76,7 @@ const handleParameterSelect = (event) => {
     <>
       <div
         className={
-          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
+          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-2xl rounded " +
           (color === "light" ? "bg-white" : "bg-lightBlue-900 text-white")
         }
       >
@@ -203,7 +203,7 @@ const handleParameterSelect = (event) => {
                   </span>
                 </th>
                 <td className="border-t-0 px-6 align-middle  border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                <select className="bg-lightBlue-800" value={selectedParameter} onChange={handleParameterSelect}>
+                <select className="bg-light" value={selectedParameter} onChange={handleParameterSelect}>
                   <option  value="">Selecciona un sector</option>
                     {defects4.map(parametro => (
                       <option key={parametro.sector} value={parametro.sector}>

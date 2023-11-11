@@ -8,7 +8,7 @@ import NavbarHome from "components/Navbars/HomeNavbar";
 export default function Tables() {
   return (
     <>
-      <div className="flex flex-wrap mt-4 fullscreen3">
+      <div className="flex flex-wrap  ">
 
       <div className="w-full">
           <NavbarHome />
@@ -16,7 +16,7 @@ export default function Tables() {
 
         
         <div className="w-full xl:w-14/14 px-14 mt-20">
-          <CardTable color="dark" />
+          <CardTable color="light" />
         </div>
         
       </div>

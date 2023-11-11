@@ -38,7 +38,7 @@ export default function Dashboard() {
           <AdminNavbar />
         </div>
         
-        <div className="w-full xl:w-14/14 px-14 mt-20"> 
+        <div className="w-full xl:w-14/14 px-14 mt-20 "> 
           <PieChart data={pieChartData} /> 
         </div>
 
