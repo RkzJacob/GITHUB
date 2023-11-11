@@ -3,6 +3,8 @@ import Chart from "chart.js";
 import axios from "axios";
 import { DataContext } from 'components/Funciones/context.js';
 import { useDataContext } from 'components/Funciones/context';
+import { defectColors } from 'assets/colors/colorMapping';
+
 
 export default function GraficoBarrasCompleto() {
   const [loading, setLoading] = useState(true);
@@ -67,10 +69,12 @@ export default function GraficoBarrasCompleto() {
       const sortedData = labelbar.map((label, index) => ({
         label,
         value: dataValues[index],
+        color: defectColors[label] || '#FF5733',
       })).sort((a, b) => b.value - a.value);
 
       const sortedLabelbar = sortedData.map(item => item.label);
       const sortedDataValues = sortedData.map(item => item.value);
+      const sortedDataColors = sortedData.map(item => item.color);
 
       var config = {
         type: "bar",
@@ -78,7 +82,7 @@ export default function GraficoBarrasCompleto() {
           labels: sortedLabelbar,
           datasets: [
             {
-              backgroundColor: "#e5ead4",
+              backgroundColor: sortedDataColors,
               borderColor: "#e5ead4",
               data: sortedDataValues,
             },

@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef, useContext  } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import Chart from "chart.js";
-import { DataContext, useDataContext  } from "components/Funciones/context";
-
+import { DataContext, useDataContext } from "components/Funciones/context";
+import { defectColors } from 'assets/colors/colorMapping';
 
 export default function CardPieChart({ fetchData }) {
   const [defects, setDefects] = useState([]);
@@ -10,14 +10,14 @@ export default function CardPieChart({ fetchData }) {
   const chartRef = useRef(null);
   const legendRef = useRef(null);
 
-  
+
   const contextData = useContext(DataContext);
   const { selectedKPI } = useDataContext();
 
   useEffect(() => {
-    if (contextData && contextData.data) { 
-      const data = contextData.data; 
-  
+    if (contextData && contextData.data) {
+      const data = contextData.data;
+
       setDefects(data);
       setLoading(false);
     }
@@ -35,13 +35,13 @@ export default function CardPieChart({ fetchData }) {
   useEffect(() => {
     if (!loading && contextData && contextData.data) {
       const data = contextData.data;
-  
+
       // Inicializa un objeto para almacenar labels para que no se repitan
       const uniqueLabels = {};
-  
+
       data.forEach(defect => {
         const cantidad = parseInt(defect.cantidad, 10); // Convierte a número
-        let labelKey; 
+        let labelKey;
 
         if (selectedKPI === "defectos") {
           labelKey = defect.defect;
@@ -50,9 +50,9 @@ export default function CardPieChart({ fetchData }) {
         } else if (selectedKPI === "Seleccionar KPI") {
           labelKey = null;
         } else {
-            labelKey = defect.sector;
+          labelKey = defect.sector;
         }
-        
+
         if (!isNaN(cantidad)) {
           if (uniqueLabels[labelKey]) {
             uniqueLabels[labelKey] += cantidad; // Suma números en lugar de concatenar
@@ -61,34 +61,38 @@ export default function CardPieChart({ fetchData }) {
           }
         }
       });
-  
+
       const labels = Object.keys(uniqueLabels);
       const dataValues = Object.values(uniqueLabels);
-  
-      // Genera colores aleatorios únicos
-      const uniqueColors = new Set();
-      const backgroundColors = labels.map(() => {
-        let color;
-        do {
-          color = getRandomColor();
-        } while (uniqueColors.has(color));
-        uniqueColors.add(color);
-        return color;
-      });
-  
+
+      const dataObjects = labels.map((label, index) => ({
+        label,
+        value: dataValues[index],
+        color: defectColors[label] || '#FF5733',
+      }));
+
+      // Ordenar el array de objetos en función de los valores (de mayor a menor)
+      const sortedDataObjects = dataObjects.sort((a, b) => b.value - a.value);
+
+      // Extraer las etiquetas y los valores ordenados
+      const sortedLabels = sortedDataObjects.map(item => item.label);
+      const sortedDataValues = sortedDataObjects.map(item => item.value);
+      const sortedDataColors = sortedDataObjects.map(item => item.color);
+
+
       if (chartRef.current) {
         chartRef.current.destroy();
       }
-  
+
       const ctx = document.getElementById("pie-chart").getContext("2d");
       const config = {
         type: "pie",
         data: {
-          labels: labels, // Usa chartLabels en lugar de labels
+          labels: sortedLabels, // Usa chartLabels en lugar de labels
           datasets: [
             {
-              data: dataValues,
-              backgroundColor: backgroundColors,
+              data: sortedDataValues,
+              backgroundColor: sortedDataColors,
               borderWidth: 1,
             },
           ],
@@ -107,20 +111,20 @@ export default function CardPieChart({ fetchData }) {
               fontColor: "black",
             },
           },
-          legendCallback: function(chart) {
+          legendCallback: function (chart) {
             const labels = chart.data.labels;
             const datasets = chart.data.datasets[0].data;
             let legendHTML = '';
-      
+
             labels.forEach((label, index) => {
               legendHTML += `<li>${label}: ${datasets[index]}</li>`;
             });
-      
+
             return `<ul>${legendHTML}</ul>`;
           },
         },
       };
-      
+
       chartRef.current = new Chart(ctx, config);
       const legend = chartRef.current.generateLegend();
       legendRef.current.innerHTML = legend;
@@ -140,9 +144,9 @@ export default function CardPieChart({ fetchData }) {
         </div>
       </div>
       <div className="p-4 flex-auto">
-      
+
         <div className="relative h-500-px w-700-px" id="pie-chart-container">
-        <div className="legend-container" ref={legendRef}></div>
+          <div className="legend-container" ref={legendRef}></div>
 
           {loading ? (
             <div className="text-center">
@@ -157,5 +161,5 @@ export default function CardPieChart({ fetchData }) {
       </div>
     </div>
   );
-  
+
 }
