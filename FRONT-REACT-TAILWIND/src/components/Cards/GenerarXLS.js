@@ -14,7 +14,7 @@ import { apiUrl1 ,apiUrl2 ,apiUrl3 } from "components/urls/apiUrls";
 import { Alertas } from "components/Funciones/generarAlertas";
 
 
-export default function GenerarXLS({ color }) {
+export default function GenerarXLS({ color , selectedOption}) {
   
   const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api KPI 1
   const [defects2, setDefects2] = useState([]); // KPI 2
@@ -131,12 +131,13 @@ const handleParameterSelect = (event) => {
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
                 >
-                  Completion
+                  FORMATO
                 </th>
                 
               </tr>
             </thead>
             <tbody>
+            {selectedOption === "administracion" && (
              <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <img
@@ -162,6 +163,8 @@ const handleParameterSelect = (event) => {
                 </td>
                 
               </tr>
+              )}
+              {selectedOption === "formularios" && (
               <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <img
@@ -186,6 +189,8 @@ const handleParameterSelect = (event) => {
                
                 </td>
               </tr>
+              )}
+              {selectedOption === "formularios" && (
               <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                 <img
@@ -217,6 +222,7 @@ const handleParameterSelect = (event) => {
                   <button onClick={handleGenerateExcel3}>Generar XLS</button>
                 </td>
               </tr>
+              )}
             </tbody>
           </table>
         </div>

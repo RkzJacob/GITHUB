@@ -22,7 +22,8 @@ const formatDate = (date) => {
   return  `${day}-${month}-${year}`;
 };
 
-export default function CardTable({ color }) {
+export default function CardTable({ color, selectedOption}) {
+  //constantes
   const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api KPI 1
   const [defects2, setDefects2] = useState([]); // KPI 2
   const [defects3, setDefects3] = useState([]); // KPI con parametros
@@ -33,24 +34,23 @@ export default function CardTable({ color }) {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] =  useState(null);
 
+  //obtener toke y rol
   const [selectedParameter, setSelectedParameter] = useState("");
   const token = localStorage.getItem('token');
   const rol = localStorage.getItem('role');
 
+  //validar si tiene tal rol
   const isUser = (rol === 'user');
   const isAdmin = (rol === 'Admin');
 
-  
-
-
-  useEffect(() => { //utilización de un hook junto utilizacion de codigo
+  //utilización de un hook junto utilizacion de codigo
+  useEffect(() => { 
     ObtenerDataApi(apiUrl1,setDefects,token);
     ObtenerDataApi(apiUrl2,setDefects2,token);
     ObtenerDataApi(apiUrl3,setDefects4,token);
-    
-    
-
 }, []);
+
+
 
 const handleParameterSelect = (event) => {
   const parametroSeleccionado = event.target.value;
@@ -105,12 +105,9 @@ const handleParameterSelect = (event) => {
       }
     };
 
-    
-  
-
-
   return (
     <>
+    
       <div
         className={
           "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-2xl rounded " +
@@ -174,7 +171,8 @@ const handleParameterSelect = (event) => {
               </tr>
             </thead>
             <tbody>
-
+            
+            {selectedOption === "administracion" && (
             <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <img
@@ -213,6 +211,9 @@ const handleParameterSelect = (event) => {
                 </td>
                 
               </tr>
+             )}
+
+        {selectedOption === "formularios" && isUser &&(
               <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <img
@@ -238,7 +239,8 @@ const handleParameterSelect = (event) => {
                 </td>
                 
               </tr>
-              {isUser && (
+              )}
+              {selectedOption === "formularios" && isUser &&(
               <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <img
@@ -263,7 +265,9 @@ const handleParameterSelect = (event) => {
                
                 </td>
               </tr>
-            )}
+              )}
+
+              {selectedOption === "formularios" && isUser &&(
               <tr>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                 <img
@@ -295,6 +299,7 @@ const handleParameterSelect = (event) => {
                   <button onClick={GenerarPDF3}>Generar PDF</button>
                 </td>
               </tr>
+              )}
             </tbody>
           </table>
         </div>

@@ -13,7 +13,6 @@ import FooterAdmin from "components/Footers/FooterAdmin.js";
 import Dashboard from "views/admin/Dashboard.js";
 import Tables from "views/admin/Tables.js";
 import Tables2 from "views/admin/TableXLS";
-import NavbarHome from "components/Navbars/HomeNavbar";
 import PrivateRoute from "components/Funciones/privateRoute";
 
 export default function Admin() {
