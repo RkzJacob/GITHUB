@@ -111,42 +111,22 @@ export default function CardPieChart({ fetchData }) {
               fontColor: "black",
             },
           },
-          legendCallback: function (chart) {
-            const labels = chart.data.labels;
-            const datasets = chart.data.datasets[0].data;
-            let legendHTML = '';
-
-            labels.forEach((label, index) => {
-              legendHTML += `<li>${label}: ${datasets[index]}</li>`;
-            });
-
-            return `<ul>${legendHTML}</ul>`;
-          },
+          
         },
       };
 
       chartRef.current = new Chart(ctx, config);
-      const legend = chartRef.current.generateLegend();
-      legendRef.current.innerHTML = legend;
+
     }
   }, [contextData, loading, selectedKPI]);
 
   return (
-    <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-2xl rounded  bg-light ">
-      <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
-        <div className="flex flex-wrap items-center">
-          <div className="relative w-full max-w-full flex-grow flex-1">
-            <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
-              Vista general
-            </h6>
-            <h2 className="text-black text-xl font-semibold"></h2>
-          </div>
-        </div>
-      </div>
+    <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-2xl rounded  bg-light h-full ">
+      
       <div className="p-4 flex-auto">
 
         <div className="relative h-500-px w-700-px" id="pie-chart-container">
-          <div className="legend-container" ref={legendRef}></div>
+
 
           {loading ? (
             <div className="text-center">
