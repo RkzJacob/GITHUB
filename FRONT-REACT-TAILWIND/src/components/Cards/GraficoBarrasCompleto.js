@@ -76,6 +76,18 @@ export default function GraficoBarrasCompleto() {
       const sortedDataValues = sortedData.map(item => item.value);
       const sortedDataColors = sortedData.map(item => item.color);
 
+
+      function generateLabels(sortedLabelbar) {
+        return sortedLabelbar.map((label, index) => ({
+          text: label, // El texto específico de cada etiqueta en la leyenda
+          fillStyle: defectColors[label] || '#FF5733', // Color correspondiente para cada etiqueta
+          hidden: false, // Indica si la etiqueta está oculta o visible
+          index: index,
+          datasetIndex: 0,
+        }));
+      }
+
+
       var config = {
         type: "bar",
         data: {
@@ -93,19 +105,26 @@ export default function GraficoBarrasCompleto() {
           responsive: true,
           title: {
             display: false,
-            text: 'nada',
+            text: ' a ',
             fontColor: "black",
           },
           legend: {
-            labels: {
-              fontColor: "black",
-            },
             align: "end",
             position: "bottom",
+            display: true,
+            labels: {
+              text: sortedLabelbar,
+              fillStyle: sortedDataColors || '#FF5733', // Color correspondiente
+              generateLabels: function () {
+                return generateLabels(sortedLabelbar);
+              },
+              
+            },
+            onClick:null
           },
           tooltips: {
             mode: "index",
-            intersect: false,
+            intersect: true,
           },
           hover: {
             mode: "nearest",
@@ -138,7 +157,7 @@ export default function GraficoBarrasCompleto() {
             yAxes: [
               {
                 ticks: {
-                  fontColor:"rgba(2,1,4, 0.6)",
+                  fontColor: "rgba(2,1,4, 0.6)",
                   beginAtZero: true,
                   maxTicksLimit: 5,
                 },
@@ -180,7 +199,7 @@ export default function GraficoBarrasCompleto() {
           <div className="flex flex-wrap items-center">
             <div className="relative w-full max-w-full flex-grow flex-1">
               <h6 className="uppercase text-black-100 mb-1 text-xs font-semibold">
-                Vista general
+                Gráfico de barras
               </h6>
               <h2 className="text-black-100 text-xl font-semibold"></h2>
             </div>
