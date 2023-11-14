@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { DataContext } from 'components/Funciones/context.js';
-
+import { capitalizeText } from 'components/Funciones/capitalize';
 export default function TablaDatos() {
   const [sortColumn, setSortColumn] = useState(null);
   const [sortDirection, setSortDirection] = useState('asc'); // 'asc' para ascendente, 'desc' para descendente
@@ -101,7 +101,7 @@ export default function TablaDatos() {
             <tbody>
             {totales && Object.keys(totales).map(etiqueta => (
               <tr key={etiqueta}>
-                <td className="text-white">{etiqueta}</td>
+                <td className="text-white">{capitalizeText(etiqueta)}</td>
                 <td className="text-white">{totales[etiqueta]}</td>
                 <td className="text-white">
                   {((totales[etiqueta] / sumaTotalCantidad) * 100).toFixed(2)}%

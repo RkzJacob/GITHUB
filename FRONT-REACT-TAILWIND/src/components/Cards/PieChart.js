@@ -75,7 +75,7 @@ export default function CardPieChart({ fetchData }) {
       const sortedDataObjects = dataObjects.sort((a, b) => b.value - a.value);
 
       // Extraer las etiquetas y los valores ordenados
-      const sortedLabels = sortedDataObjects.map(item => item.label);
+      const sortedLabels = sortedDataObjects.map(item => item.label.charAt(0).toUpperCase() + item.label.slice(1));
       const sortedDataValues = sortedDataObjects.map(item => item.value);
       const sortedDataColors = sortedDataObjects.map(item => item.color);
 

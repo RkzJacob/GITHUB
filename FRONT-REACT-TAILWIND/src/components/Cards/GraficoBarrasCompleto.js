@@ -67,19 +67,20 @@ export default function GraficoBarrasCompleto() {
       const dataValues = Object.values(uniqueLabels);
       // Ordenar de mayor a menor
       const sortedData = labelbar.map((label, index) => ({
-        label,
+        
         value: dataValues[index],
         color: defectColors[label] || '#FF5733',
+        label,
       })).sort((a, b) => b.value - a.value);
 
       const sortedLabelbar = sortedData.map(item => item.label);
       const sortedDataValues = sortedData.map(item => item.value);
       const sortedDataColors = sortedData.map(item => item.color);
 
-
+      const capitalizedLabels = sortedData.map(item => item.label.charAt(0).toUpperCase() + item.label.slice(1))
       function generateLabels(sortedLabelbar) {
         return sortedLabelbar.map((label, index) => ({
-          text: label, // El texto específico de cada etiqueta en la leyenda
+          text: label.charAt(0).toUpperCase() + label.slice(1) ,// Capitaliza la primera letra del texto// El texto específico de cada etiqueta en la leyenda
           fillStyle: defectColors[label] || '#FF5733', // Color correspondiente para cada etiqueta
           hidden: false, // Indica si la etiqueta está oculta o visible
           index: index,
@@ -91,7 +92,7 @@ export default function GraficoBarrasCompleto() {
       var config = {
         type: "bar",
         data: {
-          labels: sortedLabelbar,
+          labels: capitalizedLabels,
           datasets: [
             {
               backgroundColor: sortedDataColors,
@@ -113,7 +114,7 @@ export default function GraficoBarrasCompleto() {
             position: "bottom",
             display: true,
             labels: {
-              text: sortedLabelbar,
+              text: capitalizedLabels,
               fillStyle: sortedDataColors || '#FF5733', // Color correspondiente
               generateLabels: function () {
                 return generateLabels(sortedLabelbar);
