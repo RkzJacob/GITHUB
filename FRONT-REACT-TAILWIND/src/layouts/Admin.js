@@ -19,6 +19,7 @@ export default function Admin() {
 
   return (
     <>
+    
       <Sidebar />
       <div className="relative md:ml-64 bg-BlancoBigeo">
      
