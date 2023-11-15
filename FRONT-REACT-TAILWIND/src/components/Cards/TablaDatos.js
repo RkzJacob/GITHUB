@@ -69,30 +69,29 @@ export default function TablaDatos() {
   const { totales, sumaTotalCantidad } = calcularTotales();
 
   return (
-    <div className="relative flex flex-col min-w-0 break-words w-full mb-6 p-6 shadow-lg rounded bg-VerdeSemiOscuro h-full">
-      <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
-        <div className="flex flex-wrap items-center">
-          <div className="relative w-full max-w-full flex-grow flex-1">
-            <h6 className="uppercase text-white mb-1 text-xs font-semibold">
+    <div className="relative flex flex-col min-w-0 break-words w-full mb-6 p-6 shadow-md rounded h-full">
+      <div className="rounded-t mb-0 px-4 py-3 bg-VerdeSemiOscuro">
+        <div className="flex flex-wrap items-center ">
+          <h6 className="uppercase text-white  text-xs font-semibold">
               Tabla
-            </h6>
-          </div>
+          </h6>
+
         </div>
       </div>
-      <div className="p-4 flex-auto">
+      <div className="p-4 flex-auto ">
         <div className="relative h-350-px" style={{ maxHeight: '350px', overflowY: 'auto' }}>
           <table className="w-full">
             <thead>
               <tr>
-                <th className="text-left text-white" onClick={() => handleSort('etiqueta')}>
+                <th className="text-left text-black" onClick={() => handleSort('etiqueta')}>
                   Etiqueta
                   {sortColumn === 'etiqueta' ? (sortDirection === 'asc' ? ' ▲' : ' ▼') : ''}
                 </th>
-                <th className="text-left text-white" onClick={() => handleSort('totalCantidad')}>
+                <th className="text-left text-black" onClick={() => handleSort('totalCantidad')}>
                   Total Cantidad
                   {sortColumn === 'totalCantidad' ? (sortDirection === 'asc' ? ' ▲' : ' ▼') : ''}
                 </th>
-                <th className="text-left text-white" onClick={() => handleSort('porcentajeTotal')}>
+                <th className="text-left text-black" onClick={() => handleSort('porcentajeTotal')}>
                   % del Total
                   {sortColumn === 'porcentajeTotal' ? (sortDirection === 'asc' ? ' ▲' : ' ▼') : ''}
                 </th>
@@ -101,9 +100,9 @@ export default function TablaDatos() {
             <tbody>
             {totales && Object.keys(totales).map(etiqueta => (
               <tr key={etiqueta}>
-                <td className="text-white">{capitalizeText(etiqueta)}</td>
-                <td className="text-white">{totales[etiqueta]}</td>
-                <td className="text-white">
+                <td className="text-black">{capitalizeText(etiqueta)}</td>
+                <td className="text-black">{totales[etiqueta]}</td>
+                <td className="text-black">
                   {((totales[etiqueta] / sumaTotalCantidad) * 100).toFixed(2)}%
                 </td>
               </tr>

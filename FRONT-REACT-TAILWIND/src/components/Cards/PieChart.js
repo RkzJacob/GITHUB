@@ -106,7 +106,8 @@ export default function CardPieChart({ fetchData }) {
             fontColor: "black",
           },
           legend: {
-            display: false,
+            display: true,
+            position:'bottom',
             labels: {
               fontColor: "black",
             },
@@ -121,7 +122,7 @@ export default function CardPieChart({ fetchData }) {
   }, [contextData, loading, selectedKPI]);
 
   return (
-    <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-2xl rounded  bg-light h-full ">
+    <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-2xl rounded  bg-neutral h-full ">
       
       <div className="p-4 flex-auto">
 
