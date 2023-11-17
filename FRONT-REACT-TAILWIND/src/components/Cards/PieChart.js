@@ -101,7 +101,7 @@ export default function CardPieChart({ fetchData }) {
           responsive: true,
           maintainAspectRatio: false,
           title: {
-            display: true,
+            display: false,
             text: selectedKPI,
             fontColor: "black",
           },
