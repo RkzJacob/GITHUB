@@ -3,7 +3,7 @@ import Chart from "chart.js";
 import axios from "axios";
 import { DataContext } from 'components/Funciones/context.js';
 import { useDataContext } from 'components/Funciones/context';
-import { defectColors } from 'assets/colors/colorMapping';
+import { defectColors,sectorColors } from 'assets/colors/colorMapping';
 
 
 export default function GraficoBarrasCompleto() {
@@ -16,6 +16,11 @@ export default function GraficoBarrasCompleto() {
   const contextData = useContext(DataContext);
   const { selectedKPI } = useDataContext();
 
+
+  const dataColors = {
+    ...defectColors,
+    ...sectorColors
+  }
   useEffect(() => {
     if (contextData && contextData.data) {
       const data = contextData.data;
@@ -69,7 +74,7 @@ export default function GraficoBarrasCompleto() {
       const sortedData = labelbar.map((label, index) => ({
         
         value: dataValues[index],
-        color: defectColors[label] || '#FF5733',
+        color: dataColors[label] || '#FF5733',
         label,
       })).sort((a, b) => b.value - a.value);
 
@@ -81,7 +86,7 @@ export default function GraficoBarrasCompleto() {
       function generateLabels(sortedLabelbar) {
         return sortedLabelbar.map((label, index) => ({
           text: label.charAt(0).toUpperCase() + label.slice(1) ,// Capitaliza la primera letra del texto// El texto específico de cada etiqueta en la leyenda
-          fillStyle: defectColors[label] || '#FF5733', // Color correspondiente para cada etiqueta
+          fillStyle: dataColors[label] || '#FF5733', // Color correspondiente para cada etiqueta
           hidden: false, // Indica si la etiqueta está oculta o visible
           index: index,
           datasetIndex: 0,
@@ -114,6 +119,7 @@ export default function GraficoBarrasCompleto() {
             position: "bottom",
             display: true,
             labels: {
+              fontColor:"black",
               text: capitalizedLabels,
               fillStyle: sortedDataColors || '#FF5733', // Color correspondiente
               generateLabels: function () {

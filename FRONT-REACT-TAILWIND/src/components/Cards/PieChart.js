@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import Chart from "chart.js";
 import { DataContext, useDataContext } from "components/Funciones/context";
-import { defectColors } from 'assets/colors/colorMapping';
+import { defectColors,sectorColors } from 'assets/colors/colorMapping';
 
 export default function CardPieChart({ fetchData }) {
   const [defects, setDefects] = useState([]);
@@ -32,6 +32,10 @@ export default function CardPieChart({ fetchData }) {
     return color;
   }
 
+  const dataColors = {
+    ...defectColors,
+    ...sectorColors
+  }
   useEffect(() => {
     if (!loading && contextData && contextData.data) {
       const data = contextData.data;
@@ -68,7 +72,7 @@ export default function CardPieChart({ fetchData }) {
       const dataObjects = labels.map((label, index) => ({
         label,
         value: dataValues[index],
-        color: defectColors[label] || '#FF5733',
+        color: dataColors[label] || '#FF5733',
       }));
 
       // Ordenar el array de objetos en función de los valores (de mayor a menor)
