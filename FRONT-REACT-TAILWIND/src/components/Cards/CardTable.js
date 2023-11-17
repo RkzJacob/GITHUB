@@ -300,7 +300,7 @@ const handleParameterSelect = (event) => {
                 </td>
               </tr>
               )}
-            </tbody>
+            </tbody>  
           </table>
         </div>
       </div>
