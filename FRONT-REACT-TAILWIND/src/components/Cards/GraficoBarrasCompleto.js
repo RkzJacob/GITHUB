@@ -3,7 +3,7 @@ import Chart from "chart.js";
 import axios from "axios";
 import { DataContext } from 'components/Funciones/context.js';
 import { useDataContext } from 'components/Funciones/context';
-import { defectColors,sectorColors } from 'assets/colors/colorMapping';
+import { defectColors, sectorColors } from 'assets/colors/colorMapping';
 
 
 export default function GraficoBarrasCompleto() {
@@ -72,7 +72,7 @@ export default function GraficoBarrasCompleto() {
       const dataValues = Object.values(uniqueLabels);
       // Ordenar de mayor a menor
       const sortedData = labelbar.map((label, index) => ({
-        
+
         value: dataValues[index],
         color: dataColors[label] || '#FF5733',
         label,
@@ -85,7 +85,7 @@ export default function GraficoBarrasCompleto() {
       const capitalizedLabels = sortedData.map(item => item.label.charAt(0).toUpperCase() + item.label.slice(1))
       function generateLabels(sortedLabelbar) {
         return sortedLabelbar.map((label, index) => ({
-          text: label.charAt(0).toUpperCase() + label.slice(1) ,// Capitaliza la primera letra del texto// El texto específico de cada etiqueta en la leyenda
+          text: label.charAt(0).toUpperCase() + label.slice(1),// Capitaliza la primera letra del texto// El texto específico de cada etiqueta en la leyenda
           fillStyle: dataColors[label] || '#FF5733', // Color correspondiente para cada etiqueta
           hidden: false, // Indica si la etiqueta está oculta o visible
           index: index,
@@ -119,15 +119,15 @@ export default function GraficoBarrasCompleto() {
             position: "bottom",
             display: true,
             labels: {
-              fontColor:"black",
+              fontColor: "black",
               text: capitalizedLabels,
               fillStyle: sortedDataColors || '#FF5733', // Color correspondiente
               generateLabels: function () {
                 return generateLabels(sortedLabelbar);
               },
-              
+
             },
-            onClick:null
+            onClick: null
           },
           tooltips: {
             mode: "index",
@@ -138,13 +138,20 @@ export default function GraficoBarrasCompleto() {
             intersect: true,
           },
           scales: {
+
+
+
             xAxes: [
               {
+
                 ticks: {
                   fontColor: "black",
                   beginAtZero: true,
+                  min: 0, // Valor mínimo del eje X
+                  max: 9, // Valor máximo del eje X (10 - 1 para mostrar 10 barras)
                 },
                 display: true,
+
                 scaleLabel: {
                   display: false,
                   labelString: "Nombre defecto",
@@ -185,6 +192,7 @@ export default function GraficoBarrasCompleto() {
                 },
               },
             ],
+
           },
         },
       };
@@ -208,13 +216,12 @@ export default function GraficoBarrasCompleto() {
               <h6 className="uppercase text-black-100 mb-1 text-xs font-semibold">
                 Gráfico de barras
               </h6>
-              <h2 className="text-black-100 text-xl font-semibold"></h2>
             </div>
           </div>
         </div>
-        <div className="p-4 flex-auto">
+        <div className="p-4 flex-auto chart-container">
           {/* Chart2 */}
-          <div className="relative h-350-px">
+          <div className="relative h-350-px overflow-y-auto">
             {loading ? (
               <div className="text-center">
                 <div className="spinner-border" role="status">
