@@ -4,12 +4,16 @@ import axios from 'axios';
 import "jspdf-autotable";
 import aspersores from '../../assets/img/aspersores.png';
 
-import { apiUrl1,apiUrl2,apiUrl3,apiUrl4 } from "components/urls/apiUrls";
+import { apiUrl1,apiUrl2,apiUrl4 } from "components/urls/apiUrls";
 import { Alertas } from "components/Funciones/generarAlertas";
 import  { ObtenerDataApi,ObtenerDataApiParametros } from "components/Funciones/pruebaFuncion2";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { apiUrlC1 } from "components/urls/apiUrls";
+import { apiUrlC2 } from "components/urls/apiUrls";
+import { apiUrlC3 } from "components/urls/apiUrls";
+import { apiUrlC4 } from "components/urls/apiUrls";
 
 // components
 
@@ -29,6 +33,9 @@ export default function CardTable({ color, selectedOption}) {
   const [defects3, setDefects3] = useState([]); // KPI con parametros
   const [defects4, setDefects4] = useState([]);//parametros
   const [defects5, setDefects5] = useState([]);//parametros
+  const [defects6, setDefects6] = useState([]);//parametros
+  const [defects7, setDefects7] = useState([]);//parametros
+  const [defects8, setDefects8] = useState([]);//parametros
 
   // fechas
   const [startDate, setStartDate] = useState(null);
@@ -47,7 +54,10 @@ export default function CardTable({ color, selectedOption}) {
   useEffect(() => { 
     ObtenerDataApi(apiUrl1,setDefects,token);
     ObtenerDataApi(apiUrl2,setDefects2,token);
-    ObtenerDataApi(apiUrl3,setDefects4,token);
+    ObtenerDataApi(apiUrlC1,setDefects4,token);
+    ObtenerDataApi(apiUrlC2,setDefects6,token);
+    ObtenerDataApi(apiUrlC3,setDefects7,token);
+    ObtenerDataApi(apiUrlC4,setDefects7,token);
 }, []);
 
 
@@ -80,7 +90,7 @@ const handleParameterSelect = (event) => {
 
       
     };
-    
+   
     const GenerarPDF = () => {
       Alertas.generarPDFAlert1(defects);
     };
@@ -105,6 +115,18 @@ const handleParameterSelect = (event) => {
       }
     };
 
+    const GenerarPDF5 = () => {
+      Alertas.generarPDFAlert5(defects6);
+    };
+
+    const GenerarPDF6 = () => {
+      Alertas.generarPDFAlert6(defects7);
+    };
+
+    const GenerarPDF7 = () => {
+      Alertas.generarPDFAlert7(defects8);
+    };
+
   return (
     <>
     
@@ -123,7 +145,7 @@ const handleParameterSelect = (event) => {
                   (color === "light" ? "text-blueGray-700" : "text-white")
                 }
               >
-                DESCARGAR INFORMES PDF
+                DESCARGAR INFORMES EN FORMATO PDF
               </h3>
             </div>
           </div>
@@ -142,7 +164,7 @@ const handleParameterSelect = (event) => {
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
                 >
-                  Tipo de informe
+                  TIPO DE INFORME
                 </th>
                
                 
@@ -155,7 +177,7 @@ const handleParameterSelect = (event) => {
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
                 >
-                  Parametro
+                  PARAMETRO
                 </th>
                 <th
                   className={
@@ -227,7 +249,7 @@ const handleParameterSelect = (event) => {
                       +(color === "light" ? "text-blueGray-600" : "text-white")
                     }
                   >
-                    Conteo de todos los defectos registrados
+                    CONTEO DE TODOS LOS DEFECTOS REGISTRADOS
                   </span>
                 </th>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -254,7 +276,7 @@ const handleParameterSelect = (event) => {
                       +(color === "light" ? "text-blueGray-600" : "text-white")
                     }
                   >
-                    Conteo de todos los defectos de los aspersores por sector
+                    CONTEO DE DEFECTOS POR SECTOR
                   </span>
                 </th>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -281,15 +303,15 @@ const handleParameterSelect = (event) => {
                       +(color === "light" ? "text-blueGray-600" : "text-white")
                     }
                   >
-                    Defecto de aspersores por sector
+                    DEFECTOS POR SECTOR ESPECÍFICO
                   </span>
                 </th>
                 <td className="border-t-0 px-6 align-middle  border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                 <select className="bg-light" value={selectedParameter} onChange={handleParameterSelect}>
-                  <option  value="">Selecciona un sector</option>
+                  <option  value="">SELECCIONAR UN SECTOR</option>
                     {defects4.map(parametro => (
-                      <option key={parametro.sector} value={parametro.sector}>
-                      {parametro.sector}
+                      <option key={parametro} value={parametro}>
+                      {parametro}
                   </option>
                   ))}
                   </select>
@@ -297,6 +319,87 @@ const handleParameterSelect = (event) => {
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                   <i className="fas fa-circle text-emerald-500 mr-2"></i>
                   <button onClick={GenerarPDF3}>Generar PDF</button>
+                </td>
+              </tr>
+              )}
+
+              {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={aspersores}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE DEFECTOS DEL [[[CERRO TUNEL]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF5}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+            {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={aspersores}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE DEFECTOS DEL [[[CERRO CASA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF6}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+              {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={aspersores}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE DEFECTOS DEL [[[CERRO ESPERANZA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF7}> Generar PDF </button>
+               
                 </td>
               </tr>
               )}

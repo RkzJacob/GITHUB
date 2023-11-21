@@ -193,6 +193,72 @@ const generarPDFAlert1 = async (defects) => {
       
     };
 
+    const generarPDFAlert5 = async (defects) => {
+      try {
+        if (defects.length > 0) {
+          GenerarPDF2(defects, 'Defectos de sectores CERRO TUNEL');
+          await Swal.fire({
+            icon: 'success',
+            title: 'Archivo PDF generado correctamente',
+          });
+        } else {
+          await Swal.fire({
+            icon: 'info',
+            title: 'No hay datos disponibles en este sector',
+          });
+        }
+      } catch (error) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Ocurrió un error al generar el informe PDF',
+        });
+      }
+    };
+
+    const generarPDFAlert6 = async (defects) => {
+      try {
+        if (defects.length > 0) {
+          GenerarPDF2(defects, 'Defectos de sectores CERRO CASA');
+          await Swal.fire({
+            icon: 'success',
+            title: 'Archivo PDF generado correctamente',
+          });
+        } else {
+          await Swal.fire({
+            icon: 'info',
+            title: 'No hay datos disponibles en este sector',
+          });
+        }
+      } catch (error) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Ocurrió un error al generar el informe PDF',
+        });
+      }
+    };
+
+    const generarPDFAlert7 = async (defects) => {
+      try {
+        if (defects.length > 0) {
+          GenerarPDF2(defects, 'Defectos de sectores CERRO ESPERANZA');
+          await Swal.fire({
+            icon: 'success',
+            title: 'Archivo PDF generado correctamente',
+          });
+        } else {
+          await Swal.fire({
+            icon: 'info',
+            title: 'No hay datos disponibles en este sector',
+          });
+        }
+      } catch (error) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Ocurrió un error al generar el informe PDF',
+        });
+      }
+    };
+
 
 
 
@@ -204,6 +270,9 @@ export const Alertas = {
   generarPDFAlert2,
   generarPDFAlert3,
   generarPDFAlert4,
+  generarPDFAlert5,
+  generarPDFAlert6,
+  generarPDFAlert7,
 };
 
 

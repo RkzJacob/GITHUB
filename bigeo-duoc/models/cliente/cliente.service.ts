@@ -23,6 +23,11 @@ export class ClienteService {
 
     return null; 
   }
+  getAllSectores() {
+    // Utiliza un método para obtener todos los sectores directamente
+    const sectores = this.datos.cerros.reduce((acc, cerro) => [...acc, ...cerro.sectores], []);
+    return sectores;
+  }
 }
 
 

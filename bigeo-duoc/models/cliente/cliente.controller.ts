@@ -29,4 +29,9 @@ export class ClienteController {
         return this.jsonService.getSectoresByCerro(nombreCerro);
     }
 
+    @Get('Sectores-unicos')
+    getSectoresUnicos()  {
+        return this.jsonService.getAllSectores();
+    }
+
 }

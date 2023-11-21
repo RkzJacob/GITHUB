@@ -2,16 +2,17 @@ import React, { useState,useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
 import aspersores from '../../assets/img/aspersores.png';
-import  { ObtenerDataApi,ObtenerDataApiParametros } from "components/Funciones/pruebaFuncion2";
+import  { ObtenerDataApi } from "components/Funciones/pruebaFuncion2";
 
 
 
 
 
 //llamo a las urls definidas
-import { apiUrl1 ,apiUrl2 ,apiUrl3 } from "components/urls/apiUrls";
+import { apiUrl1 ,apiUrl2  } from "components/urls/apiUrls";
 //alertas
 import { Alertas } from "components/Funciones/generarAlertas";
+import { apiUrlC1 } from "components/urls/apiUrls";
 
 
 export default function GenerarXLS({ color , selectedOption}) {
@@ -31,9 +32,7 @@ export default function GenerarXLS({ color , selectedOption}) {
 
     ObtenerDataApi(apiUrl1,  setDefects,token);
     ObtenerDataApi(apiUrl2, setDefects2,token);
-    ObtenerDataApi(apiUrl3,  setDefects4,token);
-
-    
+    ObtenerDataApi(apiUrlC1,  setDefects4,token);
 }, []);
 
 const handleParameterSelect = (event) => {
@@ -89,7 +88,7 @@ const handleParameterSelect = (event) => {
                   (color === "light" ? "text-blueGray-700" : "text-white")
                 }
               >
-                Descarga de informes en XLS
+                DESCARGAR INFORMES EN FORMATO EXCEL
               </h3>
             </div>
           </div>
@@ -108,7 +107,7 @@ const handleParameterSelect = (event) => {
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
                 >
-                  Tipo de informe
+                  TIPO DE INFORME
                 </th>
                
                 
@@ -121,7 +120,7 @@ const handleParameterSelect = (event) => {
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
                 >
-                  Tipo
+                  PARAMETRO
                 </th>
                 <th
                   className={
@@ -151,7 +150,7 @@ const handleParameterSelect = (event) => {
                       +(color === "light" ? "text-blueGray-600" : "text-white")
                     }
                   >
-                    Conteo de todos los defectos registrados
+                    CONTEO DE TODOS LOS DEFECTOS REGISTRADOS
                   </span>
                 </th>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -159,7 +158,7 @@ const handleParameterSelect = (event) => {
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                   <i className="fas fa-circle text-emerald-500 mr-2">
-                  </i> <button onClick={handleGenerateExcel} > Generar XLS </button>
+                  </i> <button onClick={handleGenerateExcel} > Generar EXCEL </button>
                 </td>
                 
               </tr>
@@ -178,14 +177,14 @@ const handleParameterSelect = (event) => {
                       +(color === "light" ? "text-blueGray-600" : "text-white")
                     }
                   >
-                    Conteo de todos los defectos de los aspersores por sector
+                    CONTEO DE DEFECTOS POR SECTOR
                   </span>
                 </th>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                 XLS
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={handleGenerateExcel2}> Generar XLS</button>
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={handleGenerateExcel2}>Generar EXCEL</button>
                
                 </td>
               </tr>
@@ -204,25 +203,26 @@ const handleParameterSelect = (event) => {
                       +(color === "light" ? "text-blueGray-600" : "text-white")
                     }
                   >
-                    Defecto de aspersores por sector
+                    DEFECTOS POR SECTOR
                   </span>
                 </th>
                 <td className="border-t-0 px-6 align-middle  border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                 <select className="bg-light" value={selectedParameter} onChange={handleParameterSelect}>
-                  <option  value="">Selecciona un sector</option>
+                  <option  value="">SELECCIONAR UN SECTOR</option>
                     {defects4.map(parametro => (
-                      <option key={parametro.sector} value={parametro.sector}>
-                      {parametro.sector}
+                      <option key={parametro} value={parametro}>
+                      {parametro}
                   </option>
                   ))}
                   </select>
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                   <i className="fas fa-circle text-emerald-500 mr-2"></i>
-                  <button onClick={handleGenerateExcel3}>Generar XLS</button>
+                  <button onClick={handleGenerateExcel3}>Generar EXCEL</button>
                 </td>
               </tr>
               )}
+              
             </tbody>
           </table>
         </div>
