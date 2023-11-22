@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /*
 https://docs.nestjs.com/providers#services
 */
@@ -58,11 +59,11 @@ export class FormPlagueService {
         const placeholders = sectores.map((_, index) => `$${index + 3}`).join(',');
 
         const query = `
-        SELECT COALESCE(plague, 'Sin Plagas')  as plaga, COUNT(plague) as cant_plaga,
+        SELECT plague as plaga, COUNT(plague) as cant_plaga,
         sector as sector
         FROM public.form
         JOIN public.properties pr on propid="propertiesPropid"
-        LEFT join public."formPlague" pl on plid="formPlaguePlid"
+        join public."formPlague" pl on plid="formPlaguePlid"
         WHERE TO_CHAR("dateTime",'DD/MM/YYYY') BETWEEN $1 AND $2
         AND sector IN (${placeholders}) 
         GROUP BY plague, sector
@@ -97,11 +98,11 @@ export class FormPlagueService {
             const placeholders = sectoresCerroTunel.map((_, index) => `$${index + 3}`).join(',');
 
             const query = `
-          SELECT COALESCE(plague, 'Sin Plagas')  as plaga, COUNT(plague) as cant_plaga,
+          SELECT plague as plaga, COUNT(plague) as cant_plaga,
           sector as sector
           FROM public.form
           JOIN public.properties pr on propid="propertiesPropid"
-          LEFT join public."formPlague" pl on plid="formPlaguePlid"
+          join public."formPlague" pl on plid="formPlaguePlid"
           WHERE TO_CHAR("dateTime",'DD/MM/YYYY') BETWEEN $1 AND $2
           AND sector IN (${placeholders}) 
           GROUP BY plague, sector
