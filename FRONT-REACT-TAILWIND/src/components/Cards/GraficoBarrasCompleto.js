@@ -16,6 +16,7 @@ export default function GraficoBarrasCompleto() {
   const contextData = useContext(DataContext);
   const { selectedKPI } = useDataContext();
 
+  const [numResults, setNumResults] = useState(10);
 
   const dataColors = {
     ...defectColors,
@@ -70,13 +71,19 @@ export default function GraficoBarrasCompleto() {
 
       const labelbar = Object.keys(uniqueLabels);
       const dataValues = Object.values(uniqueLabels);
+
+
       // Ordenar de mayor a menor
-      const sortedData = labelbar.map((label, index) => ({
+      let sortedData = labelbar.map((label, index) => ({
 
         value: dataValues[index],
         color: dataColors[label] || '#FF5733',
         label,
       })).sort((a, b) => b.value - a.value);
+
+      if (numResults !== "all") {
+        sortedData = sortedData.slice(0, numResults);
+      }
 
       const sortedLabelbar = sortedData.map(item => item.label);
       const sortedDataValues = sortedData.map(item => item.value);
@@ -211,17 +218,29 @@ export default function GraficoBarrasCompleto() {
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6   shadow-2xl rounded bg-light">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
-          <div className="flex flex-wrap items-center">
+          <div className="flex flex-wrap items-center justify-end">
             <div className="relative w-full max-w-full flex-grow flex-1">
-              <h6 className="uppercase text-black-100 mb-1 text-xs font-semibold">
+              <h6 className="uppercase text-black-100 mb-1 text-xs font-semibold flex top-0 left-0">
                 Gráfico de barras
               </h6>
             </div>
+            <div className="text-right ml-auto uppercase text-black-100 mb-1 text-xs font-semibold">
+              <h1>Cantidad de resultados</h1>
+              <select value={numResults} onChange={(e) => setNumResults(e.target.value)} class="bg-gray-50 border border-gray-300">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="all">Todos</option>
+              </select>
+            </div>
+
           </div>
         </div>
         <div className="p-4 flex-auto chart-container">
           {/* Chart2 */}
           <div className="relative h-350-px overflow-y-auto">
+
             {loading ? (
               <div className="text-center">
                 <div className="spinner-border" role="status">
@@ -230,6 +249,7 @@ export default function GraficoBarrasCompleto() {
               </div>
             ) : (
               <canvas id="line-chart2"></canvas>
+
             )}
           </div>
         </div>

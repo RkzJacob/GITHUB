@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import Chart from "chart.js";
 import { DataContext, useDataContext } from "components/Funciones/context";
-import { defectColors,sectorColors } from 'assets/colors/colorMapping';
+import { defectColors, sectorColors } from 'assets/colors/colorMapping';
 
 export default function CardPieChart({ fetchData }) {
   const [defects, setDefects] = useState([]);
@@ -13,6 +13,9 @@ export default function CardPieChart({ fetchData }) {
 
   const contextData = useContext(DataContext);
   const { selectedKPI } = useDataContext();
+
+  const [numResults, setNumResults] = useState(10);
+
 
   useEffect(() => {
     if (contextData && contextData.data) {
@@ -69,14 +72,18 @@ export default function CardPieChart({ fetchData }) {
       const labels = Object.keys(uniqueLabels);
       const dataValues = Object.values(uniqueLabels);
 
-      const dataObjects = labels.map((label, index) => ({
+      let dataObjects = labels.map((label, index) => ({
         label,
         value: dataValues[index],
         color: dataColors[label] || '#FF5733',
-      }));
+      })).sort((a, b) => b.value - a.value);
+
+      if (numResults !== "all") {
+        dataObjects = dataObjects.slice(0, numResults);
+      }
 
       // Ordenar el array de objetos en función de los valores (de mayor a menor)
-      const sortedDataObjects = dataObjects.sort((a, b) => b.value - a.value);
+      const sortedDataObjects = dataObjects;
 
       // Extraer las etiquetas y los valores ordenados
       const sortedLabels = sortedDataObjects.map(item => item.label.charAt(0).toUpperCase() + item.label.slice(1));
@@ -111,12 +118,12 @@ export default function CardPieChart({ fetchData }) {
           },
           legend: {
             display: true,
-            position:'bottom',
+            position: 'bottom',
             labels: {
               fontColor: "black",
             },
           },
-          
+
         },
       };
 
@@ -127,9 +134,18 @@ export default function CardPieChart({ fetchData }) {
 
   return (
     <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-2xl rounded  bg-neutral h-full ">
-      
-      <div className="p-4 flex-auto">
 
+      <div className="p-4 flex-auto">
+        <div className="text-right ml-auto uppercase text-black-100 mb-1 text-xs font-semibold">
+          <h1>Cantidad de resultados</h1>
+          <select value={numResults} onChange={(e) => setNumResults(e.target.value)} class="bg-gray-50 border border-gray-300">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="all">Todos</option>
+          </select>
+        </div>
         <div className="relative h-500-px w-700-px" id="pie-chart-container">
 
 
