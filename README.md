@@ -1,2 +1,2 @@
-# BACK AND FRONT
- subida de back(nestjs y front (react tailwind)
+# Proyecto BIGEO-DASHBOARD
+ Proyectos frontend y backend
