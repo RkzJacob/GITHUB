@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import Chart from "chart.js";
-import axios from "axios";
+
 import { DataContext } from 'components/Funciones/context.js';
 import { useDataContext } from 'components/Funciones/context';
 import { defectColors, sectorColors } from 'assets/colors/colorMapping';
@@ -8,8 +8,6 @@ import { defectColors, sectorColors } from 'assets/colors/colorMapping';
 
 export default function GraficoBarrasCompleto() {
   const [loading, setLoading] = useState(true);
-  const [defects, setDefects] = useState([]);
-
   const chartRef = useRef(null);
   const legendRef = useRef(); // Initialize with an empty ref
 
@@ -33,8 +31,6 @@ export default function GraficoBarrasCompleto() {
 
       // Ordena los datos de mayor a menor según la cantidad
       data.sort((a, b) => parseInt(b.cantidad, 10) - parseInt(a.cantidad, 10));
-
-      setDefects(data);
       setLoading(false);
     }
   }, [contextData]);
@@ -212,7 +208,7 @@ export default function GraficoBarrasCompleto() {
         legendRef.current.innerHTML = legend;
       }
     }
-  }, [contextData, loading, selectedKPI]);
+  }, [contextData, loading, selectedKPI,dataColors,numResults]);
 
   return (
     <>
