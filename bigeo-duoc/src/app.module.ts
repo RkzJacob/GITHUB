@@ -1,3 +1,6 @@
+import { FormDiseasesService } from './../models/formDiseases/formdiseases.service';
+import { FormDiseasesModule } from './../models/formDiseases/formdiseases.module';
+import { FormDiseasesController } from './../models/formDiseases/formdiseases.controller';
 import { FormCountService } from './../models/formCount/formcount.service';
 import { FormCountModule } from './../models/formCount/formcount.module';
 import { FormCountController } from './../models/formCount/formcount.controller';
@@ -41,6 +44,7 @@ import { jwtConstants } from './auth/constants/jwt.constants';
 
 @Module({
   imports: [
+    FormDiseasesModule,
     FormCountModule,
     FormDamageModule,
     FormFaunaModule,
@@ -69,6 +73,7 @@ import { jwtConstants } from './auth/constants/jwt.constants';
     FormSprinklerModule,
   ],
   controllers: [
+    FormDiseasesController,
     FormCountController,
     FormDamageController,
     FormFaunaController,
@@ -81,6 +86,7 @@ import { jwtConstants } from './auth/constants/jwt.constants';
     AuthController,
   ],
   providers: [
+    FormDiseasesService,
     FormCountService,
     FormDamageService,
     FormFaunaService,
