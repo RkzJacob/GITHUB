@@ -31,11 +31,19 @@ export default function TablaDatos() {
         }
         sumaTotalCantidad += parseInt(defect.cantidad, 10);
       } else if (selectedKPI === "Fauna") {
-        // Agrupar por tipo de defecto
-        if (!totales[defect.defect]) {
+        // Agrupar por tipo de fauna
+        if (!totales[defect.fauna]) {
           totales[defect.fauna] = parseInt(defect.cantidad, 10);
         } else {
           totales[defect.fauna] += parseInt(defect.cantidad, 10);
+        }
+        sumaTotalCantidad += parseInt(defect.cantidad, 10);
+      } else if (selectedKPI === "Plaga") {
+        // Agrupar por tipo de plaga
+        if (!totales[defect.plaga]) {
+          totales[defect.plaga] = parseInt(defect.cantidad, 10);
+        } else {
+          totales[defect.plaga] += parseInt(defect.cantidad, 10);
         }
         sumaTotalCantidad += parseInt(defect.cantidad, 10);
       } else {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import Chart from "chart.js";
 import { DataContext, useDataContext } from "components/Funciones/context";
-import { defectColors, sectorColors, faunaColors, plagaColors } from 'assets/colors/colorMapping';
+import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors } from 'assets/colors/colorMapping';
 
 export default function CardPieChart({ fetchData }) {
   const [defects, setDefects] = useState([]);
@@ -39,8 +39,10 @@ export default function CardPieChart({ fetchData }) {
     ...defectColors,
     ...sectorColors,
     ...faunaColors,
-    ...plagaColors
+    ...plagaColors,
+    ...diseasesColors
   }
+  
   useEffect(() => {
     if (!loading && contextData && contextData.data) {
       const data = contextData.data;
@@ -60,6 +62,8 @@ export default function CardPieChart({ fetchData }) {
           labelKey = defect.fauna;
         } else if (selectedKPI === "Plaga") {
           labelKey = defect.plaga;
+        } else if (selectedKPI === "Diseases") {
+          labelKey = defect.diseases;
         } else if (selectedKPI === "Seleccionar KPI") {
           labelKey = null;
         } else {

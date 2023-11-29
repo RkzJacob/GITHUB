@@ -49,6 +49,10 @@ export default function AdminNavbar({ ongetData, chartsData }) {
             setKpiOptions([
                 { value: "Damage", label: "Damage TEST" },
             ]);
+        } else if (firstSelectValue === "formDiseases") {
+            setKpiOptions([
+                { value: "Diseases", label: "Diseaes TEST" },
+            ]);
         } else {
             setKpiOptions([]);
         }
@@ -128,6 +132,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                     <option value="Seleccionar">Seleccionar</option>
                     <option value="formSprinkler">Aspersores</option>
                     <option value="formCount">Conteo</option>
+                    <option value="formDiseases">Enfermedades</option>
                     <option value="formFauna">Fauna</option>
                     <option value="formPlague">Plagas</option>
                 </select>

@@ -3,7 +3,7 @@ import Chart from "chart.js";
 
 import { DataContext } from 'components/Funciones/context.js';
 import { useDataContext } from 'components/Funciones/context';
-import { defectColors, sectorColors, faunaColors } from 'assets/colors/colorMapping';
+import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors } from 'assets/colors/colorMapping';
 
 
 export default function GraficoBarrasCompleto() {
@@ -19,8 +19,11 @@ export default function GraficoBarrasCompleto() {
   const dataColors = {
     ...defectColors,
     ...sectorColors,
-    ...faunaColors
+    ...faunaColors,
+    ...plagaColors,
+    ...diseasesColors
   }
+
   useEffect(() => {
     if (contextData && contextData.data) {
       const data = contextData.data;
@@ -54,6 +57,8 @@ export default function GraficoBarrasCompleto() {
           labelKey = defect.sector;
         } else if (selectedKPI === "Fauna") {
           labelKey = defect.fauna;
+        } else if (selectedKPI === "Plaga") {
+          labelKey = defect.plaga;
         } else if (selectedKPI === "Seleccionar KPI") {
           labelKey = null;
         } else {

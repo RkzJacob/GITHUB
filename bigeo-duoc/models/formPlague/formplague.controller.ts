@@ -25,7 +25,7 @@ export class FormPlagueController {
   async CuentaDeDefectos() {
     return this.FormPlagueService.CantidadPlagasPorSector();
   }
-  @Get('Conteo-plagas-sectores/:Fecha1/:Fecha2') //tipo de operacion y nombre
+  @Get('Plaga-Todos/:Fecha1/:Fecha2') //tipo de operacion y nombre
   @ApiOperation({ summary: 'Cuenta plagas por sector' }) //descripción metodo
   @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formPlague] }) // Respuesta exitosa
   async CuentaDeDefectosSectoresFecha(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
