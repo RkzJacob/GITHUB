@@ -18,7 +18,7 @@ export class FormPlagueService {
     async CantidadPlagasPorSector(): Promise<any> {
         const query = `
         SELECT 
-        sector, COUNT(plague) as cant_plaga
+        sector, COUNT(plague) as cantidad
         FROM public.form
         JOIN public.properties pr on propid="propertiesPropid"
         LEFT join public."formPlague" pl on plid="formPlaguePlid"
@@ -59,7 +59,7 @@ export class FormPlagueService {
         const placeholders = sectores.map((_, index) => `$${index + 3}`).join(',');
 
         const query = `
-        SELECT plague as plaga, COUNT(plague) as cant_plaga,
+        SELECT plague as plaga, COUNT(plague) as cantidad,
         sector as sector
         FROM public.form
         JOIN public.properties pr on propid="propertiesPropid"
@@ -67,7 +67,7 @@ export class FormPlagueService {
         WHERE TO_CHAR("dateTime",'DD/MM/YYYY') BETWEEN $1 AND $2
         AND sector IN (${placeholders}) 
         GROUP BY plague, sector
-        ORDER BY cant_plaga DESC, sector ASC
+        ORDER BY cantidad DESC, sector ASC
         `;
 
         const result = await this.sequelize.query(query, {
@@ -98,7 +98,7 @@ export class FormPlagueService {
             const placeholders = sectoresCerroTunel.map((_, index) => `$${index + 3}`).join(',');
 
             const query = `
-          SELECT plague as plaga, COUNT(plague) as cant_plaga,
+          SELECT plague as plaga, COUNT(plague) as cantidad,
           sector as sector
           FROM public.form
           JOIN public.properties pr on propid="propertiesPropid"
@@ -106,7 +106,7 @@ export class FormPlagueService {
           WHERE TO_CHAR("dateTime",'DD/MM/YYYY') BETWEEN $1 AND $2
           AND sector IN (${placeholders}) 
           GROUP BY plague, sector
-          ORDER BY cant_plaga DESC, sector ASC
+          ORDER BY cantidad DESC, sector ASC
           `;
 
             const result = await this.sequelize.query(query, {
@@ -139,7 +139,7 @@ export class FormPlagueService {
             const placeholders = sectoresCerroCasa.map((_, index) => `$${index + 3}`).join(',');
 
             const query = `
-          SELECT COALESCE(plague, 'Sin Plagas')  as plaga, COUNT(plague) as cant_plaga,
+          SELECT COALESCE(plague, 'Sin Plagas')  as plaga, COUNT(plague) as cantidad,
           sector as sector
           FROM public.form
           JOIN public.properties pr on propid="propertiesPropid"
@@ -147,7 +147,7 @@ export class FormPlagueService {
           WHERE TO_CHAR("dateTime",'DD/MM/YYYY') BETWEEN $1 AND $2
           AND sector IN (${placeholders}) 
           GROUP BY plague, sector
-          ORDER BY cant_plaga DESC, sector ASC
+          ORDER BY cantidad DESC, sector ASC
           `;
 
             const result = await this.sequelize.query(query, {
@@ -180,7 +180,7 @@ export class FormPlagueService {
             const placeholders = sectoresLaEsperanza.map((_, index) => `$${index + 3}`).join(',');
 
             const query = `
-          SELECT COALESCE(plague, 'Sin Plagas')  as plaga, COUNT(plague) as cant_plaga,
+          SELECT COALESCE(plague, 'Sin Plagas')  as plaga, COUNT(plague) as cantidad,
           sector as sector
           FROM public.form
           JOIN public.properties pr on propid="propertiesPropid"
@@ -188,7 +188,7 @@ export class FormPlagueService {
           WHERE TO_CHAR("dateTime",'DD/MM/YYYY') BETWEEN $1 AND $2
           AND sector IN (${placeholders}) 
           GROUP BY plague, sector
-          ORDER BY cant_plaga DESC, sector ASC
+          ORDER BY cantidad DESC, sector ASC
           `;
 
             const result = await this.sequelize.query(query, {

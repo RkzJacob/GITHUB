@@ -3,7 +3,7 @@ import Chart from "chart.js";
 
 import { DataContext } from 'components/Funciones/context.js';
 import { useDataContext } from 'components/Funciones/context';
-import { defectColors, sectorColors } from 'assets/colors/colorMapping';
+import { defectColors, sectorColors, faunaColors } from 'assets/colors/colorMapping';
 
 
 export default function GraficoBarrasCompleto() {
@@ -18,16 +18,13 @@ export default function GraficoBarrasCompleto() {
 
   const dataColors = {
     ...defectColors,
-    ...sectorColors
+    ...sectorColors,
+    ...faunaColors
   }
   useEffect(() => {
     if (contextData && contextData.data) {
       const data = contextData.data;
 
-      // Destruye el gráfico anterior si existe
-      if (chartRef.current) {
-        chartRef.current.destroy();
-      }
 
       // Ordena los datos de mayor a menor según la cantidad
       data.sort((a, b) => parseInt(b.cantidad, 10) - parseInt(a.cantidad, 10));
@@ -38,6 +35,11 @@ export default function GraficoBarrasCompleto() {
   useEffect(() => {
     if (!loading && contextData && contextData.data) {
       const data = contextData.data;
+
+            // Destruye el gráfico anterior si existe
+            if (chartRef.current) {
+              chartRef.current.destroy();
+            }
 
       // Inicializa un objeto para almacenar labels para que no se repitan
       const uniqueLabels = {};
@@ -50,6 +52,8 @@ export default function GraficoBarrasCompleto() {
           labelKey = defect.defect;
         } else if (selectedKPI === "sector") {
           labelKey = defect.sector;
+        } else if (selectedKPI === "Fauna") {
+          labelKey = defect.fauna;
         } else if (selectedKPI === "Seleccionar KPI") {
           labelKey = null;
         } else {

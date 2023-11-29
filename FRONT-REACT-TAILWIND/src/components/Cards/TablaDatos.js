@@ -30,6 +30,14 @@ export default function TablaDatos() {
           totales[defect.defect] += parseInt(defect.cantidad, 10);
         }
         sumaTotalCantidad += parseInt(defect.cantidad, 10);
+      } else if (selectedKPI === "Fauna") {
+        // Agrupar por tipo de defecto
+        if (!totales[defect.defect]) {
+          totales[defect.fauna] = parseInt(defect.cantidad, 10);
+        } else {
+          totales[defect.fauna] += parseInt(defect.cantidad, 10);
+        }
+        sumaTotalCantidad += parseInt(defect.cantidad, 10);
       } else {
         // Agrupar por sector
         if (!totales[defect.sector]) {

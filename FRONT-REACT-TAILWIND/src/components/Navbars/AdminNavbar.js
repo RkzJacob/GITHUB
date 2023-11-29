@@ -35,15 +35,19 @@ export default function AdminNavbar({ ongetData, chartsData }) {
             ]);
         } else if (firstSelectValue === "formFauna") {
             setKpiOptions([
-                { value: "Fauna", label: "FAUNA TEST" },
-            ]);
-        } else if (firstSelectValue === "formCompaction") {
-            setKpiOptions([
-                { value: "Pressure", label: "Compaction TEST" },
+                { value: "Fauna", label: "Conteo de animales" },
             ]);
         } else if (firstSelectValue === "formCount") {
             setKpiOptions([
                 { value: "Fruit", label: "Conteo de frutas" },
+            ]);
+        } else if (firstSelectValue === "formPlague") {
+            setKpiOptions([
+                { value: "Plaga", label: "Conteo de Plagas" },
+            ]);
+        } else if (firstSelectValue === "formDamage") {
+            setKpiOptions([
+                { value: "Damage", label: "Damage TEST" },
             ]);
         } else {
             setKpiOptions([]);
@@ -123,9 +127,9 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                 >
                     <option value="Seleccionar">Seleccionar</option>
                     <option value="formSprinkler">Aspersores</option>
-                    <option value="formCompaction">Compaction</option>
                     <option value="formCount">Conteo</option>
                     <option value="formFauna">Fauna</option>
+                    <option value="formPlague">Plagas</option>
                 </select>
             </div>
             <div className="md:w-3/12 w-4/12 px-2">

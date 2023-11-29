@@ -31,19 +31,19 @@ export class FormPlagueController {
   async CuentaDeDefectosSectoresFecha(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
     return this.FormPlagueService.ConteoPlagasTodosLosSectores(Fecha1,Fecha2);
   }
-  @Get('Conteo-plagas-sectores-CerroTunel/:Fecha1/:Fecha2') //tipo de operacion y nombre
+  @Get('Plaga-Cerro-Tunel/:Fecha1/:Fecha2') //tipo de operacion y nombre
   @ApiOperation({ summary: 'Cuenta plagas por sector' }) //descripción metodo
   @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formPlague] }) // Respuesta exitosa
   async CuentaDeDefectosCerroTunel(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
     return this.FormPlagueService.ConteoPlagasCerroTunel(Fecha1,Fecha2);
   }
-  @Get('Conteo-plagas-sectores-CerroCasa/:Fecha1/:Fecha2') //tipo de operacion y nombre
+  @Get('Plaga-Cerro-Casa/:Fecha1/:Fecha2') //tipo de operacion y nombre
   @ApiOperation({ summary: 'Cuenta plagas por sector' }) //descripción metodo
   @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formPlague] }) // Respuesta exitosa
   async CuentaDeDefectosCerroCasa(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
     return this.FormPlagueService.ConteoPlagasCerroCasa(Fecha1,Fecha2);
   }
-  @Get('Conteo-plagas-sectores-LaEsperanza/:Fecha1/:Fecha2') //tipo de operacion y nombre
+  @Get('Plaga-Cerro-Esperanza/:Fecha1/:Fecha2') //tipo de operacion y nombre
   @ApiOperation({ summary: 'Cuenta plagas por sector' }) //descripción metodo
   @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formPlague] }) // Respuesta exitosa
   async CuentaDeDefectosLaEsperanza(@Param('Fecha1') Fecha1: string,@Param('Fecha2') Fecha2: string) {
