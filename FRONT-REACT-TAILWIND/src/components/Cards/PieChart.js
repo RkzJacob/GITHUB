@@ -4,11 +4,10 @@ import { DataContext, useDataContext } from "components/Funciones/context";
 import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors } from 'assets/colors/colorMapping';
 
 export default function CardPieChart({ fetchData }) {
-  const [defects, setDefects] = useState([]);
+
   const [loading, setLoading] = useState(true);
   // const [selectedKPI, setSelectedKPI] = useState("");
   const chartRef = useRef(null);
-  const legendRef = useRef(null);
 
 
   const contextData = useContext(DataContext);
@@ -19,22 +18,9 @@ export default function CardPieChart({ fetchData }) {
 
   useEffect(() => {
     if (contextData && contextData.data) {
-      const data = contextData.data;
-
-      setDefects(data);
       setLoading(false);
     }
   }, [contextData]);
-
-  const getRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-
   const dataColors = {
     ...defectColors,
     ...sectorColors,
@@ -46,6 +32,10 @@ export default function CardPieChart({ fetchData }) {
   useEffect(() => {
     if (!loading && contextData && contextData.data) {
       const data = contextData.data;
+      // Destruye el gráfico anterior si existe
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
 
       // Inicializa un objeto para almacenar labels para que no se repitan
       const uniqueLabels = {};
@@ -140,7 +130,7 @@ export default function CardPieChart({ fetchData }) {
       chartRef.current = new Chart(ctx, config);
 
     }
-  }, [contextData, loading, selectedKPI]);
+  }, [contextData, loading, selectedKPI,dataColors,numResults]);
 
   return (
     <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-2xl rounded  bg-neutral h-full ">

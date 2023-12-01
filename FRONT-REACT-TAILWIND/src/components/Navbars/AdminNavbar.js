@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ConsumirApi } from "../Funciones/api.js"; // Asegúrate de importar correctamente
 import { fetchData } from "../Funciones/api.js";
 import { DataContext, useDataContext } from "components/Funciones/context.js";
 import Swal from 'sweetalert2';
@@ -10,18 +9,12 @@ export default function AdminNavbar({ ongetData, chartsData }) {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const [Kpi, setKpi] = useState(' ');
-    const [datosA, estableceDatos] = useState('');
     const [firstSelectValue, setFirstSelectValue] = useState("Seleccionar"); // Estado para el primer select
     const [secondSelectOptions, setSecondSelectOptions] = useState([]); // Estado para el segundo select
     const [KpiOptions, setKpiOptions] = useState([]);
-    const [CerroOptions, setCerroOptions] = useState([]);
     const [CerroValue, setCerroValue] = useState('');
     const [secondSelectValue, setSecondSelectValue] = useState("");
-
-    const [KpiValue, setKpiValue] = useState("");
     const [formName, setFormName] = useState("");
-
-    const { data } = useContext(DataContext)
     const { setData } = useContext(DataContext)
     const { selectedKPI, setSelectedKPI } = useDataContext();
 
@@ -81,11 +74,6 @@ export default function AdminNavbar({ ongetData, chartsData }) {
         setCerroValue(event.target.value);
     };
 
-    const datosApi = (datos) => {
-        estableceDatos(datos);
-        console.log(datosA);
-        chartsData(datosA);
-    }
 
     const showErrorMessage = async (message) => {
         await Swal.fire({

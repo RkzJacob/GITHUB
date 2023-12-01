@@ -126,7 +126,6 @@ export const sectorColors = {
     "AO-CERRO 1-B1B-V004": "#A9A9A9",
     "AO-CERRO 1-B1B-V003": "#FFA07A",
     "AO-CERRO 1-B1B-V002": "#C71585",
-    "AO-CERRO 1-B1B-V001": "#FF8C00",
     "AO-CERRO 1-B3A-V007": "#FAFAD2",
     "AO-CERRO 1-B4A-V006": "#DA70D6",
     "AO-CERRO 1-B4A-V005": "#32CD32",
