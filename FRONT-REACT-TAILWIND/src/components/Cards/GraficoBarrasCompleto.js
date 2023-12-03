@@ -1,29 +1,33 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef,useMemo } from 'react';
 import Chart from "chart.js";
 
 import { DataContext } from 'components/Funciones/context.js';
 import { useDataContext } from 'components/Funciones/context';
-import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors } from 'assets/colors/colorMapping';
+import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors } from 'assets/colors/colorMapping'; // Importación de colores definidos para cada categoría
 
 
 export default function GraficoBarrasCompleto() {
-  const [loading, setLoading] = useState(true);
-  const chartRef = useRef(null);
-  const legendRef = useRef(); // Initialize with an empty ref
+  const [loading, setLoading] = useState(true); // Estado para controlar la carga
+  const chartRef = useRef(null); // Referencia al elemento de gráfico
+  const legendRef = useRef(); // Initialize with an empty ref // Referencia al elemento de leyenda
 
+  // Uso de contextos y estados compartidos
   const contextData = useContext(DataContext);
   const { selectedKPI } = useDataContext();
 
-  const [numResults, setNumResults] = useState(10);
+  const [numResults, setNumResults] = useState(10); // Estado para controlar la cantidad de resultados mostrados
 
-  const dataColors = {
-    ...defectColors,
-    ...sectorColors,
-    ...faunaColors,
-    ...plagaColors,
-    ...diseasesColors
-  }
-
+  // Objeto que contiene los colores para diferentes categorías
+  const dataColors = useMemo(() => {
+    return {
+      ...defectColors,
+      ...sectorColors,
+      ...faunaColors,
+      ...plagaColors,
+      ...diseasesColors
+    };
+  }, []); // Dependencia vacía para inicializar una sola vez
+  // Primer efecto para manejar los datos y la carga inicial
   useEffect(() => {
     if (contextData && contextData.data) {
       const data = contextData.data;
@@ -35,22 +39,27 @@ export default function GraficoBarrasCompleto() {
     }
   }, [contextData]);
 
+
+  // Segundo efecto para generar el gráfico cuando los datos y el estado cambian
   useEffect(() => {
+    // Verifica si los datos no están cargando y existen datos en el contexto
     if (!loading && contextData && contextData.data) {
       const data = contextData.data;
 
-            // Destruye el gráfico anterior si existe
-            if (chartRef.current) {
-              chartRef.current.destroy();
-            }
+      // Destruye el gráfico anterior si existe
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
 
       // Inicializa un objeto para almacenar labels para que no se repitan
       const uniqueLabels = {};
 
+      // Recorre los datos para generar las etiquetas y sus valores correspondientes
       data.forEach(defect => {
         const cantidad = parseInt(defect.cantidad, 10); // Convierte a número
-        let labelKey;
 
+        // Determina la etiqueta dependiendo del KPI seleccionado
+        let labelKey;
         if (selectedKPI === "defectos") {
           labelKey = defect.defect;
         } else if (selectedKPI === "sector") {
@@ -64,7 +73,7 @@ export default function GraficoBarrasCompleto() {
         } else {
           labelKey = defect.sector;
         }
-
+        // Verifica si la cantidad es un número y asigna los valores
         if (!isNaN(cantidad)) {
           if (uniqueLabels[labelKey]) {
             uniqueLabels[labelKey] += cantidad; // Suma números en lugar de concatenar
@@ -73,28 +82,31 @@ export default function GraficoBarrasCompleto() {
           }
         }
       });
-
+      // Obtiene las etiquetas y valores
       const labelbar = Object.keys(uniqueLabels);
       const dataValues = Object.values(uniqueLabels);
 
 
-      // Ordenar de mayor a menor
+      // Ordena los datos de mayor a menor según los valores
       let sortedData = labelbar.map((label, index) => ({
 
         value: dataValues[index],
-        color: dataColors[label] || '#FF5733',
+        color: dataColors[label] || '#FF5733', // Asigna un color por defecto si no hay uno definido
         label,
       })).sort((a, b) => b.value - a.value);
-
+      // Limita los resultados mostrados si no se elige mostrar todos
       if (numResults !== "all") {
         sortedData = sortedData.slice(0, numResults);
       }
-
+      // Obtiene las etiquetas, valores y colores ordenados
       const sortedLabelbar = sortedData.map(item => item.label);
       const sortedDataValues = sortedData.map(item => item.value);
       const sortedDataColors = sortedData.map(item => item.color);
 
+      // Capitaliza las etiquetas para mostrarlas correctamente
       const capitalizedLabels = sortedData.map(item => item.label.charAt(0).toUpperCase() + item.label.slice(1))
+
+      // Función para generar las etiquetas en la leyenda
       function generateLabels(sortedLabelbar) {
         return sortedLabelbar.map((label, index) => ({
           text: label.charAt(0).toUpperCase() + label.slice(1),// Capitaliza la primera letra del texto// El texto específico de cada etiqueta en la leyenda
@@ -105,7 +117,7 @@ export default function GraficoBarrasCompleto() {
         }));
       }
 
-
+      // Configuración del gráfico de barras
       var config = {
         type: "bar",
         data: {
@@ -150,12 +162,8 @@ export default function GraficoBarrasCompleto() {
             intersect: true,
           },
           scales: {
-
-
-
             xAxes: [
               {
-
                 ticks: {
                   fontColor: "black",
                   beginAtZero: true,
@@ -163,7 +171,6 @@ export default function GraficoBarrasCompleto() {
                   max: 9, // Valor máximo del eje X (10 - 1 para mostrar 10 barras)
                 },
                 display: true,
-
                 scaleLabel: {
                   display: false,
                   labelString: "Nombre defecto",
@@ -208,16 +215,17 @@ export default function GraficoBarrasCompleto() {
           },
         },
       };
-
+      // Creación del gráfico usando Chart.js y la referencia al elemento del canvas
       const ctx = document.getElementById("line-chart2").getContext("2d");
       chartRef.current = new Chart(ctx, config);
+      // Generación de la leyenda y su inserción en el elemento correspondiente
       const legend = chartRef.current.generateLegend();
 
       if (legendRef.current) {
         legendRef.current.innerHTML = legend;
       }
     }
-  }, [contextData, loading, selectedKPI,dataColors,numResults]);
+  }, [contextData, loading, selectedKPI, dataColors, numResults]);
 
   return (
     <>

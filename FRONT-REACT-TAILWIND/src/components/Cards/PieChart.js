@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext, useMemo } from 'react';
 import Chart from "chart.js";
 import { DataContext, useDataContext } from "components/Funciones/context";
 import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors } from 'assets/colors/colorMapping';
@@ -21,15 +21,21 @@ export default function CardPieChart({ fetchData }) {
       setLoading(false);
     }
   }, [contextData]);
-  const dataColors = {
-    ...defectColors,
-    ...sectorColors,
-    ...faunaColors,
-    ...plagaColors,
-    ...diseasesColors
-  }
-  
+  // Objeto que contiene los colores para diferentes categorías
+  const dataColors = useMemo(() => {
+    return {
+      ...defectColors,
+      ...sectorColors,
+      ...faunaColors,
+      ...plagaColors,
+      ...diseasesColors
+    };
+  }, []); // Dependencia vacía para inicializar una sola vez
+
+
+  // Efecto para generar el gráfico cuando los datos y el estado cambian
   useEffect(() => {
+    // Verifica si los datos no están cargando y existen datos en el contexto
     if (!loading && contextData && contextData.data) {
       const data = contextData.data;
       // Destruye el gráfico anterior si existe
@@ -40,8 +46,11 @@ export default function CardPieChart({ fetchData }) {
       // Inicializa un objeto para almacenar labels para que no se repitan
       const uniqueLabels = {};
 
+      // Recorre los datos para generar las etiquetas y sus valores correspondientes
       data.forEach(defect => {
         const cantidad = parseInt(defect.cantidad, 10); // Convierte a número
+
+        // Determina la etiqueta dependiendo del KPI seleccionado
         let labelKey;
 
         if (selectedKPI === "defectos") {
@@ -59,7 +68,7 @@ export default function CardPieChart({ fetchData }) {
         } else {
           labelKey = defect.sector;
         }
-
+        // Verifica si la cantidad es un número y asigna los valores
         if (!isNaN(cantidad)) {
           if (uniqueLabels[labelKey]) {
             uniqueLabels[labelKey] += cantidad; // Suma números en lugar de concatenar
@@ -69,15 +78,18 @@ export default function CardPieChart({ fetchData }) {
         }
       });
 
+      // Obtiene las etiquetas y valores
       const labels = Object.keys(uniqueLabels);
       const dataValues = Object.values(uniqueLabels);
 
+      // Ordena los datos de mayor a menor según los valores
       let dataObjects = labels.map((label, index) => ({
         label,
         value: dataValues[index],
         color: dataColors[label] || '#FF5733',
       })).sort((a, b) => b.value - a.value);
 
+      // Limita los resultados mostrados si no se elige mostrar todos
       if (numResults !== "all") {
         dataObjects = dataObjects.slice(0, numResults);
       }
@@ -94,7 +106,7 @@ export default function CardPieChart({ fetchData }) {
       if (chartRef.current) {
         chartRef.current.destroy();
       }
-
+      // Configuración del gráfico pie
       const ctx = document.getElementById("pie-chart").getContext("2d");
       const config = {
         type: "pie",
@@ -130,11 +142,18 @@ export default function CardPieChart({ fetchData }) {
       chartRef.current = new Chart(ctx, config);
 
     }
-  }, [contextData, loading, selectedKPI,dataColors,numResults]);
+  }, [contextData, loading, selectedKPI, dataColors, numResults]);
 
   return (
     <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-2xl rounded  bg-neutral h-full ">
+      <div className="rounded-t mb-0 px-4 py-3 bg-VerdeSemiOscuro">
+        <div className="flex flex-wrap items-center ">
+          <h6 className="uppercase text-white  text-xs font-semibold">
+            Gráfico de torta
+          </h6>
 
+        </div>
+      </div>
       <div className="p-4 flex-auto">
         <div className="text-right ml-auto uppercase text-black-100 mb-1 text-xs font-semibold">
           <h1>Cantidad de resultados</h1>

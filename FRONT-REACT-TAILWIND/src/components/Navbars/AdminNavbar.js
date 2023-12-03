@@ -128,7 +128,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                     <option value="formPlague">Plagas</option>
                 </select>
             </div>
-            <div className="md:w-3/12 w-4/12 px-2">
+            <div className="md:w-3/12 w-3/12 px-2">
                 <select
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
                     value={secondSelectValue}
