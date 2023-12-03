@@ -37,5 +37,27 @@ export class FormFaunaController {
     }
 
 
+    @Get('Fauna-Cerro-Tunel-General/') // Ruta con parámetro
+    @ApiOperation({ summary: 'cantidad de FAUNA' }) //descripción metodo
+    @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formFauna] }) // Respuesta exitosa
+    async obtCompCerroTunel2() {
+        return this.formFaunaService.CerroTunel2();
+    }
+
+    @Get('Fauna-Cerro-Casa-General/') // Ruta con parámetro
+    @ApiOperation({ summary: 'cantidad de FAUNA' }) //descripción metodo
+    @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formFauna] }) // Respuesta exitosa
+    async obtCompCerroCasa2() {
+        return this.formFaunaService.CerroCasa2();
+    }
+
+    @Get('Fauna-Cerro-Esperanza-General/') // Ruta con parámetro
+    @ApiOperation({ summary: 'cantidad de FAUNA' }) //descripción metodo
+    @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formFauna] }) // Respuesta exitosa
+    async obtCompCerroEsperanza2() {
+        return this.formFaunaService.CerroEsperanza2();
+    }
+
+
 
 }

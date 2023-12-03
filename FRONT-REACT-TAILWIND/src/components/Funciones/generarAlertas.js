@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import { generarInformeEnExcel, generarInformeEnExcel2 } from './xls';
-import { GenerarPDF,GenerarPDF2,GenerarPDF3, GenerarPDF5 } from "./generarPdf";
+import { GenerarPDF,GenerarPDF2,GenerarPDF3, GenerarPDF5, GenerarPDF6, GenerarPDF7, GenerarPDF8, GenerarPDF9 } from "./generarPdf";
 
 //generar alerta por todos los tipos de defecto
 const generarExcelYMostrarAlerta = async (defects) => {
@@ -260,6 +260,96 @@ const generarPDFAlert1 = async (defects) => {
     };
 
 
+    const generarPDFAlert8 = async (defects,nombrePdf) => {
+      try {
+        if (defects.length > 0) {
+          GenerarPDF6(defects, ` ${nombrePdf}`);
+          await Swal.fire({
+            icon: 'success',
+            title: 'Archivo PDF generado correctamente',
+          });
+        } else {
+          await Swal.fire({
+            icon: 'info',
+            title: 'No hay datos disponibles en este sector',
+          });
+        }
+      } catch (error) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Ocurrió un error al generar el informe PDF',
+        });
+      }
+    };
+
+    const generarPDFAlert9 = async (defects,nombrePdf) => {
+      try {
+        if (defects.length > 0) {
+          GenerarPDF7(defects, ` ${nombrePdf}`);
+          await Swal.fire({
+            icon: 'success',
+            title: 'Archivo PDF generado correctamente',
+          });
+        } else {
+          await Swal.fire({
+            icon: 'info',
+            title: 'No hay datos disponibles en este sector',
+          });
+        }
+      } catch (error) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Ocurrió un error al generar el informe PDF',
+        });
+      }
+    };
+
+    const generarPDFAlert10 = async (defects,nombrePdf) => {
+      try {
+        if (defects.length > 0) {
+          GenerarPDF8(defects, ` ${nombrePdf}`);
+          await Swal.fire({
+            icon: 'success',
+            title: 'Archivo PDF generado correctamente',
+          });
+        } else {
+          await Swal.fire({
+            icon: 'info',
+            title: 'No hay datos disponibles en este sector',
+          });
+        }
+      } catch (error) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Ocurrió un error al generar el informe PDF',
+        });
+      }
+    };
+
+    const generarPDFAlert11 = async (defects,nombrePdf) => {
+      try {
+        if (defects.length > 0) {
+          GenerarPDF9(defects, ` ${nombrePdf}`);
+          await Swal.fire({
+            icon: 'success',
+            title: 'Archivo PDF generado correctamente',
+          });
+        } else {
+          await Swal.fire({
+            icon: 'info',
+            title: 'No hay datos disponibles en este sector',
+          });
+        }
+      } catch (error) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Ocurrió un error al generar el informe PDF',
+        });
+      }
+    };
+
+
+
 
 
 export const Alertas = {
@@ -273,6 +363,11 @@ export const Alertas = {
   generarPDFAlert5,
   generarPDFAlert6,
   generarPDFAlert7,
+  generarPDFAlert8,
+  generarPDFAlert9,
+  generarPDFAlert10,
+  generarPDFAlert11,
+
 };
 
 

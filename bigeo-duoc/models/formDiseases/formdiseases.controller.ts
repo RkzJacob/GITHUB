@@ -36,4 +36,25 @@ export class FormDiseasesController {
         return this.formDiseasesService.obtCompCerroEsperanza(Fecha1,Fecha2);
     }
 
+    @Get('Diseases-Cerro-Tunel-General/') // Ruta con parámetro
+    @ApiOperation({ summary: 'cantidad de Diseases' }) //descripción metodo
+    @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formDiseases] }) // Respuesta exitosa
+    async obtCompCerroTunel2() {
+        return this.formDiseasesService.CerroTunel2();
+    }
+
+    @Get('Diseases-Cerro-Casa-General/') // Ruta con parámetro
+    @ApiOperation({ summary: 'cantidad de Diseases' }) //descripción metodo
+    @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formDiseases] }) // Respuesta exitosa
+    async obtCompCerroCasa2() {
+        return this.formDiseasesService.CerroCasa2();
+    }
+
+    @Get('Diseases-Cerro-Esperanza-General/') // Ruta con parámetro
+    @ApiOperation({ summary: 'cantidad de Diseases' }) //descripción metodo
+    @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formDiseases] }) // Respuesta exitosa
+    async obtCompCerroEsperanza2() {
+        return this.formDiseasesService.CerroEsperanza2();
+    }
+
 }

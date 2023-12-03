@@ -51,4 +51,26 @@ export class FormPlagueController {
   }
 
 
+  @Get('Plaga-Cerro-Tunel-General/') // Ruta con parámetro
+    @ApiOperation({ summary: 'cantidad de plagas' }) //descripción metodo
+    @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formPlague] }) // Respuesta exitosa
+    async obtCompCerroTunel2() {
+        return this.FormPlagueService.CerroTunel2();
+    }
+
+    @Get('Plaga-Cerro-Casa-General/') // Ruta con parámetro
+    @ApiOperation({ summary: 'cantidad de plagas' }) //descripción metodo
+    @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formPlague] }) // Respuesta exitosa
+    async obtCompCerroCasa2() {
+        return this.FormPlagueService.CerroCasa2();
+    }
+
+    @Get('Plaga-Cerro-Esperanza-General/') // Ruta con parámetro
+    @ApiOperation({ summary: 'cantidad de plagas' }) //descripción metodo
+    @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formPlague] }) // Respuesta exitosa
+    async obtCompCerroEsperanza2() {
+        return this.FormPlagueService.CerroEsperanza2();
+    }
+
+
 }

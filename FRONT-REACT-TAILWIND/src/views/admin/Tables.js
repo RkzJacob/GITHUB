@@ -6,9 +6,11 @@ import NavbarHome from "components/Navbars/HomeNavbar";
 
 export default function Tables() {
   const [selectedOption, setSelectedOption] = useState("Seleccionar");
+ 
 
   const handleSelectOption = (option) => {
     setSelectedOption(option);
+    
   };
 
   return (

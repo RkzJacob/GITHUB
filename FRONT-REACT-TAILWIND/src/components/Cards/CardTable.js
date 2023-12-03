@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import axios from 'axios';
 import "jspdf-autotable";
 import aspersores from '../../assets/img/aspersores.png';
+import enfermedades from '../../assets/img/diseases.png';
+import damage from '../../assets/img/damage.png';
+import plaga from '../../assets/img/Plaga.png';
+import fauna from '../../assets/img/fauna.png';
 
 import { apiUrl1,apiUrl2,apiUrl4 } from "components/urls/apiUrls";
 import { Alertas } from "components/Funciones/generarAlertas";
@@ -14,6 +18,18 @@ import { apiUrlC1 } from "components/urls/apiUrls";
 import { apiUrlC2 } from "components/urls/apiUrls";
 import { apiUrlC3 } from "components/urls/apiUrls";
 import { apiUrlC4 } from "components/urls/apiUrls";
+import { apiUrlE1 } from "components/urls/apiUrls";
+import { apiUrlE2 } from "components/urls/apiUrls";
+import { apiUrlE3 } from "components/urls/apiUrls";
+import { apiUrlD1 } from "components/urls/apiUrls";
+import { apiUrlD2 } from "components/urls/apiUrls";
+import { apiUrlD3 } from "components/urls/apiUrls";
+import { apiUrlF1 } from "components/urls/apiUrls";
+import { apiUrlF2 } from "components/urls/apiUrls";
+import { apiUrlF3 } from "components/urls/apiUrls";
+import { apiUrlP1 } from "components/urls/apiUrls";
+import { apiUrlP2 } from "components/urls/apiUrls";
+import { apiUrlP3 } from "components/urls/apiUrls";
 
 // components
 
@@ -27,7 +43,7 @@ const formatDate = (date) => {
 };
 
 export default function CardTable({ color, selectedOption}) {
-  //constantes
+  //const KPI SPRINKLERS
   const [defects, setDefects] = useState([]);//Constante para guardar la respuesta de la api KPI 1
   const [defects2, setDefects2] = useState([]); // KPI 2
   const [defects3, setDefects3] = useState([]); // KPI con parametros
@@ -36,6 +52,31 @@ export default function CardTable({ color, selectedOption}) {
   const [defects6, setDefects6] = useState([]);//parametros
   const [defects7, setDefects7] = useState([]);//parametros
   const [defects8, setDefects8] = useState([]);//parametros
+
+
+  //KPI ENFERMEDADES
+  const [defects9, setDefects9] = useState([]);//parametros
+  const [defects10, setDefects10] = useState([]);//parametros
+  const [defects11, setDefects11] = useState([]);//parametros
+
+  //KPI DAMAGE
+  const [defects12, setDefects12] = useState([]);//parametros
+  const [defects13, setDefects13] = useState([]);//parametros
+  const [defects14, setDefects14] = useState([]);//parametros
+
+  //KPI FAUNA
+  const [defects15, setDefects15] = useState([]);//parametros
+  const [defects16, setDefects16] = useState([]);//parametros
+  const [defects17, setDefects17] = useState([]);//parametros
+
+  //KPI PLAGA 
+  const [defects18, setDefects18] = useState([]);//parametros
+  const [defects19, setDefects19] = useState([]);//parametros
+  const [defects20, setDefects20] = useState([]);//parametros
+
+
+
+  
 
   // fechas
   const [startDate, setStartDate] = useState(null);
@@ -52,12 +93,37 @@ export default function CardTable({ color, selectedOption}) {
 
   //utilización de un hook junto utilizacion de codigo
   useEffect(() => { 
+    //KPI ASPERSORES
     ObtenerDataApi(apiUrl1,setDefects,token);
     ObtenerDataApi(apiUrl2,setDefects2,token);
     ObtenerDataApi(apiUrlC1,setDefects4,token);
     ObtenerDataApi(apiUrlC2,setDefects6,token);
     ObtenerDataApi(apiUrlC3,setDefects7,token);
-    ObtenerDataApi(apiUrlC4,setDefects7,token);
+    ObtenerDataApi(apiUrlC4,setDefects8,token);
+    
+    //KPI ENFERMEDADES
+    ObtenerDataApi(apiUrlE1,setDefects9,token);
+    ObtenerDataApi(apiUrlE2,setDefects10,token);
+    ObtenerDataApi(apiUrlE3,setDefects11,token);
+
+    //KPI DAÑOS
+    ObtenerDataApi(apiUrlD1,setDefects12,token);
+    ObtenerDataApi(apiUrlD2,setDefects13,token);
+    ObtenerDataApi(apiUrlD3,setDefects14,token);
+
+    //KPI FAUNA
+    ObtenerDataApi(apiUrlF1,setDefects15,token);
+    ObtenerDataApi(apiUrlF2,setDefects16,token);
+    ObtenerDataApi(apiUrlF3,setDefects17,token);
+
+    //KPI PLAGA
+    ObtenerDataApi(apiUrlP1,setDefects18,token);
+    ObtenerDataApi(apiUrlP2,setDefects19,token);
+    ObtenerDataApi(apiUrlP3,setDefects20,token);
+
+
+
+
 }, []);
 
 
@@ -125,6 +191,54 @@ const handleParameterSelect = (event) => {
 
     const GenerarPDF7 = () => {
       Alertas.generarPDFAlert7(defects8);
+    };
+
+    //Diseases
+    const GenerarPDF8 = () => {
+      Alertas.generarPDFAlert8(defects9,'Reporte de Enfermedades por cada sector del CERRO TUNEL');
+    };
+
+    const GenerarPDF9 = () => {
+      Alertas.generarPDFAlert8(defects10,'Reporte de Enfermedades por cada sector del CERRO CASA');
+    };
+    const GenerarPDF10 = () => {
+      Alertas.generarPDFAlert8(defects11,'Reporte de Enfermedades por cada sector del CERRO ESPERANZA');
+    };
+
+     //damage
+    const GenerarPDF11 = () => {
+      Alertas.generarPDFAlert9(defects12,'Reporte de daños por cada sector del CERRO TUNEL');
+    };
+
+    const GenerarPDF12 = () => {
+      Alertas.generarPDFAlert9(defects13,'Reporte de daños por cada sector del CERRO CASA');
+    };
+    const GenerarPDF13 = () => {
+      Alertas.generarPDFAlert9(defects14,'Reporte de daños por cada sector del CERRO ESPERANZA');
+    };
+
+    //fauna
+    const GenerarPDF14 = () => {
+      Alertas.generarPDFAlert10(defects15,'Reporte de Fauna por cada sector del CERRO TUNEL');
+    };
+
+    const GenerarPDF15 = () => {
+      Alertas.generarPDFAlert10(defects16,'Reporte de Fauna por cada sector del CERRO CASA');
+    };
+    const GenerarPDF16 = () => {
+      Alertas.generarPDFAlert10(defects17,'Reporte de Fauna por cada sector del CERRO ESPERANZA');
+    };
+
+    //plagas
+    const GenerarPDF17 = () => {
+      Alertas.generarPDFAlert11(defects18,'Reporte de plagas por cada sector del CERRO TUNEL');
+    };
+
+    const GenerarPDF18 = () => {
+      Alertas.generarPDFAlert11(defects19,'Reporte de plagas por cada sector del CERRO CASA');
+    };
+    const GenerarPDF19 = () => {
+      Alertas.generarPDFAlert11(defects20,'Reporte de plagas por cada sector del CERRO ESPERANZA');
     };
 
   return (
@@ -399,6 +513,329 @@ const handleParameterSelect = (event) => {
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                   <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF7}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+              {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={enfermedades}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE ENFERMEDADES DEL [[[CERRO TUNEL]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF8}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+              {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={enfermedades}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE ENFERMEDADES DEL [[[CERRO CASA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF9}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+            {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={enfermedades}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE ENFERMEDADES DEL [[[CERRO ESPERANZA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF10}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+            {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={damage}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE TIPOS DE DAÑOS DEL [[[CERRO ESPERANZA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF11}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+            {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={damage}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE TIPOS DE DAÑOS [[[CERRO ESPERANZA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF12}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+        {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={damage}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE TIPOS DE DAÑOS [[[CERRO ESPERANZA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF13}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+            {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={fauna}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE TIPOS DE FAUNA [[[CERRO ESPERANZA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF14}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+            {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={fauna}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE TIPOS DE FAUNA [[[CERRO ESPERANZA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF15}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+              {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={fauna}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE TIPOS DE FAUNA [[[CERRO ESPERANZA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF16}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+          {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={plaga}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE TIPOS DE PLAGA [[[CERRO ESPERANZA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF17}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+          {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={plaga}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE TIPOS DE PLAGA [[[CERRO ESPERANZA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF18}> Generar PDF </button>
+               
+                </td>
+              </tr>
+              )}
+
+            {selectedOption === "formularios" && isUser &&(
+              <tr>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                  <img
+                    src={plaga}
+                    className="h-12 w-12 bg-white rounded-full border"
+                    alt="..."
+                  ></img>
+                  <span
+                    className={
+                      "ml-3 font-bold " +
+                      +(color === "light" ? "text-blueGray-600" : "text-white")
+                    }
+                  >
+                    CONTEO DE TIPOS DE PLAGA [[[CERRO ESPERANZA]]]
+                  </span>
+                </th>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  PDF
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <i className="fas fa-circle text-emerald-500 mr-2"></i><button onClick={GenerarPDF19}> Generar PDF </button>
                
                 </td>
               </tr>

@@ -100,3 +100,138 @@ export function GenerarPDF5(data, data2, nombreArchivo) {
   // Guardar el PDF con el nombre de archivo proporcionado
   pdf.save(`${nombreArchivo}.pdf`);
 };
+
+export function GenerarPDF6  ( data,nombreArchivo) {
+  const pdf = new jsPDF();
+  let currentY = 20;
+  pdf.text('Reporte De enfermedades de todos los sectores',10,10);
+
+  const sectoresUnicos = [...new Set(data.map(item => item.sector))];
+  console.log("Sectores Únicos:", sectoresUnicos);
+  
+
+  sectoresUnicos.forEach(sector => {
+  // Agrega el nombre del sector
+  pdf.text(`Sector: ${sector}`, 10, currentY);
+  currentY += 10;
+
+  const defectosSector = data.filter(defect => defect.sector === sector);
+  const tableData = defectosSector.map(defect => [defect.diseases, defect.cantidad]);
+
+  // Agrega la tabla de defectos y cantidades
+  pdf.autoTable({
+    head: [['Tipo de Enfermedad', 'Cantidad']],
+    body: tableData,
+    startY: currentY + 5,
+    margin: { top: 10 },
+  });
+
+  // Ajusta la posición Y para el próximo sector
+  currentY = pdf.autoTable.previous.finalY + 10;
+});
+
+pdf.save(`${nombreArchivo}.pdf`);
+};
+
+
+export function GenerarPDF7  ( data,nombreArchivo) {
+  const pdf = new jsPDF();
+  let currentY = 20;
+
+  pdf.text('Reporte todos los tipos de daños Por sector',10,10);
+
+
+  const sectoresUnicos = [...new Set(data.map(item => item.sector))];
+  console.log("Sectores Únicos:", sectoresUnicos);
+  
+
+  sectoresUnicos.forEach(sector => {
+  // Agrega el nombre del sector
+  pdf.text(`Sector: ${sector}`, 10, currentY);
+  currentY += 10;
+
+  const defectosSector = data.filter(defect => defect.sector === sector);
+  const tableData = defectosSector.map(defect => [defect.damage, defect.cantidad]);
+
+  // Agrega la tabla de defectos y cantidades
+  pdf.autoTable({
+    head: [['Tipo de Daño', 'Cantidad']],
+    body: tableData,
+    startY: currentY + 5,
+    margin: { top: 10 },
+  });
+
+  // Ajusta la posición Y para el próximo sector
+  currentY = pdf.autoTable.previous.finalY + 10;
+});
+
+pdf.save(`${nombreArchivo}.pdf`);
+};
+
+export function GenerarPDF8  ( data,nombreArchivo) {
+  const pdf = new jsPDF();
+  let currentY = 20;
+
+  pdf.text('Reporte todos los tipos de fauna Por sector',10,10);
+
+
+  const sectoresUnicos = [...new Set(data.map(item => item.sector))];
+  console.log("Sectores Únicos:", sectoresUnicos);
+  
+
+  sectoresUnicos.forEach(sector => {
+  // Agrega el nombre del sector
+  pdf.text(`Sector: ${sector}`, 10, currentY);
+  currentY += 10;
+
+  const defectosSector = data.filter(defect => defect.sector === sector);
+  const tableData = defectosSector.map(defect => [defect.fauna, defect.cantidad]);
+
+  // Agrega la tabla de defectos y cantidades
+  pdf.autoTable({
+    head: [['Tipo de Fauna', 'Cantidad']],
+    body: tableData,
+    startY: currentY + 5,
+    margin: { top: 10 },
+  });
+
+  // Ajusta la posición Y para el próximo sector
+  currentY = pdf.autoTable.previous.finalY + 10;
+});
+
+pdf.save(`${nombreArchivo}.pdf`);
+};
+
+export function GenerarPDF9  ( data,nombreArchivo) {
+  const pdf = new jsPDF();
+  let currentY = 20;
+
+  pdf.text('Reporte todos los tipos de plagas Por sector',10,10);
+
+
+  const sectoresUnicos = [...new Set(data.map(item => item.sector))];
+  console.log("Sectores Únicos:", sectoresUnicos);
+  
+
+  sectoresUnicos.forEach(sector => {
+  // Agrega el nombre del sector
+  pdf.text(`Sector: ${sector}`, 10, currentY);
+  currentY += 10;
+
+  const defectosSector = data.filter(defect => defect.sector === sector);
+  const tableData = defectosSector.map(defect => [defect.plague, defect.cantidad]);
+
+  // Agrega la tabla de defectos y cantidades
+  pdf.autoTable({
+    head: [['Tipo de plaga', 'Cantidad']],
+    body: tableData,
+    startY: currentY + 5,
+    margin: { top: 10 },
+  });
+
+  // Ajusta la posición Y para el próximo sector
+  currentY = pdf.autoTable.previous.finalY + 10;
+});
+
+pdf.save(`${nombreArchivo}.pdf`);
+};
