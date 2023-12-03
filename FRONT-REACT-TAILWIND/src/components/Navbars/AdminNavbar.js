@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useContext } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,8 +7,8 @@ import { DataContext, useDataContext } from "components/Funciones/context.js";
 import Swal from 'sweetalert2';
 
 export default function AdminNavbar({ ongetData, chartsData }) {
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
+    const [startDate, setStartDate] = useState(); // Estado para la fecha de inicio
+    const [endDate, setEndDate] = useState(); // Estado para la fecha de fin
     const [Kpi, setKpi] = useState(' ');
     const [firstSelectValue, setFirstSelectValue] = useState("Seleccionar"); // Estado para el primer select
     const [secondSelectOptions, setSecondSelectOptions] = useState([]); // Estado para el segundo select
@@ -19,8 +20,9 @@ export default function AdminNavbar({ ongetData, chartsData }) {
     const { selectedKPI, setSelectedKPI } = useDataContext();
 
 
-
+    // Efecto secundario que se activa cuando el valor del primer select cambia (firstSelectValue)
     useEffect(() => {
+        // Lógica para configurar las opciones del segundo select (KpiOptions) según el valor del primer select (firstSelectValue)
         if (firstSelectValue === "formSprinkler") {
             setKpiOptions([
                 { value: "defectos", label: "Todos los defectos" },
@@ -51,12 +53,12 @@ export default function AdminNavbar({ ongetData, chartsData }) {
         }
     }, [firstSelectValue]);
 
+    // Función que se activa cuando cambian las fechas seleccionadas en el DatePicker
     const onChange = (dates) => {
         const [start, end] = dates;
         setStartDate(start);
         setEndDate(end);
     };
-
 
     const handleFormChange = (event) => {
         setFirstSelectValue(event.target.value);
@@ -74,7 +76,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
         setCerroValue(event.target.value);
     };
 
-
+    // Función para mostrar mensajes de error utilizando SweetAlert2
     const showErrorMessage = async (message) => {
         await Swal.fire({
             icon: 'error',
@@ -82,6 +84,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
         });
     }
 
+    // Función para obtener los datos según las selecciones hechas en los selects y las fechas
     const handleGetData = async () => {
         const finalValue = `${secondSelectValue}-${CerroValue}`;
         try {
