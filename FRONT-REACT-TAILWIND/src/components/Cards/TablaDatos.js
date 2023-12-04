@@ -1,10 +1,24 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import { DataContext } from 'components/Funciones/context.js';
 import { capitalizeText } from 'components/Funciones/capitalize';
+import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors, damageColors } from 'assets/colors/colorMapping'; // Importación de colores definidos para cada categoría
+
 export default function TablaDatos() {
   const [sortColumn, setSortColumn] = useState(null);
   const [sortDirection, setSortDirection] = useState('asc'); // 'asc' para ascendente, 'desc' para descendente
   const { data, selectedKPI } = useContext(DataContext);
+
+  // Objeto que contiene los colores para diferentes categorías
+  const dataColors = useMemo(() => {
+    return {
+      ...defectColors,
+      ...sectorColors,
+      ...faunaColors,
+      ...plagaColors,
+      ...diseasesColors,
+      ...damageColors
+    };
+  }, []); // Dependencia vacía para inicializar una sola vez
 
   const handleSort = (columnName) => {
     if (sortColumn === columnName) {
@@ -20,7 +34,7 @@ export default function TablaDatos() {
   const calcularTotales = () => {
     const totales = {};
     let sumaTotalCantidad = 0;
-  
+
     data.forEach(defect => {
       if (selectedKPI === "defectos") {
         // Agrupar por tipo de defecto
@@ -72,13 +86,13 @@ export default function TablaDatos() {
         sumaTotalCantidad += parseInt(defect.cantidad, 10);
       }
     });
-  
+
     if (sortColumn) {
       // Ordenar los totales según la columna seleccionada
       const sortedTotales = Object.entries(totales).sort((a, b) => {
         const [keyA, valueA] = a;
         const [keyB, valueB] = b;
-  
+
         if (sortColumn === 'etiqueta') {
           return sortDirection === 'asc' ? keyA.localeCompare(keyB) : keyB.localeCompare(keyA);
         } else if (sortColumn === 'totalCantidad') {
@@ -88,13 +102,13 @@ export default function TablaDatos() {
           const porcentajeB = (valueB / sumaTotalCantidad) * 100;
           return sortDirection === 'asc' ? porcentajeA - porcentajeB : porcentajeB - porcentajeA;
         }
-  
+
         return 0; // En caso de que la columna de clasificación no se reconozca
       });
-  
+
       return { totales: Object.fromEntries(sortedTotales), sumaTotalCantidad };
     }
-  
+
     return { totales, sumaTotalCantidad };
   };
 
@@ -105,7 +119,7 @@ export default function TablaDatos() {
       <div className="rounded-t mb-0 px-4 py-3 bg-VerdeSemiOscuro">
         <div className="flex flex-wrap items-center ">
           <h6 className="uppercase text-white  text-xs font-semibold">
-              Tabla
+            Tabla
           </h6>
 
         </div>
@@ -130,15 +144,18 @@ export default function TablaDatos() {
               </tr>
             </thead>
             <tbody>
-            {totales && Object.keys(totales).map(etiqueta => (
-              <tr key={etiqueta}>
-                <td className="text-black">{capitalizeText(etiqueta)}</td>
-                <td className="text-black">{totales[etiqueta]}</td>
-                <td className="text-black">
-                  {((totales[etiqueta] / sumaTotalCantidad) * 100).toFixed(2)}%
-                </td>
-              </tr>
-            ))}
+              {totales && Object.keys(totales).map(etiqueta => (
+                <tr key={etiqueta}>
+                  <td className="text-black">{capitalizeText(etiqueta)}</td>
+                  <td className="text-black">{totales[etiqueta]}</td>
+                  <td className="text-black">
+                    {((totales[etiqueta] / sumaTotalCantidad) * 100).toFixed(2)}%
+                  </td>
+                  <td>
+                    <div style={{ width: '20px', height: '20px', backgroundColor: dataColors[etiqueta] }} />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
