@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext, useMemo } from 'react';
 import Chart from "chart.js";
 import { DataContext, useDataContext } from "components/Funciones/context";
-import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors } from 'assets/colors/colorMapping';
+import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors, damageColors } from 'assets/colors/colorMapping';
 
 export default function CardPieChart({ fetchData }) {
 
@@ -11,7 +11,7 @@ export default function CardPieChart({ fetchData }) {
 
 
   const contextData = useContext(DataContext);
-  const { selectedKPI } = useDataContext();
+  const { selectedKPI, reloadChart, setReloadChart } = useDataContext();
 
   const [numResults, setNumResults] = useState(10);
 
@@ -28,7 +28,8 @@ export default function CardPieChart({ fetchData }) {
       ...sectorColors,
       ...faunaColors,
       ...plagaColors,
-      ...diseasesColors
+      ...diseasesColors,
+      ...damageColors
     };
   }, []); // Dependencia vacía para inicializar una sola vez
 
@@ -36,8 +37,12 @@ export default function CardPieChart({ fetchData }) {
   // Efecto para generar el gráfico cuando los datos y el estado cambian
   useEffect(() => {
     // Verifica si los datos no están cargando y existen datos en el contexto
-    if (!loading && contextData && contextData.data) {
+    if (!loading && contextData && contextData.data && reloadChart) {
       const data = contextData.data;
+      
+      // Restablece el estado de recarga a falso
+      setReloadChart(false);
+
       // Destruye el gráfico anterior si existe
       if (chartRef.current) {
         chartRef.current.destroy();
@@ -63,6 +68,8 @@ export default function CardPieChart({ fetchData }) {
           labelKey = defect.plaga;
         } else if (selectedKPI === "Diseases") {
           labelKey = defect.diseases;
+        } else if (selectedKPI === "Damage") {
+          labelKey = defect.damage;
         } else if (selectedKPI === "Seleccionar KPI") {
           labelKey = null;
         } else {
@@ -142,7 +149,7 @@ export default function CardPieChart({ fetchData }) {
       chartRef.current = new Chart(ctx, config);
 
     }
-  }, [contextData, loading, selectedKPI, dataColors, numResults]);
+  }, [contextData, loading, selectedKPI, dataColors, numResults, reloadChart]);
 
   return (
     <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-2xl rounded  bg-neutral h-full ">

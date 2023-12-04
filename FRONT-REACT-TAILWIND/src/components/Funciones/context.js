@@ -7,9 +7,12 @@ export const DataContext = createContext();
 export const DataContextProvider = ({ children }) => {
   const [data, setData] = useState([]); // Datos iniciales del contexto
   const [selectedKPI, setSelectedKPI] = useState(""); // Agregar estado para SelectedKPI
+  const [reloadChart, setReloadChart] = useState(false); //Para que graficos no se actualicen solos
+  const [reloadChart2, setReloadChart2] = useState(false); //Para que graficos no se actualicen solos
+  const [reloadChart3, setReloadChart3] = useState(false); //Para que graficos no se actualicen solos
 
   return (
-    <DataContext.Provider value={{ data, setData, selectedKPI, setSelectedKPI }}>
+    <DataContext.Provider value={{ data, setData, selectedKPI, setSelectedKPI, reloadChart, setReloadChart, reloadChart2, setReloadChart2, reloadChart3, setReloadChart3  }}>
       {children}
     </DataContext.Provider>
   );

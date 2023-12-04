@@ -61,6 +61,11 @@ export const plagaColors = {
     "plague18": "#0000FF",
 }
 
+export const damageColors = {
+    "enfermedad": "#CD5C5C",
+    "plaga": "#ADFF2F",
+}
+
 export const diseasesColors = {
     "fusarium": "#CD5C5C",
     "verticilosis": "#FFC0CB",

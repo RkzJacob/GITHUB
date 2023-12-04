@@ -17,7 +17,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
     const [secondSelectValue, setSecondSelectValue] = useState("");
     const [formName, setFormName] = useState("");
     const { setData } = useContext(DataContext)
-    const { selectedKPI, setSelectedKPI } = useDataContext();
+    const { selectedKPI, setSelectedKPI, setReloadChart, setReloadChart2, setReloadChart3 } = useDataContext();
 
 
     // Efecto secundario que se activa cuando el valor del primer select cambia (firstSelectValue)
@@ -42,11 +42,12 @@ export default function AdminNavbar({ ongetData, chartsData }) {
             ]);
         } else if (firstSelectValue === "formDamage") {
             setKpiOptions([
-                { value: "Damage", label: "Damage TEST" },
+                { value: "Damage", label: "Conteo de daños" },
+                { value: "SDamage", label: "Daños por sector" },
             ]);
         } else if (firstSelectValue === "formDiseases") {
             setKpiOptions([
-                { value: "Diseases", label: "Diseaes TEST" },
+                { value: "Diseases", label: "Conteo de enfermedades" },
             ]);
         } else {
             setKpiOptions([]);
@@ -104,6 +105,9 @@ export default function AdminNavbar({ ongetData, chartsData }) {
 
             if (response && response.length > 0) {
                 setData(response);
+                setReloadChart(true); // Para la recarga del grafico
+                setReloadChart2(true)
+                setReloadChart3(true)
             } else {
                 showErrorMessage('No hay datos disponibles para las fechas seleccionadas');
             }
@@ -122,6 +126,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                 >
                     <option value="Seleccionar">Seleccionar</option>
                     <option value="formSprinkler">Aspersores</option>
+                    <option value="formDamage">Daños</option>
                     <option value="formCount">Conteo</option>
                     <option value="formDiseases">Enfermedades</option>
                     <option value="formFauna">Fauna</option>

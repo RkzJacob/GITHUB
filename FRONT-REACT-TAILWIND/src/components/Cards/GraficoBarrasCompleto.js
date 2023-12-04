@@ -3,7 +3,7 @@ import Chart from "chart.js";
 
 import { DataContext } from 'components/Funciones/context.js';
 import { useDataContext } from 'components/Funciones/context';
-import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors } from 'assets/colors/colorMapping'; // Importación de colores definidos para cada categoría
+import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors, damageColors } from 'assets/colors/colorMapping'; // Importación de colores definidos para cada categoría
 
 
 export default function GraficoBarrasCompleto() {
@@ -13,7 +13,7 @@ export default function GraficoBarrasCompleto() {
 
   // Uso de contextos y estados compartidos
   const contextData = useContext(DataContext);
-  const { selectedKPI } = useDataContext();
+  const { selectedKPI, reloadChart2, setReloadChart2 } = useDataContext();
 
   const [numResults, setNumResults] = useState(10); // Estado para controlar la cantidad de resultados mostrados
 
@@ -24,7 +24,8 @@ export default function GraficoBarrasCompleto() {
       ...sectorColors,
       ...faunaColors,
       ...plagaColors,
-      ...diseasesColors
+      ...diseasesColors,
+      ...damageColors
     };
   }, []); // Dependencia vacía para inicializar una sola vez
   // Primer efecto para manejar los datos y la carga inicial
@@ -43,8 +44,11 @@ export default function GraficoBarrasCompleto() {
   // Segundo efecto para generar el gráfico cuando los datos y el estado cambian
   useEffect(() => {
     // Verifica si los datos no están cargando y existen datos en el contexto
-    if (!loading && contextData && contextData.data) {
+    if (!loading && contextData && contextData.data && reloadChart2) {
       const data = contextData.data;
+
+      // Restablece el estado de recarga a falso
+      setReloadChart2(false);
 
       // Destruye el gráfico anterior si existe
       if (chartRef.current) {
@@ -68,6 +72,10 @@ export default function GraficoBarrasCompleto() {
           labelKey = defect.fauna;
         } else if (selectedKPI === "Plaga") {
           labelKey = defect.plaga;
+        } else if (selectedKPI === "Diseases") {
+          labelKey = defect.diseases;
+        } else if (selectedKPI === "Damage") {
+          labelKey = defect.damage;
         } else if (selectedKPI === "Seleccionar KPI") {
           labelKey = null;
         } else {
@@ -225,7 +233,7 @@ export default function GraficoBarrasCompleto() {
         legendRef.current.innerHTML = legend;
       }
     }
-  }, [contextData, loading, selectedKPI, dataColors, numResults]);
+  }, [contextData, loading, selectedKPI, dataColors, numResults, reloadChart2]);
 
   return (
     <>

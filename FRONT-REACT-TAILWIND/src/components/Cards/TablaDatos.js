@@ -46,6 +46,22 @@ export default function TablaDatos() {
           totales[defect.plaga] += parseInt(defect.cantidad, 10);
         }
         sumaTotalCantidad += parseInt(defect.cantidad, 10);
+      } else if (selectedKPI === "Diseases") {
+        // Agrupar por tipo de diseases
+        if (!totales[defect.diseases]) {
+          totales[defect.diseases] = parseInt(defect.cantidad, 10);
+        } else {
+          totales[defect.diseases] += parseInt(defect.cantidad, 10);
+        }
+        sumaTotalCantidad += parseInt(defect.cantidad, 10);
+      } else if (selectedKPI === "Damage") {
+        // Agrupar por tipo de damage
+        if (!totales[defect.damage]) {
+          totales[defect.damage] = parseInt(defect.cantidad, 10);
+        } else {
+          totales[defect.damage] += parseInt(defect.cantidad, 10);
+        }
+        sumaTotalCantidad += parseInt(defect.cantidad, 10);
       } else {
         // Agrupar por sector
         if (!totales[defect.sector]) {
