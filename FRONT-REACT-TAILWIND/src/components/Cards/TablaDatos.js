@@ -111,7 +111,7 @@ export default function TablaDatos() {
         </div>
       </div>
       <div className="p-4 flex-auto ">
-        <div className="relative h-350-px" style={{ maxHeight: '350px', overflowY: 'auto' }}>
+        <div className="relative h-600-px" style={{ maxHeight: '600px', overflowY: 'auto' }}>
           <table className="w-full">
             <thead>
               <tr>
