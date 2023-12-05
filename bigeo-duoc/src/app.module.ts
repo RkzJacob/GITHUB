@@ -99,11 +99,5 @@ import { jwtConstants } from './auth/constants/jwt.constants';
     AppService]
 })
 export class AppModule {
-  //configure(consumer: MiddlewareConsumer) {
-  //consumer
-  //.apply(RolesMiddleware)
-  //.forRoutes(
-  //{ path: 'user/Todos-los-usuarios', method: RequestMethod.GET },
-  //); // Aplica el middleware a todas las rutas, puedes especificar rutas específicas si lo deseas
-  //}
+  
 }

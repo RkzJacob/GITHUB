@@ -7,7 +7,7 @@ import {  JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { jwtConstants } from '../constants/jwt.constants';
 
-
+//obtención y verificación del token generado por el backend para acceder a la app
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private readonly JwtService: JwtService){}
