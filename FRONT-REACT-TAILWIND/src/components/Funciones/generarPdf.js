@@ -1,6 +1,7 @@
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
 
+//Generar PDF KPI Sprinkler
 export function GenerarPDF  (data,nombreArchivo) {
     const pdf = new jsPDF();
     pdf.text('Reporte de todos los Defectos', 10, 10);
@@ -14,6 +15,7 @@ export function GenerarPDF  (data,nombreArchivo) {
     pdf.save(`${nombreArchivo}.pdf`);
 };
 
+//Generar PDF por todos los sectores KPI Sprinkler
 export function GenerarPDF2  ( data,nombreArchivo) {
     const pdf = new jsPDF();
     let currentY = 10;
@@ -45,6 +47,7 @@ export function GenerarPDF2  ( data,nombreArchivo) {
   pdf.save(`${nombreArchivo}.pdf`);
 };
 
+//Generar PDF KPI Sprinkler
 export function GenerarPDF3  (data,nombreArchivo,sector) {
     const pdf = new jsPDF();
     pdf.text(`Reporte de defectos del sector: ${sector}`, 10, 10);
@@ -58,6 +61,7 @@ export function GenerarPDF3  (data,nombreArchivo,sector) {
     pdf.save(`${nombreArchivo}.pdf`);
 };
 
+//Generar PDF KPI Sprinkler
 export function GenerarPDF5(data, data2, nombreArchivo) {
   const pdf = new jsPDF();
   console.log('entrando en generarpdf');
@@ -101,6 +105,7 @@ export function GenerarPDF5(data, data2, nombreArchivo) {
   pdf.save(`${nombreArchivo}.pdf`);
 };
 
+//Generar PDF KPI DISEASES
 export function GenerarPDF6  ( data,nombreArchivo) {
   const pdf = new jsPDF();
   let currentY = 20;
@@ -133,7 +138,7 @@ export function GenerarPDF6  ( data,nombreArchivo) {
 pdf.save(`${nombreArchivo}.pdf`);
 };
 
-
+//Generar PDF KPI DAMAGE
 export function GenerarPDF7  ( data,nombreArchivo) {
   const pdf = new jsPDF();
   let currentY = 20;
@@ -168,6 +173,8 @@ export function GenerarPDF7  ( data,nombreArchivo) {
 pdf.save(`${nombreArchivo}.pdf`);
 };
 
+
+//Generar PDF KPI FAUNA
 export function GenerarPDF8  ( data,nombreArchivo) {
   const pdf = new jsPDF();
   let currentY = 20;
@@ -202,6 +209,7 @@ export function GenerarPDF8  ( data,nombreArchivo) {
 pdf.save(`${nombreArchivo}.pdf`);
 };
 
+//Generar PDF KPI PLAGUE
 export function GenerarPDF9  ( data,nombreArchivo) {
   const pdf = new jsPDF();
   let currentY = 20;

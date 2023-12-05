@@ -127,7 +127,7 @@ export default function CardTable({ color, selectedOption}) {
 }, []);
 
 
-
+//Seleccionar un sector para generar el reporte por un sector en especifico
 const handleParameterSelect = (event) => {
   const parametroSeleccionado = event.target.value;
   console.log('Parametro seleccionado:', parametroSeleccionado);
@@ -157,18 +157,20 @@ const handleParameterSelect = (event) => {
       
     };
    
+    //Generar reporte de KPI Sprinkler
     const GenerarPDF = () => {
       Alertas.generarPDFAlert1(defects);
     };
-
+    //Generar reporte de KPI Sprinkler
     const GenerarPDF2 = () => {
       Alertas.generarPDFAlert2(defects2);
     };
-
+    //Generar reporte de KPI Sprinkler
     const GenerarPDF3 = () => {
       Alertas.generarPDFAlert3(defects3,selectedParameter);
     };
 
+    //Generar reporte de KPI Sprinkler utilizando api BIGEO
     const GenerarPDF4 = async () => {
       try {
         // Esperar a que los datos se obtengan
@@ -180,15 +182,15 @@ const handleParameterSelect = (event) => {
         // Manejar el error si ocurre alguno
       }
     };
-
+    //Generar reporte de KPI Sprinkler
     const GenerarPDF5 = () => {
       Alertas.generarPDFAlert5(defects6);
     };
-
+    //Generar reporte de KPI Sprinkler
     const GenerarPDF6 = () => {
       Alertas.generarPDFAlert6(defects7);
     };
-
+    //Generar reporte de KPI Sprinkler
     const GenerarPDF7 = () => {
       Alertas.generarPDFAlert7(defects8);
     };

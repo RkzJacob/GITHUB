@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+//obtener datos del api utilizando una url personalizada
 export function ObtenerDataApi  (url, setData,token) {
     const headers = {
         Authorization: `Bearer ${token}`,
@@ -18,7 +18,7 @@ export function ObtenerDataApi  (url, setData,token) {
       });
     
   };
-
+//obtener datos del api utilizando una url personalizada teniendo el token
 export function ObtenerDataApiParametros (url, setData, token, Fecha1, Fecha2) {
     return new Promise((resolve, reject) => {
     const headers = {

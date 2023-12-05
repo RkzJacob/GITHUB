@@ -1,5 +1,6 @@
 import * as XLSX  from 'xlsx';
 
+//generar reporte de xls
 
 export function generarInformeEnExcel(data, nombreArchivo) {
   const wb = XLSX.utils.book_new();

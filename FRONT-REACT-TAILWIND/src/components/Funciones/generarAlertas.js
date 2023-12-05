@@ -259,7 +259,7 @@ const generarPDFAlert1 = async (defects) => {
       }
     };
 
-
+    //Generar PDF CON API BIGEO
     const generarPDFAlert8 = async (defects,nombrePdf) => {
       try {
         if (defects.length > 0) {
@@ -282,6 +282,7 @@ const generarPDFAlert1 = async (defects) => {
       }
     };
 
+    //Generar PDF KPI DISEASES
     const generarPDFAlert9 = async (defects,nombrePdf) => {
       try {
         if (defects.length > 0) {
@@ -304,6 +305,7 @@ const generarPDFAlert1 = async (defects) => {
       }
     };
 
+    //Generar PDF KPI DAMAGE
     const generarPDFAlert10 = async (defects,nombrePdf) => {
       try {
         if (defects.length > 0) {
@@ -326,6 +328,8 @@ const generarPDFAlert1 = async (defects) => {
       }
     };
 
+
+    //Generar PDF KPI FAUNA
     const generarPDFAlert11 = async (defects,nombrePdf) => {
       try {
         if (defects.length > 0) {
