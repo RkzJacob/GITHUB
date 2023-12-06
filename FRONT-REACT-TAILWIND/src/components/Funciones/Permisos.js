@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-
+//obtiene el rol del usuario al loguear 
 const PermisoContext = createContext();
 
 export const PermisoProvider = ({ children }) => {
