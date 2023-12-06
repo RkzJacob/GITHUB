@@ -57,6 +57,27 @@ export class FormDamageController {
         return this.formDamageService.CerroEsperanza2();
     }
 
+    @Get('Damage-Cerro-Tunel-General') // Ruta con parámetro
+    @ApiOperation({ summary: 'cantidad de Damage' }) //descripción metodo
+    @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formDamage] }) // Respuesta exitosa
+    async obtCompCerroTunel3() {
+        return this.formDamageService.CerroTunel2();
+    }
+
+    @Get('Damage-Cerro-Casa-General') // Ruta con parámetro
+    @ApiOperation({ summary: 'cantidad de Damage' }) //descripción metodo
+    @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formDamage] }) // Respuesta exitosa
+    async obtCompCerroCasa3() {
+        return this.formDamageService.CerroCasa2();
+    }
+
+    @Get('Damage-Cerro-Esperanza-General') // Ruta con parámetro
+    @ApiOperation({ summary: 'cantidad de Damage' }) //descripción metodo
+    @ApiResponse({ status: 200, description: 'Consulta realizada con exito', type: [formDamage] }) // Respuesta exitosa
+    async obtCompCerroEsperanza3() {
+        return this.formDamageService.CerroEsperanza2();
+    }
+
     
 
 
