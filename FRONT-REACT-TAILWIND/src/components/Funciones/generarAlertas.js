@@ -61,6 +61,125 @@ const generarExcelYMostrarAlerta2 = async (defects) => {
   }
 };
 
+//generar alerta por defectos por sector
+const generarExcelYMostrarAlerta4 = async (defects) => {
+  try {
+    const data1 = defects.map(defect => ({
+      Sectores: defect.sector,
+      TipoDeDefecto: defect.diseases,
+      Cantidad: defect.cantidad
+    }));
+    
+    if (data1.length > 0) {
+      generarInformeEnExcel2(data1, 'Defectos por sector');
+      await Swal.fire({
+        icon: 'success',
+        title: 'Archivo xls generado correctamente',
+      });
+    } else {
+      await Swal.fire({
+        icon: 'info',
+        title: 'No hay datos disponibles en este sector',
+      });
+    }
+  } catch (error) {
+    console.error('Error generando el informe en Excel:', error);
+    await Swal.fire({
+      icon: 'error',
+      title: 'Ocurrió un error al generar el informe en Excel',
+    });
+  }
+};
+//generar alerta por defectos por sector
+const generarExcelYMostrarAlerta5 = async (defects) => {
+  try {
+    const data1 = defects.map(defect => ({
+      Sectores: defect.sector,
+      TipoDeDefecto: defect.damage,
+      Cantidad: defect.cantidad
+    }));
+    
+    if (data1.length > 0) {
+      generarInformeEnExcel2(data1, 'Defectos por sector');
+      await Swal.fire({
+        icon: 'success',
+        title: 'Archivo xls generado correctamente',
+      });
+    } else {
+      await Swal.fire({
+        icon: 'info',
+        title: 'No hay datos disponibles en este sector',
+      });
+    }
+  } catch (error) {
+    console.error('Error generando el informe en Excel:', error);
+    await Swal.fire({
+      icon: 'error',
+      title: 'Ocurrió un error al generar el informe en Excel',
+    });
+  }
+};
+
+//generar alerta por defectos por sector
+const generarExcelYMostrarAlerta6 = async (defects) => {
+  try {
+    const data1 = defects.map(defect => ({
+      Sectores: defect.sector,
+      TipoDeDefecto: defect.fauna,
+      Cantidad: defect.cantidad
+    }));
+    
+    if (data1.length > 0) {
+      generarInformeEnExcel2(data1, 'Defectos por sector');
+      await Swal.fire({
+        icon: 'success',
+        title: 'Archivo xls generado correctamente',
+      });
+    } else {
+      await Swal.fire({
+        icon: 'info',
+        title: 'No hay datos disponibles en este sector',
+      });
+    }
+  } catch (error) {
+    console.error('Error generando el informe en Excel:', error);
+    await Swal.fire({
+      icon: 'error',
+      title: 'Ocurrió un error al generar el informe en Excel',
+    });
+  }
+};
+
+//generar alerta por defectos por sector
+const generarExcelYMostrarAlerta7 = async (defects) => {
+  try {
+    const data1 = defects.map(defect => ({
+      Sectores: defect.sector,
+      TipoDeDefecto: defect.plague,
+      Cantidad: defect.cantidad
+    }));
+    
+    if (data1.length > 0) {
+      generarInformeEnExcel2(data1, 'Defectos por sector');
+      await Swal.fire({
+        icon: 'success',
+        title: 'Archivo xls generado correctamente',
+      });
+    } else {
+      await Swal.fire({
+        icon: 'info',
+        title: 'No hay datos disponibles en este sector',
+      });
+    }
+  } catch (error) {
+    console.error('Error generando el informe en Excel:', error);
+    await Swal.fire({
+      icon: 'error',
+      title: 'Ocurrió un error al generar el informe en Excel',
+    });
+  }
+};
+
 //generar alerta por defectos de un sector 
 const generarExcelYMostrarAlerta3 = async (defects) => {
   try {
@@ -360,6 +479,10 @@ export const Alertas = {
   generarExcelYMostrarAlerta,
   generarExcelYMostrarAlerta2,
   generarExcelYMostrarAlerta3,
+  generarExcelYMostrarAlerta4,
+  generarExcelYMostrarAlerta5,
+  generarExcelYMostrarAlerta6,
+  generarExcelYMostrarAlerta7,
   generarPDFAlert1,
   generarPDFAlert2,
   generarPDFAlert3,
