@@ -13,7 +13,7 @@ export default function GraficoBarrasCompleto() {
 
   // Uso de contextos y estados compartidos
   const contextData = useContext(DataContext);
-  const { selectedKPI, reloadChart2, setReloadChart2 } = useDataContext();
+  const { selectedKPI, reloadChart2, setReloadChart2 ,selectedKPI2} = useDataContext();
 
   const [numResults, setNumResults] = useState(10); // Estado para controlar la cantidad de resultados mostrados
 
@@ -68,7 +68,7 @@ export default function GraficoBarrasCompleto() {
           labelKey = defect.defect;
         } else if (selectedKPI === "sector") {
           labelKey = defect.sector;
-        } else if (selectedKPI === "Fauna") {
+        }else if (selectedKPI === "Fauna") {
           labelKey = defect.fauna;
         } else if (selectedKPI === "Plaga") {
           labelKey = defect.plaga;

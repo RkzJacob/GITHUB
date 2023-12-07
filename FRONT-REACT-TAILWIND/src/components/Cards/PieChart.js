@@ -11,7 +11,7 @@ export default function CardPieChart({ fetchData }) {
 
 
   const contextData = useContext(DataContext);
-  const { selectedKPI, reloadChart, setReloadChart } = useDataContext();
+  const { selectedKPI, reloadChart, setReloadChart,selectedKPI2 } = useDataContext();
 
   const [numResults, setNumResults] = useState(10);
 
@@ -42,6 +42,7 @@ export default function CardPieChart({ fetchData }) {
       
       // Restablece el estado de recarga a falso
       setReloadChart(false);
+      console.log(reloadChart+"pie reload");
 
       // Destruye el gráfico anterior si existe
       if (chartRef.current) {
@@ -60,9 +61,7 @@ export default function CardPieChart({ fetchData }) {
 
         if (selectedKPI === "defectos") {
           labelKey = defect.defect;
-        } else if (selectedKPI === "Fruit") {
-          labelKey = defect.sector;
-        } else if (selectedKPI === "Fauna") {
+        }else if (selectedKPI === "Fauna") {
           labelKey = defect.fauna;
         } else if (selectedKPI === "Plaga") {
           labelKey = defect.plaga;

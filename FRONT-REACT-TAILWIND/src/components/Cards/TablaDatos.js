@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from 'react';
+import React, { useContext, useState,useEffect, useMemo } from 'react';
 import { DataContext } from 'components/Funciones/context.js';
 import { capitalizeText } from 'components/Funciones/capitalize';
 import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors, damageColors } from 'assets/colors/colorMapping'; // Importación de colores definidos para cada categoría
@@ -6,7 +6,17 @@ import { defectColors, sectorColors, faunaColors, plagaColors, diseasesColors, d
 export default function TablaDatos() {
   const [sortColumn, setSortColumn] = useState(null);
   const [sortDirection, setSortDirection] = useState('asc'); // 'asc' para ascendente, 'desc' para descendente
-  const { data, selectedKPI } = useContext(DataContext);
+  const { data, selectedKPI ,ReloadChart3,
+    setReloadChart3,selectedKPI2} = useContext(DataContext);
+    const contextData = useContext(DataContext);
+
+    useEffect(() => {
+      if (contextData && contextData.data && ReloadChart3) {
+        const data = contextData.data;
+        setReloadChart3(false);
+        console.log(ReloadChart3+"reload 3 tabla de datos");
+      }
+    }, [contextData],ReloadChart3);
 
   // Objeto que contiene los colores para diferentes categorías
   const dataColors = useMemo(() => {
@@ -76,14 +86,23 @@ export default function TablaDatos() {
           totales[defect.damage] += parseInt(defect.cantidad, 10);
         }
         sumaTotalCantidad += parseInt(defect.cantidad, 10);
-      } else {
-        // Agrupar por sector
+      } else if (selectedKPI === "sector") {
         if (!totales[defect.sector]) {
           totales[defect.sector] = parseInt(defect.cantidad, 10);
         } else {
           totales[defect.sector] += parseInt(defect.cantidad, 10);
         }
         sumaTotalCantidad += parseInt(defect.cantidad, 10);
+      } else if (selectedKPI === "SDamage") {
+        if (!totales[defect.sector]) {
+          totales[defect.sector] = parseInt(defect.cantidad, 10);
+        } else {
+          totales[defect.sector] += parseInt(defect.cantidad, 10);
+        }
+        sumaTotalCantidad += parseInt(defect.cantidad, 10);
+      }
+      else {
+        return null;
       }
     });
 
@@ -144,7 +163,7 @@ export default function TablaDatos() {
               </tr>
             </thead>
             <tbody>
-              {totales && Object.keys(totales).map(etiqueta => (
+              {totales && Object.keys(totales).map((etiqueta) => capitalizeText(etiqueta) !== "Undefined" ? (
                 <tr key={etiqueta}>
                   <td className="text-black">{capitalizeText(etiqueta)}</td>
                   <td className="text-black">{totales[etiqueta]}</td>
@@ -155,7 +174,8 @@ export default function TablaDatos() {
                     <div style={{ width: '20px', height: '20px', backgroundColor: dataColors[etiqueta] }} />
                   </td>
                 </tr>
-              ))}
+              ): null
+              )}
             </tbody>
           </table>
         </div>

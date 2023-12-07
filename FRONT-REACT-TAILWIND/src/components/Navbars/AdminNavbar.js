@@ -17,7 +17,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
     const [secondSelectValue, setSecondSelectValue] = useState("");
     const [formName, setFormName] = useState("");
     const { setData } = useContext(DataContext)
-    const { selectedKPI, setSelectedKPI, setReloadChart, setReloadChart2, setReloadChart3 } = useDataContext();
+    const { selectedKPI, setSelectedKPI, setReloadChart, setReloadChart2, setReloadChart3,ReloadChart3,reloadChart2 ,  selectedKPI2, set2SelectedKPI} = useDataContext();
 
 
     // Efecto secundario que se activa cuando el valor del primer select cambia (firstSelectValue)
@@ -32,11 +32,7 @@ export default function AdminNavbar({ ongetData, chartsData }) {
             setKpiOptions([
                 { value: "Fauna", label: "Conteo de animales" },
             ]);
-        } else if (firstSelectValue === "formCount") {
-            setKpiOptions([
-                { value: "Fruit", label: "Conteo de frutas" },
-            ]);
-        } else if (firstSelectValue === "formPlague") {
+        }else if (firstSelectValue === "formPlague") {
             setKpiOptions([
                 { value: "Plaga", label: "Conteo de Plagas" },
             ]);
@@ -68,9 +64,15 @@ export default function AdminNavbar({ ongetData, chartsData }) {
     };
 
     const handleKpiChange = (event) => {
+        console.log("cambiando 2do kpi",ReloadChart3);
         setSecondSelectValue(event.target.value);
         setKpi(event.target.value);
+        set2SelectedKPI(event.target.value);
+        console.log(selectedKPI2);
         setSelectedKPI(event.target.value);
+        setReloadChart(false); // Para la recarga del grafico
+        setReloadChart2(false);//recarga pie
+        setReloadChart3(false);
     };
     /**/
     const handleCerroChange = (event) => {
@@ -103,17 +105,20 @@ export default function AdminNavbar({ ongetData, chartsData }) {
             }
             const response = await fetchData(formName, finalValue, startDate, endDate);
 
-            if (response && response.length > 0) {
+            if ( response && response.length > 0) {
                 setData(response);
                 setReloadChart(true); // Para la recarga del grafico
-                setReloadChart2(true)
-                setReloadChart3(true)
+                setReloadChart2(true);//recarga pie
+                setReloadChart3(true);//recarga tabla
+                console.log(reloadChart2+"reload 2")
+                console.log(ReloadChart3);
             } else {
                 showErrorMessage('No hay datos disponibles para las fechas seleccionadas');
             }
         } catch (error) {
+            console.log("aaa"+ setReloadChart3);
         }
-    }
+    };
 
     return (
         <div className=" flex  md:justify-start border-b flex-wrap md:px-2 px-2">
@@ -127,7 +132,6 @@ export default function AdminNavbar({ ongetData, chartsData }) {
                     <option value="Seleccionar">Seleccionar</option>
                     <option value="formSprinkler">Aspersores</option>
                     <option value="formDamage">Daños</option>
-                    <option value="formCount">Conteo</option>
                     <option value="formDiseases">Enfermedades</option>
                     <option value="formFauna">Fauna</option>
                     <option value="formPlague">Plagas</option>
